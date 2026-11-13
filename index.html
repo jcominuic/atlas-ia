@@ -1887,7 +1887,7 @@ async function buildReport(step){
   /* ================= METODOLOGÍA ================= */
   heading('Cómo leer este informe',null,40);
   [...document.querySelectorAll('footer > div')].forEach(d=>para(d.textContent,8.2));
-  para('Fuente: AI Innovation Architecture Dashboard, release 2026.4. Los indicadores de origen proceden de Stanford AI Index 2025, World Development Indicators, Worldwide Governance Indicators, WIPO, OECD.AI Policy Observatory, World Bank Enterprise Surveys y Doing Business.',8.2,T.muted);
+  para('Los indicadores de origen proceden de Stanford AI Index 2025, World Development Indicators, Worldwide Governance Indicators, WIPO, OECD.AI Policy Observatory, World Bank Enterprise Surveys y Doing Business.',8.2,T.muted);
 
   /* Contenido con números de página */
   doc.setPage(tocPage);y=TOP+2;
@@ -1907,7 +1907,7 @@ async function buildReport(step){
       const Lr=layout(title,{size:7.5,width:CW-used-8,min:6});draw(Lh,M,8.5,T.acc);draw(Lr,W-M,8.5,T.muted,'right');
       doc.line(M,8.5+Math.max(Lh.h,Lr.h)+1.6,W-M,8.5+Math.max(Lh.h,Lr.h)+1.6)}
     const Ln=layout(`${i} / ${n}`,{size:7.5,style:'bold',width:20});doc.setFontSize(Ln.size);const nw=tw(Ln.lines[0],0);
-    const Lf=layout('Fuente: AI Innovation Architecture Dashboard, release 2026.4  ·  '+fechaLarga(),{size:7,width:CW-nw-8,min:6});
+    const Lf=layout('Generado el '+fechaLarga(),{size:7,width:CW-nw-8,min:6});
     doc.line(M,H-12.5,W-M,H-12.5);draw(Lf,M,H-10.5,T.muted);draw(Ln,W-M,H-10.5,T.acc,'right')}
   window.__pdfPages=doc.getNumberOfPages();
   return doc.output('blob');
