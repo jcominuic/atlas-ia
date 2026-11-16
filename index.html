@@ -848,6 +848,30 @@ nav.tabs{gap:.35rem}
 .rx-core b{line-height:1.12}
 @media (max-width:400px){.rx-head,.rx-row{grid-template-columns:minmax(0,1fr) 38px 38px 66px;gap:5px}.rx-row .rx-d{white-space:nowrap;font-size:.8125rem}.rx-row .rx-l{hyphens:auto;word-break:break-word}.rx-row.dom{font-size:.875rem}}
 @media (max-width:400px){.pr-head,.pr-row>summary{grid-template-columns:minmax(0,1fr) 40px 40px 50px;gap:6px}.pr-l{hyphens:auto;word-break:break-word;min-width:0}.pr-row>summary{font-size:.875rem}}
+
+/* El contenido del panel lateral no se encoge: se desplaza el panel entero */
+.drw-body>*{flex-shrink:0}
+.drawer .tablewrap{overflow:visible;max-height:none}
+/* Lista del grupo de comparación en móvil: una tarjeta por país */
+@media (max-width:700px){
+  .gl-wrap{border:0}
+  .gl-tbl{display:block!important;overflow:visible!important}
+  .gl-tbl thead{display:none}
+  .gl-tbl tbody{display:flex;flex-direction:column;gap:6px}
+  .gl-tbl tr{display:flex;flex-wrap:wrap;align-items:baseline;gap:2px 10px;border:1px solid var(--line);border-radius:var(--r-md);padding:.55rem .75rem}
+  .gl-tbl td{border:0!important;padding:0!important;font-size:.875rem;color:var(--muted);text-align:left!important;background:none!important}
+  .gl-tbl tr.me{background:color-mix(in srgb,var(--accent) 8%,transparent)}
+  .gl-tbl td:nth-child(1){order:1;flex:1 1 55%;font-size:1rem;color:var(--ink);font-weight:600}
+  .gl-tbl td:nth-child(6){order:2;flex:none;font-size:1.0625rem;color:var(--ink);font-weight:700}
+  .gl-tbl td:nth-child(6)::before{content:"Núcleo ";font:500 .75rem var(--f-body);color:var(--muted)}
+  .gl-tbl td:nth-child(2){order:3;flex-basis:100%}
+  .gl-tbl td:nth-child(3){order:4}
+  .gl-tbl td:nth-child(4){order:5}.gl-tbl td:nth-child(4)::before{content:"PIB pc PPA ";font-family:var(--f-body)}
+  .gl-tbl td:nth-child(5){order:6}.gl-tbl td:nth-child(5)::before{content:"Tier ";font-family:var(--f-body)}
+  .gl-tbl td:nth-child(7){order:7;flex-basis:100%}
+  .gl-tbl td:nth-child(7):empty{display:none}
+  .gl-tbl tr.me{border-color:var(--accent)}
+}
 @media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
 </style>
 
@@ -2725,7 +2749,7 @@ function renderGroupCtl(o,G){
 function openGroupList(o){
   const G=groupFor(o),ms=[...G.members].sort((a,b)=>b.core-a.core),g=GDPPC[o.iso];
   const body=secH('Criterio aplicado')+basisHTML(G)+(G.alt?`<p class="g-alt">${esc(G.alt)}</p>`:'')+
-    secH(`Países del grupo (${ms.length})`)+`<div class="tablewrap"><table class="mini drw-t"><thead><tr><th>País</th><th>Región</th><th>Renta</th><th>PIB pc PPA</th><th>Tier</th><th>Núcleo</th><th></th></tr></thead><tbody>
+    secH(`Países del grupo (${ms.length})`)+`<div class="tablewrap gl-wrap"><table class="mini drw-t gl-tbl"><thead><tr><th>País</th><th>Región</th><th>Renta</th><th>PIB pc PPA</th><th>Tier</th><th>Núcleo</th><th></th></tr></thead><tbody>
     <tr class="me"><td><b>${esc(o.name)}</b> <small>(analizado)</small></td><td>${esc(o.reg)}</td><td>${esc(o.inc)}</td><td class="mono">${g?fmtR(g.v)+' <small>('+g.y+')</small>':'sin dato'}</td><td class="mono">${o.tier}</td><td class="mono"><b>${fmt(o.core)}</b></td><td></td></tr>
     ${ms.map(x=>{const gx=GDPPC[x.iso];return `<tr><td>${esc(x.name)}</td><td>${esc(x.reg)}</td><td>${esc(x.inc)}</td><td class="mono">${gx?fmtR(gx.v)+' <small>('+gx.y+')</small>':'sin dato'}</td><td class="mono">${x.tier}</td><td class="mono">${fmt(x.core)}</td><td><button type="button" class="lnk" data-rx="${x.iso}">Radiografía</button></td></tr>`}).join('')}</tbody></table></div>
     <p class="note">PIB per cápita PPA en $ internacionales constantes de 2021. Fuente: ${esc(GDP_SRC.name)} (${GDP_SRC.code}); los valores que faltaban en la base del atlas se han completado con la misma serie (consulta del ${GDP_SRC.date}). Sin dato en WDI: Liechtenstein, Taiwán, Venezuela, Yemen y Eritrea.</p>`;
