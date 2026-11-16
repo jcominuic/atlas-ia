@@ -1,4 +1,4 @@
-<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#070b12;color:#eef6ff}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!doctype html><html lang="es"><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#070b12;color:#eef6ff}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
 <title>Atlas de Arquitecturas IA</title>
 <meta name="description" content="Atlas interactivo de capacidades de inteligencia artificial de 218 economías: compara países, explora rankings y descarga un informe PDF completo.">
 <meta property="og:title" content="Atlas de Arquitecturas IA">
@@ -823,6 +823,31 @@ nav.tabs{gap:.35rem}
 .tab-g{padding:0 .45rem;gap:.25rem;font-size:.7188rem}
 .tab-grp a{padding:.5rem .42rem;font-size:.9063rem}
 @media (max-width:1500px){nav.tabs{gap:.35rem}.tab-g{padding:0 .4rem;letter-spacing:.04em}.tab-g svg{display:none}.tab-grp a{padding:.5rem .5rem;font-size:.9063rem}}
+
+/* ===== Móvil: evitar textos superpuestos y tablas cortadas ===== */
+@media (max-width:700px){
+  .rx-row .rx-l{flex-wrap:wrap;row-gap:3px;overflow-wrap:anywhere}
+  .rx-row .rx-l .cov{margin-left:0;font-size:.75rem;padding:1px 6px}
+  .rx-row{gap:8px}
+  .pr-row table,.calc-dom table,table.drw-t,#rxEv table.mini,.inv-tbl{display:block;overflow-x:auto;max-width:100%;-webkit-overflow-scrolling:touch}
+  .pr-row table{margin:4px 0 10px;width:100%}
+  .calc-dom table{margin:0 0 8px;width:100%}
+  .calc-dom>summary{grid-template-columns:minmax(0,1fr) auto;row-gap:2px}
+  .calc-dom>summary>span.mono{grid-column:1}
+  #rxEv table.mini td.mono{white-space:nowrap}
+  #rxEv .ev-n{display:none}
+  .mini td,.mini th{overflow-wrap:anywhere}
+  .mini td.mono,.mini th{overflow-wrap:normal}
+  .rob li{flex-direction:column;gap:.25rem}
+  .tablewrap{max-height:none}
+  .colsel-p{left:auto;right:0;max-width:calc(100vw - 2rem)}
+  .rx-core b{line-height:1.05}
+  .bd-head span:nth-child(5),.bd-row .bd-s{font-size:.8125rem}
+}
+.colsel:not([open]) .colsel-p{display:none}
+.rx-core b{line-height:1.12}
+@media (max-width:400px){.rx-head,.rx-row{grid-template-columns:minmax(0,1fr) 38px 38px 66px;gap:5px}.rx-row .rx-d{white-space:nowrap;font-size:.8125rem}.rx-row .rx-l{hyphens:auto;word-break:break-word}.rx-row.dom{font-size:.875rem}}
+@media (max-width:400px){.pr-head,.pr-row>summary{grid-template-columns:minmax(0,1fr) 40px 40px 50px;gap:6px}.pr-l{hyphens:auto;word-break:break-word;min-width:0}.pr-row>summary{font-size:.875rem}}
 @media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
 </style>
 
@@ -2905,7 +2930,7 @@ function renderRx(){
     <tr data-tip="m:${o.iso}:raw"><td>Bruta → núcleo</td><td class="mono">${o.raw!=null?fmt(o.raw,2)+' → '+fmt(o.core,2):'—'}</td></tr>
     <tr><td>Ajuste por fiabilidad (núcleo − bruta)</td><td class="mono">${o.raw!=null?sgn(o.core-o.raw,2):'—'}</td></tr></tbody></table>
     </div><div class="rx-ev-c"><h3>Indicadores con dato por dominio <span data-ii="cobertura"></span></h3>
-    <table class="mini"><tbody>${byDom.map(x=>{const c=covOf(o,x.k);return `<tr class="${x.n===0?'warn':''}"><td>${DL[x.k]}</td><td class="mono">${x.n} de ${x.tot}</td><td>${covBadge(c,COV_L[c.lvl].replace('Cobertura ',''))}</td></tr>`}).join('')}</tbody></table>
+    <table class="mini"><tbody>${byDom.map(x=>{const c=covOf(o,x.k);return `<tr class="${x.n===0?'warn':''}"><td>${DL[x.k]}</td><td class="mono ev-n">${x.n} de ${x.tot}</td><td>${covBadge(c,COV_L[c.lvl].replace('Cobertura ',''))}</td></tr>`}).join('')}</tbody></table>
     <p class="note">Cobertura alta ≥ ${COV_T.alta} % de los indicadores del dominio, media ${COV_T.media}–${COV_T.alta} %, limitada &lt; ${COV_T.media} %. Con cobertura limitada, más de la mitad del valor del dominio procede de la referencia previa.</p>
     ${byDom.some(x=>x.n===0&&x.k!=='leg')?`<p class="note warn-note">Hay dominios sin indicadores observados: su valor es la referencia previa (45 % mediana global, 30 % regional, 25 % de renta), nunca un cero.</p>`:''}
     <p class="note">Peso de cada indicador: igual entre los indicadores con dato de su dominio. La cobertura de cada dominio es su fiabilidad en el ajuste.</p>
