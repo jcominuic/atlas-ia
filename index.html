@@ -774,6 +774,28 @@ footer .ft{font-size:.9375rem;line-height:1.6;color:var(--ink-2);max-width:95ch}
 @media (max-width:1100px){.rx-top3{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}}
 @media (max-width:700px){.rx-top3{grid-template-columns:minmax(0,1fr)}.rx-gctl>select{max-width:100%}}
 @media (max-width:700px){.adv-sum{display:none}}
+
+/* Pestañas en tres bloques: Analizar · Comparar · Datos */
+nav.tabs{display:flex;align-items:center;gap:.6rem;border-bottom:0;overflow-x:auto;overflow-y:hidden;padding:2px 2px 4px;scrollbar-width:thin}
+.tab-grp{display:flex;align-items:stretch;flex:none;border:1px solid var(--line);border-radius:var(--r-md);background:var(--surface);overflow:hidden}
+.tab-g{display:flex;align-items:center;gap:.4rem;padding:0 .75rem;font-size:.75rem;font-weight:800;text-transform:uppercase;letter-spacing:.09em;color:var(--accent);background:color-mix(in srgb,var(--accent) 12%,var(--surface));border-right:1px solid color-mix(in srgb,var(--accent) 35%,var(--line));white-space:nowrap}
+.tab-g:first-child{padding-left:.75rem}
+.tab-g svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.tab-grp a{padding:.55rem .85rem;margin:0;border:0;border-radius:0;color:var(--ink-2);font-weight:500;position:relative;text-decoration:none;white-space:nowrap}
+.tab-grp a+a{border-left:1px solid var(--soft)}
+.tab-grp a:hover{background:var(--act-bg);color:var(--ink)}
+.tab-grp a[aria-current="page"]{color:var(--ink);font-weight:700;background:color-mix(in srgb,var(--accent) 16%,var(--surface))}
+.tab-grp a[aria-current="page"]::after{content:"";position:absolute;left:.6rem;right:.6rem;bottom:0;height:3px;border-radius:3px 3px 0 0;background:var(--accent)}
+.tab-grp a:focus-visible{outline:2px solid var(--accent);outline-offset:-3px}
+:root[data-mode="light"] .tab-grp a[aria-current="page"]{color:#0a4f99}
+.tab-help{margin-left:auto}
+
+nav.tabs{gap:.45rem}
+.tab-g{padding:0 .55rem;gap:.3rem;letter-spacing:.07em}
+.tab-grp a{padding:.5rem .62rem;font-size:.9375rem}
+.tab-help{padding:.4rem .5rem;font-size:.9063rem}
+#glossBtn{white-space:nowrap}
+@media (max-width:1400px){.adv-sum{display:none}}
 @media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
 </style>
 
@@ -784,6 +806,7 @@ footer .ft{font-size:.9375rem;line-height:1.6;color:var(--ink-2);max-width:95ch}
       <p class="sub pdf-only" id="pdfDate"></p>
     </div>
     <div class="hdr-row">
+      <button type="button" class="btn" id="glossBtn" title="Qué significa cada término">ⓘ Glosario</button>
       <button type="button" class="btn" id="advBtn" aria-expanded="false" aria-controls="adv"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h10M18 6h2M4 12h4M12 12h8M4 18h12M20 18h0"/><circle cx="16" cy="6" r="2"/><circle cx="10" cy="12" r="2"/><circle cx="18" cy="18" r="2"/></svg>Opciones avanzadas<span class="adv-sum" id="advSum"></span></button>
       <div class="mode-switch" role="group" aria-label="Modo de visualización">
         <button type="button" id="modeDark" aria-pressed="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>Oscuro</button>
@@ -837,19 +860,24 @@ footer .ft{font-size:.9375rem;line-height:1.6;color:var(--ink-2);max-width:95ch}
   </section>
 
   <nav class="tabs" aria-label="Vistas">
-    <span class="tab-g">Analizar</span>
+    <div class="tab-grp" role="group" aria-label="Analizar">
+    <span class="tab-g"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5"/></svg>Analizar</span>
     <a href="#radiografia" data-v="radiografia" title="Diagnóstico de un país frente a su grupo de comparación">Radiografía</a>
     <a href="#referentes" data-v="referentes" title="Países que mejor encajan con un objetivo del cliente">Referentes</a>
-    <span class="tab-g">Comparar</span>
+    </div>
+    <div class="tab-grp" role="group" aria-label="Comparar">
+    <span class="tab-g"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 20V10M12 20V4M19 20v-7"/></svg>Comparar</span>
     <a href="#perfil" data-v="perfil" title="Hasta 6 países lado a lado">Comparación</a>
     <a href="#ranking" data-v="ranking" title="Clasificación por cualquier métrica">Ranking</a>
     <a href="#dispersion" data-v="dispersion" title="Dos métricas cruzadas en un gráfico de puntos">Dispersión</a>
     <a href="#grupos" data-v="grupos" title="Perfil medio por región, renta o arquetipo">Grupos</a>
     <a href="#mapa-calor" data-v="mapa-calor" title="Todos los dominios de todos los países en una tabla de color">Mapa de calor</a>
-    <span class="tab-g">Datos</span>
+    </div>
+    <div class="tab-grp" role="group" aria-label="Datos">
+    <span class="tab-g"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M4 10h16M10 4v16"/></svg>Datos</span>
     <a href="#evidencia" data-v="evidencia" title="Los 92 indicadores de origen, uno a uno">Indicadores</a>
     <a href="#datos" data-v="datos" title="Tabla completa con búsqueda, columnas y exportación a CSV">Tabla de datos</a>
-    <button type="button" class="tab-help" id="glossBtn" title="Qué significa cada término">ⓘ Glosario</button>
+    </div>
   </nav>
 
   <div class="fbar" id="fbar" hidden role="status"></div>
