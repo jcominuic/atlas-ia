@@ -814,8 +814,6 @@ table.fx td:first-child{font-weight:650;width:11.5rem;color:var(--ink)}
 .exp-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(15rem,1fr));gap:.75rem}
 .exp-c{border:1px solid var(--line);border-radius:var(--r-md);padding:.8rem .9rem;display:flex;flex-direction:column;gap:.4rem;align-items:flex-start}
 .exp-c span{color:var(--muted);font-size:.9063rem;line-height:1.5;flex:1}
-.cite{border:1px solid var(--line);border-radius:var(--r-md);padding:.7rem .9rem;display:flex;flex-direction:column;gap:.4rem;align-items:flex-start;margin-bottom:.6rem}
-.cite p{margin:0;font-size:.9688rem;line-height:1.55;user-select:all}
 .png-b{position:absolute;top:2px;right:2px;z-index:3;font:600 .75rem var(--f-body);color:var(--accent);background:color-mix(in srgb,var(--surface) 88%,transparent);border:1px solid var(--act-line);border-radius:var(--r-sm);padding:.15rem .45rem;cursor:pointer;opacity:.75}
 .png-b:hover,.png-b:focus-visible{opacity:1;background:var(--act-bg);outline:2px solid var(--accent);outline-offset:1px}
 .pdf-mode .png-b{display:none}
@@ -906,7 +904,7 @@ nav.tabs{gap:.35rem}
     <span class="tab-g"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M4 10h16M10 4v16"/></svg>Datos</span>
     <a href="#evidencia" data-v="evidencia" title="Los 92 indicadores de origen, uno a uno">Indicadores</a>
     <a href="#datos" data-v="datos" title="Tabla completa con búsqueda, columnas y exportación a CSV">Tabla</a>
-    <a href="#investigacion" data-v="investigacion" title="Metodología, sensibilidad, exportación de datos y cita">Investigación</a>
+    <a href="#investigacion" data-v="investigacion" title="Metodología, sensibilidad y exportación de datos">Investigación</a>
     </div>
   </nav>
 
@@ -1170,8 +1168,8 @@ nav.tabs{gap:.35rem}
   <!-- INVESTIGACIÓN -->
   <section class="view" data-view="investigacion" hidden>
     <div class="panel span inv-intro">
-      <div><h2>Capa de investigación</h2><p class="note">Para analistas: metodología y versiones, calidad del dato, análisis de sensibilidad, exportación de datos y cita. Nada de lo que hagas aquí cambia las puntuaciones publicadas ni el resto de vistas.</p></div>
-      <nav class="inv-nav" aria-label="Apartados"><a class="btn" href="#invFicha">Ficha metodológica</a><a class="btn" href="#invCal">Calidad del dato</a><a class="btn" href="#invSens">Sensibilidad</a><a class="btn" href="#invExp">Exportar</a><a class="btn" href="#invCite">Citar</a></nav>
+      <div><h2>Capa de investigación</h2><p class="note">Para analistas: metodología y versiones, calidad del dato, análisis de sensibilidad y exportación de datos. Nada de lo que hagas aquí cambia las puntuaciones publicadas ni el resto de vistas.</p></div>
+      <nav class="inv-nav" aria-label="Apartados"><a class="btn" href="#invFicha">Ficha metodológica</a><a class="btn" href="#invCal">Calidad del dato</a><a class="btn" href="#invSens">Sensibilidad</a><a class="btn" href="#invExp">Exportar</a></nav>
     </div>
     <section class="panel span" id="invFicha"><h2>Ficha metodológica y versiones</h2><div id="invFichaB"></div></section>
     <section class="panel span" id="invCal"><h2>Calidad del dato por país <span data-ii="cobertura"></span></h2>
@@ -1200,7 +1198,6 @@ nav.tabs{gap:.35rem}
       </div>
       <p class="note">Gráficos: cada gráfico tiene un botón «PNG» en su esquina para descargarlo en alta resolución. La tabla de la vista «Tabla» se exporta desde allí, tal como se ve.</p>
     </section>
-    <section class="panel span" id="invCite"><h2>Cómo citar</h2><div id="invCiteB"></div></section>
   </section>
 
   <footer>
@@ -2142,7 +2139,6 @@ async function buildReport(step){
     cells.forEach((c,i)=>{const x=M+i*(colW+10);draw(c.Ll,x,y,T.muted);draw(c.Lv,x,y+c.Ll.h+1.6,T.ink)});y+=rowH+4;
   }
   doc.line(M,y,W-M,y);y+=6;
-  y+=draw(eyebrow('Cita recomendada',CW),M,y,T.acc)+2;y+=draw(layout(citeReport(),{size:8,width:CW}),M,y,T.ink)+4;
   const Ld=layout('Diagnóstico estructural basado en datos públicos. No constituye una predicción ni una recomendación de inversión. Los valores ausentes nunca se cuentan como cero.',{size:7.5,width:CW});
   if(doc.getNumberOfPages()===1&&y+4<BOTTOM-Ld.h-2)draw(Ld,M,BOTTOM-Ld.h-2,T.muted);else{need(Ld.h+4);y+=2;y+=draw(Ld,M,y,T.muted)+4}
 
@@ -2455,12 +2451,8 @@ async function buildReport(step){
           if(k==='conv'||k==='endo')return {t:sgn(v),color:v>=0?T.pos:T.neg};return typeof v==='number'?fmt(v,colDec(k)):String(v??'—')})})),{size:C.length>10?6.3:6.6,label:chunks.length>1?`Tabla de datos (${ci+1}/${chunks.length})`:'Tabla de datos'});}
   }
 
-  /* ================= ANEXO C · CITA Y LIMITACIONES ================= */
-  section('C','Cita recomendada y limitaciones','Cómo citar este informe y qué límites tiene el análisis.');
-  heading('Cita de este informe',null,20);para(citeReport(),8.6);
-  heading('Cita de la herramienta',null,20);para(citeTool(),8.6);
-  para('El atlas no tiene una autoría registrada: añade la persona o entidad responsable si procede. Cita también la fuente primaria de cada indicador cuando uses sus valores originales: Stanford AI Index 2025, World Development Indicators, Worldwide Governance Indicators, WIPO, OECD.AI Policy Observatory, World Bank Enterprise Surveys y Doing Business.',8,T.muted);
-  heading('Limitaciones',null,30);
+  /* ================= ANEXO C · LIMITACIONES ================= */
+  section('C','Limitaciones','Qué límites tiene el análisis y cómo interpretarlo.');
   LIMITS.forEach(t=>{const L=layout(t,{size:8.4,width:CW-5});need(L.h+2.4);doc.setFillColor(...T.acc);doc.circle(M+1.2,y+L.size*PT*0.5,0.7,'F');y+=draw(L,M+5,y,T.ink)+2.2});
   [...document.querySelectorAll('footer .ft')].slice(2).forEach(d=>para(d.textContent,8.2,T.muted));
 
@@ -3219,7 +3211,7 @@ $('#goalFilt').addEventListener('change',e=>{G_FILT=e.target.checked;renderGoals
 $('#goalExcl').addEventListener('change',e=>{G_EXCL=e.target.checked;renderGoals()});
 
 /* ---------- Navegación ---------- */
-/* ---------- Capa de investigación: versiones, sensibilidad, calidad del dato, exportación y cita ---------- */
+/* ---------- Capa de investigación: versiones, sensibilidad, calidad del dato y exportación ---------- */
 const APP={name:'Atlas de Arquitecturas de IA',ver:'3.0',date:'16-11-2026',url:'https://jcominuic.github.io/atlas-ia/',src:'AI Innovation Architecture Dashboard'};
 GLOSS.sensibilidad=['Análisis de sensibilidad','Comprueba cuánto dependen los resultados de las decisiones del método (pesos, forma de promediar, ajuste). Si el puesto de un país apenas cambia al variar esos supuestos, la conclusión es robusta.'];
 const SCEN_T=10;   // supuesto de interpretación: un puesto es «robusto» si no se mueve más de 10 posiciones en ningún escenario
@@ -3311,13 +3303,6 @@ const LIMITS=['Corte transversal: los datos son una única instantánea (05-08-2
   'PIB per cápita PPA sin dato en WDI para Liechtenstein, Taiwán, Venezuela, Yemen y Eritrea: para ellos el grupo de contexto usa renta y región.',
   'Índice comparativo y estructural: no admite lecturas causales ni predictivas, ni constituye una recomendación de inversión.'];
 const fechaISO=()=>new Date().toISOString().slice(0,10);
-function citeTool(){return `${APP.name} (2026). Versión ${APP.ver}. Datos: ${APP.src}, release ${METH.release}, instantánea de evidencia ${METH.snapshot}. Disponible en: ${APP.url} (consultado el ${fechaLarga()}).`}
-function citeReport(){const o=BYISO[RX],G=o?groupFor(o):null;return `${APP.name} (2026). Radiografía de ${o?o.name:'—'} frente a ${G?GMODES[G.mode].toLowerCase()+' ('+G.short+')':'—'}. Informe generado el ${fechaLarga()} con la versión ${APP.ver}. Datos: ${APP.src}, release ${METH.release}, instantánea de evidencia ${METH.snapshot}. ${APP.url}`}
-function renderCite(){
-  const c=(id,t,txt)=>`<div class="cite"><b>${t}</b><p id="${id}">${esc(txt)}</p><button type="button" class="btn" data-cp="${id}">Copiar cita</button></div>`;
-  $('#invCiteB').innerHTML=c('ciT','La herramienta',citeTool())+c('ciR','El informe de la consulta actual',citeReport())+`<p class="note">El atlas no tiene una autoría registrada: añade la persona o entidad responsable delante del título si procede. Cita también la fuente primaria de cada indicador cuando uses sus valores originales.</p>`;
-  $('#invCiteB').querySelectorAll('[data-cp]').forEach(b=>b.addEventListener('click',()=>{const t=$('#'+b.dataset.cp).textContent;navigator.clipboard.writeText(t).then(()=>toast('Cita copiada')).catch(()=>{const r=document.createRange();r.selectNodeContents($('#'+b.dataset.cp));const s=getSelection();s.removeAllRanges();s.addRange(r);toast('Cita seleccionada: cópiala con Ctrl+C')})}));
-}
 /* Exportación */
 function expMeta(L){const o=BYISO[RX],G=o?groupFor(o):null;return {herramienta:APP.name,version_atlas:APP.ver,fecha_version:APP.date,url:APP.url,generado:new Date().toISOString(),
   datos:{fuente:APP.src,release:METH.release,instantanea_evidencia:METH.snapshot,paises:218,indicadores:92,tipo:'corte transversal'},
@@ -3326,7 +3311,7 @@ function expMeta(L){const o=BYISO[RX],G=o?groupFor(o):null;return {herramienta:A
   pib_per_capita_ppa:GDP_SRC,umbrales_de_lectura:{cobertura_pct:COV_T,puntos:RX_T,robustez_puestos:SCEN_T},
   consulta:{paises_exportados:L.length,filtros:{region:$('#fRegion').value||null,renta:$('#fIncome').value||null,calidad:$('#fTier').value,arquetipo:$('#fArch').value===''?null:ARCH[+$('#fArch').value]},pais_analizado:o?o.iso:null,
     grupo_comparacion:G?{modo:G.mode,criterio:G.crit,criterio_alternativo:G.alt||null,miembros:G.members.map(m=>m.iso)}:null,paises_seleccionados:[...S.sel]},
-  cita:citeTool(),limitaciones:LIMITS}}
+  limitaciones:LIMITS}}
 const r4=v=>v==null?null:Math.round(v*1e4)/1e4;
 function expCountries(L){return L.map(o=>{const c=calcChain(o);return {iso:o.iso,pais:o.name,pais_en:o.nameEn,region:o.reg,renta:o.inc,tier:o.tier,confianza:o.conf,puesto:o.rank,arquetipo:ARCH[o.arch],nucleo:o.core,bruta:o.raw,
   nucleo_reproducido:r4(c.core),indicadores_con_dato:o.ind,cobertura_pct:o.cov,actualidad:o.fresh,pib_pc_ppa:GDPPC[o.iso]?{valor:GDPPC[o.iso].v,anio:GDPPC[o.iso].y}:null,
@@ -3351,7 +3336,7 @@ $('#sAgg').addEventListener('change',e=>{SENS.agg=e.target.value;renderSensOut()
 $('#sBase').addEventListener('change',e=>{SENS.base=e.target.value;renderSensOut()});
 $('#sReset').addEventListener('click',()=>{SENS.w=eqW();SENS.agg='arit';SENS.base='adj';renderSens()});
 document.querySelectorAll('.inv-nav a').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();document.querySelector(a.getAttribute('href'))?.scrollIntoView({behavior:reduced()?'auto':'smooth',block:'start'})}));
-function renderResearch(){renderFicha();renderQuality();renderSens();renderRob();renderCite();applyII(document.querySelector('[data-view="investigacion"]'))}
+function renderResearch(){renderFicha();renderQuality();renderSens();renderRob();applyII(document.querySelector('[data-view="investigacion"]'))}
 /* Gráficos exportables en alta resolución */
 function chartPng(key){const ch=charts[key];if(!ch)return;const old=ch.options.devicePixelRatio;try{ch.options.devicePixelRatio=3;ch.resize();const c=document.createElement('canvas');c.width=ch.canvas.width;c.height=ch.canvas.height;const x=c.getContext('2d');x.fillStyle=css('--surface');x.fillRect(0,0,c.width,c.height);x.drawImage(ch.canvas,0,0);
   c.toBlob(b=>{if(b)saveFile(`atlas-ia-grafico-${key}-${fechaISO()}.png`,b)},'image/png')}finally{ch.options.devicePixelRatio=old;ch.resize()}}
