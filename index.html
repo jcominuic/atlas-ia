@@ -450,18 +450,156 @@ body.drw-on{overflow:hidden}
 .mode-switch button:not([aria-pressed="true"]):hover{color:var(--ink);background:var(--soft)}
 .hdr-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:flex-end}
 @media (max-width:640px){.hdr-row{justify-content:flex-start}}
+/* ===== Ronda de consolidación: primera pantalla, cobertura, controles accionables ===== */
+body{padding-block:12px 96px}
+.wrap{gap:14px}
+header.top{align-items:center}
+nav.tabs a{padding:8px 13px}
+.rx-bc{padding:7px 12px;gap:4px}
+.rx-bc-v b{font-size:24px}
+.rx-main{padding:8px 14px}
+.rx-cmp{padding-top:6px}
+h1{font-size:clamp(24px,2.6vw,32px)}
+.adv{display:flex;flex-direction:column;gap:12px;border:1px solid color-mix(in srgb,var(--accent) 35%,var(--line));border-radius:12px;padding:14px;background:color-mix(in srgb,var(--accent) 3%,var(--bg))}
+.adv[hidden]{display:none}
+.adv-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;flex-wrap:wrap}
+.adv-head .sub{margin:0}
+.adv-sum{font-weight:400;opacity:.85;font-size:12px}
+#advBtn svg{width:15px;height:15px}
+#advBtn[aria-expanded="true"]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+/* Primera pantalla de la radiografía */
+.rx-hero{gap:10px;padding:14px 16px}
+.rx-hrow{display:grid;grid-template-columns:minmax(200px,260px) minmax(0,1fr);gap:8px 18px;align-items:end}
+.rx-covs{display:flex;flex-wrap:wrap;gap:4px}
+.rx-covs .cov{font-size:10.5px;padding:1px 5px}
+.rx-tier .lnk{font-size:12px}
+.rx-eco select{font-size:18px;font-weight:600;padding:8px 10px}
+.rx-id{display:flex;justify-content:space-between;align-items:flex-end;gap:14px;flex-wrap:wrap;border:0;padding:0}
+.rx-idl{display:flex;flex-direction:column;gap:5px;min-width:0}
+.rx-meta{margin:0}
+.rx-tier{display:flex;flex-wrap:wrap;gap:4px 8px;align-items:center;font-size:12px}
+.rx-tier .rx-meta{font-size:12.5px}
+.rx-tier .tier{font-size:11.5px;padding:2px 7px;background:color-mix(in srgb,var(--ink) 10%,transparent);font-weight:600}
+.rx-covl{color:var(--muted);margin:0 2px 0 6px}
+.rx-covsum{font-size:12px;color:var(--muted)}
+.rx-core b{font-size:38px}
+.fab{transition:opacity .2s,transform .2s}
+.fab.off{opacity:0;pointer-events:none;transform:translateY(12px)}
+.rx-cmp{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:flex-end;padding-top:8px;border-top:1px solid var(--line)}
+.g-sum{margin-left:auto;display:flex;flex-direction:column;align-items:flex-end;gap:2px;font-size:12.5px;color:var(--muted);text-align:right}
+.g-alt{margin:0;font-size:12.5px;line-height:1.45;padding:7px 10px;border-radius:8px;border-left:3px solid var(--s3);background:color-mix(in srgb,var(--s3) 12%,var(--surface));color:var(--ink)}
+.g-alt b{color:var(--ink)}
+.g-warn-line{margin:0;font-size:12px;color:var(--muted)}
+.rx-main{display:flex;gap:12px;align-items:flex-start;background:color-mix(in srgb,var(--accent) 8%,var(--surface));border:1px solid color-mix(in srgb,var(--accent) 30%,var(--line));border-radius:10px;padding:10px 14px}
+.rx-main p{margin:0;font-size:16px;line-height:1.45}
+.rx-main .rx-c,.rx-read .rx-c{display:inline;padding:0 2px;margin:0;border-bottom:1px dashed color-mix(in srgb,var(--accent) 60%,transparent);border-radius:2px}
+.rx-main .rx-c:hover{background:color-mix(in srgb,var(--accent) 14%,transparent)}
+.rx-bcards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.rx-bc{font:inherit;color:var(--ink);text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:9px 12px;display:flex;flex-direction:column;gap:6px;cursor:pointer;min-width:0}
+.rx-bc-n{font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);font-weight:600}
+.rx-bc-n::after{content:" ↗";color:var(--accent)}
+.rx-bc-v{display:flex;align-items:baseline;gap:10px}
+.rx-bc-v b{font-family:var(--f-mono);font-size:26px;font-weight:500;line-height:1}
+.rx-bc-v em{font-style:normal;font-size:12.5px}
+.rx-bc-s{font-size:12px;color:var(--muted);display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.rx-msgs{display:flex;flex-direction:column;gap:6px}
+.rx-msgs-h{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.rx-msgs-h h3{margin:0}
+.rx-msgs ol{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;counter-reset:m}
+.rx-msgs li{counter-increment:m;border:1px solid var(--line);border-left:3px solid var(--bench);border-radius:8px;padding:7px 10px;min-width:0}
+.rx-msgs li.up{border-left-color:var(--pos)}.rx-msgs li.down{border-left-color:var(--neg)}.rx-msgs li.warn{border-left-color:var(--s3)}.rx-msgs li.soft{opacity:.8}
+.rx-msgs li .rx-c b{font-size:13.5px;font-weight:600;line-height:1.3}
+.rx-msgs li .rx-c b::before{content:counter(m) ". ";color:var(--muted)}
+.rx-msgs li .rx-c span{font-size:12px;color:var(--muted);line-height:1.35}
+.rx-more{display:flex;flex-direction:column;gap:10px;padding-top:6px;border-top:1px dashed var(--line)}
+.rx-more[hidden]{display:none}
+.rx-legend-lbl{font-size:12px;color:var(--muted);line-height:1.5;max-width:110ch}
+.rx-sep{margin:6px 0 -4px;font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:600;display:flex;align-items:center;gap:10px}
+.rx-sep::after{content:"";flex:1;border-top:1px solid var(--line)}
+@media (max-width:900px){.rx-main{flex-direction:column;gap:6px}.rx-hrow{grid-template-columns:minmax(0,1fr)}.rx-bcards,.rx-msgs ol{grid-template-columns:minmax(0,1fr)}.g-sum{margin-left:0;align-items:flex-start;text-align:left}}
+/* Cobertura de indicadores */
+.cov{display:inline-flex;align-items:center;gap:4px;font-family:var(--f-mono);font-size:11px;line-height:1.2;padding:1px 6px;border-radius:999px;border:1px solid var(--line);color:var(--ink);white-space:nowrap;font-weight:500}
+.cov::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--muted)}
+.cov-alta{border-color:color-mix(in srgb,var(--pos) 55%,var(--line));background:color-mix(in srgb,var(--pos) 12%,transparent)}.cov-alta::before{background:var(--pos)}
+.cov-media{border-color:color-mix(in srgb,var(--s5) 55%,var(--line));background:color-mix(in srgb,var(--s5) 12%,transparent)}.cov-media::before{background:var(--s5)}
+.cov-limitada{border-color:color-mix(in srgb,var(--neg) 55%,var(--line));background:color-mix(in srgb,var(--neg) 12%,transparent)}.cov-limitada::before{background:var(--neg)}
+.cov-nula{border-style:dashed;color:var(--muted)}
+.rx-row .rx-l .cov{margin-left:4px}
+.bd-head,.bd-row{grid-template-columns:minmax(150px,220px) minmax(120px,1fr) 56px 76px 170px 64px}
+.bd-row .cov{justify-self:start}
+@media (max-width:700px){.bd-row .cov{display:none}}
+.g-warn-i{color:var(--s3);font-size:11px}
+/* Descomposición y cálculo */
+.pr-dec tr.tot td{font-weight:600;border-top:1px solid var(--line)}
+.pr-dec tr.res td{color:var(--muted);font-style:italic}
+.pr-why>summary{cursor:pointer;color:var(--accent);font-size:13px;font-weight:500;margin:6px 0}
+.calc-chain{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:12.5px;margin-top:8px}
+.calc-chain span{border:1px solid var(--line);border-radius:999px;padding:3px 10px;background:var(--soft)}
+.calc-chain i{font-style:normal;color:var(--accent)}
+.calc-chain b{font-family:var(--f-mono)}
+.calc-step{display:flex;gap:10px;align-items:flex-start}
+.calc-n{flex:none;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font-size:12px;font-weight:700;background:var(--accent);color:var(--accent-ink)}
+.calc-step b{font-size:13px}.calc-step p{margin:2px 0 0;font-size:12.5px;line-height:1.5;color:var(--muted)}
+.calc-dom{border:1px solid var(--line);border-radius:8px}
+.calc-dom>summary{cursor:pointer;display:grid;grid-template-columns:minmax(0,1fr) auto 92px 64px;gap:10px;align-items:center;padding:6px 10px;font-size:13px}
+.calc-dom>summary b{text-align:right}
+.calc-dom table{margin:0 10px 8px;width:calc(100% - 20px)}
+.calc-t{min-width:640px}
+.drawer .tablewrap{max-height:none}
+tr.me td{background:color-mix(in srgb,var(--accent) 10%,transparent)}
+/* Tabla de datos: selector de columnas */
+.colsel{position:relative}
+.colsel>summary{list-style:none;display:inline-flex;gap:4px;align-items:center}
+.colsel>summary::-webkit-details-marker{display:none}
+.colsel-p{position:absolute;z-index:30;top:calc(100% + 6px);left:0;min-width:250px;background:var(--surface);border:1px solid color-mix(in srgb,var(--accent) 40%,var(--line));border-radius:10px;padding:10px 12px;display:flex;flex-direction:column;gap:6px;box-shadow:0 14px 30px -14px rgba(0,0,0,.5)}
+.th-b{all:unset;cursor:pointer;display:block;width:100%;text-align:inherit;color:inherit;font:inherit}
+.th-b:hover{color:var(--accent)}
+.th-b:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:3px}
+/* ===== Elementos accionables: estilo coherente con color de acento (WCAG AA) ===== */
+:root{--act:var(--accent);--act-bg:color-mix(in srgb,var(--accent) 10%,var(--surface));--act-line:color-mix(in srgb,var(--accent) 55%,var(--line))}
+.btn{border-color:var(--act-line);color:var(--ink);background:var(--act-bg);font-weight:500;display:inline-flex;align-items:center;gap:6px;transition:background .15s,border-color .15s,transform .05s}
+.btn:hover{border-color:var(--act);background:color-mix(in srgb,var(--accent) 20%,var(--surface))}
+.btn:active{transform:translateY(1px);background:color-mix(in srgb,var(--accent) 28%,var(--surface))}
+.btn.primary:hover{background:color-mix(in srgb,var(--accent) 86%,var(--ink));border-color:color-mix(in srgb,var(--accent) 86%,var(--ink))}
+.btn:disabled,.btn[aria-disabled="true"]{opacity:.45;cursor:not-allowed;transform:none;background:var(--surface)}
+.btn:focus-visible,.lnk:focus-visible,.rx-bc:focus-visible,.g-chip:focus-visible,summary:focus-visible,nav.tabs a:focus-visible,.mode-switch button:focus-visible,.seg button:focus-visible,.chk input:focus-visible{outline:2px solid var(--act);outline-offset:2px;border-radius:6px}
+select,input[type=search],input[type=text]{border-color:var(--act-line);transition:border-color .15s,box-shadow .15s}
+select{cursor:pointer}
+select:hover,input[type=search]:hover,input[type=text]:hover{border-color:var(--act)}
+select:focus-visible,input:focus-visible{outline:2px solid var(--act);outline-offset:1px;border-color:var(--act)}
+select:disabled,input:disabled{opacity:.45;cursor:not-allowed;border-style:dashed}
+.chk{display:inline-flex;align-items:center;gap:7px;font-size:13px;cursor:pointer;padding:6px 10px;border:1px solid var(--act-line);border-radius:7px;background:var(--act-bg);min-height:34px}
+.chk:hover{border-color:var(--act)}
+.chk input{accent-color:var(--accent);width:16px;height:16px;margin:0;cursor:pointer}
+.chk:has(input:disabled){opacity:.7;cursor:not-allowed}
+.chk.forced{border-color:var(--s3);border-style:solid;background:color-mix(in srgb,var(--s3) 12%,var(--surface));opacity:1}
+.chk.forced::after{content:"criterio alternativo";font-size:10.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--ink);background:color-mix(in srgb,var(--s3) 35%,transparent);border-radius:4px;padding:1px 5px}
+input[type=checkbox],input[type=range]{accent-color:var(--accent)}
+.lnk{color:var(--act);font-weight:500;border-bottom:1px solid color-mix(in srgb,var(--accent) 55%,transparent)}
+.lnk:hover{border-bottom-color:var(--act);background:color-mix(in srgb,var(--accent) 12%,transparent)}
+.rx-bc:hover{border-color:var(--act);background:var(--act-bg)}
+.rx-bc:active{transform:translateY(1px)}
+.g-chip{border-color:var(--act-line)}
+.g-chip:hover{background:var(--act-bg)}
+nav.tabs a{border-radius:6px 6px 0 0}
+nav.tabs a:hover{background:var(--act-bg);color:var(--ink)}
+nav.tabs a[aria-current="page"]{color:var(--act);font-weight:600}
+summary{cursor:pointer}
+.g-hint{color:var(--muted)}
+#gSize:disabled{opacity:.45}
+:root[data-mode="light"] .btn.primary:hover{background:#085bb0;border-color:#085bb0}
+:root[data-mode="light"] nav.tabs a[aria-current="page"]{color:#0a5fb8}
 @media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
 </style>
 
 <div class="wrap">
   <header class="top">
-    <div>
+    <div class="brand">
       <h1>Atlas de <em>arquitecturas</em> de IA</h1>
       <p class="sub pdf-only" id="pdfDate"></p>
-      <p class="sub">Graficador interactivo de los 7 dominios de capacidad + 1 de contexto social para 218 economías. Compara perfiles, cruza métricas y explora patrones por región, renta y arquetipo.</p>
     </div>
-    <div class="hdr-actions">
-      <div class="hdr-row">
+    <div class="hdr-row">
+      <button type="button" class="btn" id="advBtn" aria-expanded="false" aria-controls="adv"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h10M18 6h2M4 12h4M12 12h8M4 18h12M20 18h0"/><circle cx="16" cy="6" r="2"/><circle cx="10" cy="12" r="2"/><circle cx="18" cy="18" r="2"/></svg>Opciones avanzadas<span class="adv-sum" id="advSum"></span></button>
       <div class="mode-switch" role="group" aria-label="Modo de visualización">
         <button type="button" id="modeDark" aria-pressed="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>Oscuro</button>
         <button type="button" id="modeLight" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>Claro</button>
@@ -469,25 +607,48 @@ body.drw-on{overflow:hidden}
       <div class="export" id="exportWrap">
         <button class="btn primary" id="exportBtn" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg><span id="exportLabel">Descargar informe PDF completo</span></button>
       </div>
-      </div>
     </div>
   </header>
 
-  <section class="kpis" id="kpis" aria-label="Resumen del conjunto filtrado"></section>
-
-  <section class="filters" aria-label="Filtros">
-    <div class="fld"><label for="fRegion">Región</label><select id="fRegion"></select></div>
-    <div class="fld"><label for="fIncome">Renta</label><select id="fIncome"></select></div>
-    <div class="fld"><label for="fTier">Evidencia</label>
-      <select id="fTier">
-        <option value="AB">Comparables (Tier A–B)</option>
-        <option value="ALL">Todos los tiers</option>
-        <option value="A">Solo Tier A</option><option value="B">Solo Tier B</option>
-        <option value="C">Solo Tier C</option><option value="D">Solo Tier D</option>
-      </select></div>
-    <div class="fld"><label for="fArch">Arquetipo</label><select id="fArch"></select></div>
-    <button class="btn" id="fReset" type="button">Restablecer filtros</button>
-    <span class="count" id="fCount"></span>
+  <section class="adv" id="adv" hidden aria-label="Opciones avanzadas">
+    <div class="adv-head"><p class="sub">Graficador interactivo de los 7 dominios de capacidad + 1 de contexto social para 218 economías. Compara perfiles, cruza métricas y explora patrones por región, renta y arquetipo.</p>
+      <button type="button" class="btn" id="advClose">Cerrar opciones</button></div>
+    <section class="kpis" id="kpis" aria-label="Resumen del conjunto filtrado"></section>
+    <section class="filters" aria-label="Filtros">
+      <div class="fld"><label for="fRegion">Región</label><select id="fRegion"></select></div>
+      <div class="fld"><label for="fIncome">Renta</label><select id="fIncome"></select></div>
+      <div class="fld"><label for="fTier">Evidencia</label>
+        <select id="fTier">
+          <option value="AB">Comparables (Tier A–B)</option>
+          <option value="ALL">Todos los tiers</option>
+          <option value="A">Solo Tier A</option><option value="B">Solo Tier B</option>
+          <option value="C">Solo Tier C</option><option value="D">Solo Tier D</option>
+        </select></div>
+      <div class="fld"><label for="fArch">Arquetipo</label><select id="fArch"></select></div>
+      <button class="btn" id="fReset" type="button">Restablecer filtros</button>
+      <span class="count" id="fCount"></span>
+    </section>
+    <!-- Selección compartida -->
+    <section class="panel" aria-label="Economías seleccionadas">
+      <div class="ctrls">
+        <div class="fld fld-add" style="flex:1 1 260px">
+          <label for="addInput">Añadir economía a la comparación (máx. 6)</label>
+          <input type="text" id="addInput" list="ecoList" placeholder="Escribe un nombre o código ISO, p. ej. Spain o ESP" autocomplete="off">
+          <datalist id="ecoList"></datalist>
+        </div>
+        <div class="fld"><label for="bench">Referencia</label>
+          <select id="bench">
+            <option value="median">Mediana global (183 comparables)</option>
+            <option value="group">Grupo de comparación de la Radiografía</option>
+            <option value="top">Media del cuartil superior</option>
+            <option value="region">Media regional de la 1.ª economía</option>
+            <option value="income">Media del grupo de renta de la 1.ª</option>
+            <option value="none">Sin referencia</option>
+          </select></div>
+        <button class="btn" type="button" id="clearSel">Vaciar selección</button>
+      </div>
+      <div class="chips" id="chips"></div>
+    </section>
   </section>
 
   <nav class="tabs" aria-label="Vistas">
@@ -502,48 +663,40 @@ body.drw-on{overflow:hidden}
     <a href="#datos" data-v="datos">Datos</a>
   </nav>
 
-  <!-- Selección compartida -->
-  <section class="panel" aria-label="Economías seleccionadas">
-    <div class="ctrls">
-      <div class="fld fld-add" style="flex:1 1 260px">
-        <label for="addInput">Añadir economía a la comparación (máx. 6)</label>
-        <input type="text" id="addInput" list="ecoList" placeholder="Escribe un nombre o código ISO, p. ej. Spain o ESP" autocomplete="off">
-        <datalist id="ecoList"></datalist>
-      </div>
-      <div class="fld"><label for="bench">Referencia</label>
-        <select id="bench">
-          <option value="median">Mediana global (183 comparables)</option>
-          <option value="group">Grupo de comparación de la Radiografía</option>
-          <option value="top">Media del cuartil superior</option>
-          <option value="region">Media regional de la 1.ª economía</option>
-          <option value="income">Media del grupo de renta de la 1.ª</option>
-          <option value="none">Sin referencia</option>
-        </select></div>
-      <button class="btn" type="button" id="clearSel">Vaciar selección</button>
-    </div>
-    <div class="chips" id="chips"></div>
-  </section>
-
   <!-- RADIOGRAFÍA -->
   <section class="view" data-view="radiografia">
-    <div class="panel span">
-      <div class="ctrls rx-top">
-        <div class="fld" style="flex:0 1 300px"><label for="rxEco">País analizado</label><select id="rxEco"></select></div>
-        <div class="fld"><label id="gModeL">Comparar con</label>
-          <div class="seg" id="gMode" role="group" aria-labelledby="gModeL">
-            <button type="button" data-m="contexto" aria-pressed="true">Contexto similar</button>
-            <button type="button" data-m="arquitectura" aria-pressed="false">Arquitectura similar</button>
-            <button type="button" data-m="cliente" aria-pressed="false">Referentes del cliente</button>
-            <button type="button" data-m="todas" aria-pressed="false">Todo el filtro</button>
-          </div></div>
-        <div class="fld" id="gSizeF"><label for="gSize">Tamaño del grupo</label><select id="gSize"><option value="10">10</option><option value="15" selected>15</option><option value="25">25</option></select><small class="g-hint" id="gSizeHint" hidden>No aplicable: falta el PIB per cápita</small></div>
-        <label id="gRegF" style="display:flex;gap:6px;align-items:center;font-size:13px"><input type="checkbox" id="gReg"> Misma región</label>
+    <div class="panel span rx-hero">
+      <div class="rx-hrow">
+        <div class="fld rx-eco"><label for="rxEco">País analizado</label><select id="rxEco"></select></div>
+        <div class="rx-id" id="rxId"></div>
       </div>
-      <div class="grp"><p class="g-crit" id="gCrit"></p><div class="g-members" id="gMembers"></div></div>
-      <div class="rx-id" id="rxId"></div>
-      <div class="rx-read" id="rxRead"></div>
-      <div class="rx-cols" id="rxCols"></div>
+      <div class="rx-cmp">
+        <div class="fld"><label for="gModeSel">Comparado con</label>
+          <select id="gModeSel">
+            <option value="contexto">Contexto similar: renta y PIB per cápita</option>
+            <option value="arquitectura">Arquitectura similar: perfil de dominios</option>
+            <option value="cliente">Referentes del cliente: selección manual</option>
+            <option value="todas">Todo el filtro actual</option>
+          </select></div>
+        <div class="fld" id="gSizeF"><label for="gSize">Tamaño del grupo</label><select id="gSize"><option value="10">10</option><option value="15" selected>15</option><option value="25">25</option></select><small class="g-hint" id="gSizeHint" hidden>No se aplica</small></div>
+        <label class="chk" id="gRegF"><input type="checkbox" id="gReg"> Misma región</label>
+        <div class="g-sum"><span id="gShort"></span><button type="button" class="lnk" id="gListBtn">Ver los países del grupo ›</button></div>
+      </div>
+      <p class="g-alt" id="gAlt" role="status" hidden></p>
+      <div class="rx-main" id="rxMain"></div>
+      <div class="rx-bcards" id="rxBCards"></div>
+      <div class="rx-msgs">
+        <div class="rx-msgs-h"><h3>Mensajes prioritarios</h3><button type="button" class="btn" id="rxMore" aria-expanded="false" aria-controls="rxMoreBox">Ver más</button></div>
+        <ol id="rxMsgs"></ol>
+      </div>
+      <div class="rx-more" id="rxMoreBox" hidden>
+        <div class="rx-read" id="rxRead"></div>
+        <div class="rx-cols" id="rxCols"></div>
+        <div class="rx-legend-lbl" id="rxLbl"></div>
+        <div class="grp"><p class="g-crit" id="gCrit"></p><div class="g-members" id="gMembers"></div></div>
+      </div>
     </div>
+    <h2 class="rx-sep span">Detalle del análisis</h2>
     <div class="panel">
       <h2>Arquitectura por bloques</h2>
       <p class="note">Los tres bloques primero; despliega cada uno para ver los dominios que lo forman. La marca vertical es la mediana del grupo de comparación elegido arriba.</p>
@@ -750,15 +903,19 @@ body.drw-on{overflow:hidden}
     <div class="panel" style="grid-column:1/-1">
       <div class="ctrls">
         <div class="fld" style="flex:1 1 240px"><label for="tSearch">Buscar en la tabla</label><input type="search" id="tSearch" placeholder="Nombre o ISO"></div>
-        <button class="btn" type="button" id="copyCsv">Copiar CSV filtrado</button>
+        <details class="colsel" id="colSel"><summary class="btn">Columnas <span id="colCount"></span></summary><div class="colsel-p" id="colSelP"></div></details>
+        <button class="btn primary" type="button" id="dlCsv">Descargar CSV de la vista</button>
+        <button class="btn" type="button" id="copyCsv">Copiar CSV</button>
       </div>
-      <p class="note"><span class="hint">Pulsa una cabecera para ordenar y una fila para añadirla a la comparación. </span>Las brechas, el equilibrio y la alineación se calculan con las mismas fórmulas que la fuente.</p>
+      <p class="note"><span class="hint">Pulsa una cabecera para ordenar y una fila para añadirla a la comparación. </span>El CSV exporta exactamente lo que ves: las filas que cumplen los filtros y la búsqueda, en el orden actual y con las columnas visibles. Las brechas, el equilibrio y la alineación se calculan con las mismas fórmulas que la fuente.</p>
+      <p class="note" id="tCount"></p>
       <div class="tablewrap" id="tableWrap"></div>
     </div>
   </section>
 
   <footer>
     <div><b>Cómo leer las métricas derivadas.</b> Brecha de conversión = media(Ciencia, Talento) − media(Adopción, Financiación): positiva indica conocimiento aún no convertido en uso y financiación. Brecha de endogeneización = media(Infraestructura, Adopción, Financiación) − media(Ciencia, Talento): positiva indica despliegue por delante de la formación de conocimiento propio. Equilibrio = 100 − 2,2 × desviación típica de los 7 dominios. Alineación política-capacidad = 100 − 1,6 × |Gobernanza − media(IA responsable, Adopción)|.</div>
+    <div><b>Cómo se calcula la puntuación.</b> Cada indicador se acota entre los percentiles 2,5 y 97,5, se alinea para que más alto sea mejor, se transforma con log(1 + x) con signo cuando es muy asimétrico y se reescala a 0–100. La puntuación observada de un dominio es la media simple de sus indicadores con dato (todos pesan igual). La puntuación bruta es la media de los dominios con dato. El ajuste por fiabilidad mezcla cada dominio con una referencia previa (45 % mediana global, 30 % regional, 25 % del grupo de renta) en proporción a la parte que no cubren los datos: ajustada = cobertura × observada + (1 − cobertura) × referencia. La puntuación núcleo es la media de los 7 dominios ajustados (14,3 % cada uno). Cobertura de una conclusión: alta ≥ 75 % de los indicadores, media 40–75 %, limitada &lt; 40 %.</div>
     <div>La legitimidad social solo existe para 32 economías con encuesta directa y no entra en la puntuación núcleo. Los valores ausentes nunca se tratan como cero. Diagnóstico estructural, no predicción ni recomendación de inversión.</div>
   </footer>
 </div>
@@ -900,6 +1057,7 @@ function renderKpis(F){
   ];
   $('#kpis').innerHTML=k.map(([v,l,s],i)=>`<div class="kpi" data-tip="kpi:${i}" tabindex="0"><span>${l}</span><b>${v}</b><small>${esc(s)}</small></div>`).join('');
   $('#fCount').textContent=`${F.length} economías`;
+  if(typeof advSummary==='function')try{advSummary()}catch(e){}
 }
 
 /* ---------- Selección ---------- */
@@ -914,6 +1072,7 @@ $('#bench').addEventListener('change',e=>{S.bench=e.target.value;renderAll()});
 function renderChips(){
   $('#chips').innerHTML=S.sel.length?S.sel.map((iso,i)=>{const o=BYISO[iso];return `<span class="chip" data-tip="m:${iso}:core"><i style="background:${selCol(i)}"></i>${esc(o.name)} <span class="tier">${o.tier}</span><button type="button" aria-label="Quitar ${esc(o.name)}" data-rm="${iso}">×</button></span>`}).join(''):'<span class="note" style="color:var(--muted)">Ninguna economía seleccionada. Añade alguna con el buscador o pulsando en los gráficos.</span>';
   $('#chips').querySelectorAll('[data-rm]').forEach(b=>b.addEventListener('click',()=>toggleSel(b.dataset.rm)));
+  if(typeof advSummary==='function')try{advSummary()}catch(e){}
 }
 function benchmark(){
   const first=BYISO[S.sel[0]];
@@ -1294,22 +1453,48 @@ function renderHeat(){
 
 /* ---------- Vista: Datos ---------- */
 const COLS=[['iso','ISO'],['name','Economía'],['reg','Región'],['inc','Renta'],['tier','Tier'],['rank','Rango'],['arch','Arquetipo'],['core','Núcleo'],['raw','Bruta'],['conf','Confianza'],...DOM8.map(k=>[k,DS[k]]),['K','Conocim.'],['D','Despliegue'],['I','Instit.'],['conv','Brecha conv.'],['endo','Brecha endog.'],['bal','Equilibrio'],['align','Alineación'],['bn','Cuello'],['cov','Cobertura %'],['year','Último año']];
+// Grupos de columnas: las esenciales se ven siempre; el resto se activa con el selector
+const COL_GROUPS=[
+  {id:'base',l:'Esenciales',fixed:true,k:['name','reg','inc','tier','rank','core','K','D','I','cov']},
+  {id:'dom',l:'Dominios (7 + legitimidad)',k:[...DOM8]},
+  {id:'ev',l:'Evidencia y ajuste',k:['raw','conf','year']},
+  {id:'diag',l:'Métricas derivadas',k:['conv','endo','bal','align','bn']},
+  {id:'id',l:'Identificación',k:['iso','arch']}];
+let COLS_ON=new Set(['base']);try{const v=JSON.parse(localStorage.getItem('atlasIA.cols')||'null');if(Array.isArray(v))COLS_ON=new Set(['base',...v])}catch(e){}
+const visCols=()=>{const ks=new Set(COL_GROUPS.filter(g=>COLS_ON.has(g.id)).flatMap(g=>g.k));return COLS.filter(([k])=>ks.has(k))};
+function renderColSel(){
+  $('#colSelP').innerHTML=COL_GROUPS.map(g=>`<label class="chk"><input type="checkbox" data-cg="${g.id}" ${COLS_ON.has(g.id)?'checked':''} ${g.fixed?'disabled':''}> ${esc(g.l)} <small>(${g.k.length})</small></label>`).join('')+`<p class="note">Las esenciales siempre se muestran.</p>`;
+  $('#colCount').textContent=`(${visCols().length} de ${COLS.length})`;
+  $('#colSelP').querySelectorAll('[data-cg]').forEach(c=>c.addEventListener('change',()=>{c.checked?COLS_ON.add(c.dataset.cg):COLS_ON.delete(c.dataset.cg);
+    try{localStorage.setItem('atlasIA.cols',JSON.stringify([...COLS_ON].filter(x=>x!=='base')))}catch(e){}renderTable()}));
+}
 const T={sort:'core',dir:-1};
 $('#tSearch').addEventListener('input',renderTable);
 function cellVal(o,k){if(k==='arch')return ARCH[o.arch];if(k==='bn')return DS[o.bn];return o[k]}
-function renderTable(){
+const colDec=k=>['rank','year'].includes(k)?0:k==='core'||k==='raw'?2:1;   // mismos decimales en pantalla y en el CSV
+// Filas exactamente como se ven: filtro + búsqueda + orden
+function tableRows(){
   const q=$('#tSearch').value.trim().toLowerCase();
-  const L=filtered().filter(o=>!q||o.name.toLowerCase().includes(q)||o.iso.toLowerCase().includes(q))
-    .sort((a,b)=>{let x=cellVal(a,T.sort),y=cellVal(b,T.sort);if(x==null)return 1;if(y==null)return -1;return (typeof x==='string'?x.localeCompare(y):x-y)*T.dir});
-  $('#tableWrap').innerHTML=`<table class="data"><thead><tr>${COLS.map(([k,l])=>`<th data-k="${k}" aria-sort="${T.sort===k?(T.dir>0?'ascending':'descending'):'none'}">${l}${T.sort===k?(T.dir>0?' ▲':' ▼'):''}</th>`).join('')}</tr></thead><tbody>${L.map(o=>`<tr data-iso="${o.iso}" class="${S.sel.includes(o.iso)?'sel':''}">${COLS.map(([k])=>{const v=cellVal(o,k);return `<td${typeof v==='number'?' class="mono"':''}${typeof v==='number'&&(MET[k]||DOM8.includes(k))?` data-tip="m:${o.iso}:${k}"`:''}>${typeof v==='number'?(['rank','year'].includes(k)?v:(['conv','endo'].includes(k)?sgn(v):fmt(v))):(v==null?'—':esc(v))}</td>`}).join('')}</tr>`).join('')}</tbody></table>`;
-  $('#tableWrap').querySelectorAll('th').forEach(th=>th.addEventListener('click',()=>{const k=th.dataset.k;if(T.sort===k)T.dir*=-1;else{T.sort=k;T.dir=['name','iso','reg','inc','tier','arch','bn','rank'].includes(k)?1:-1}renderTable()}));
+  return filtered().filter(o=>!q||o.name.toLowerCase().includes(q)||o.iso.toLowerCase().includes(q))
+    .sort((a,b)=>{let x=cellVal(a,T.sort),y=cellVal(b,T.sort);if(x==null&&y==null)return 0;if(x==null)return 1;if(y==null)return -1;return (typeof x==='string'?x.localeCompare(y,'es'):x-y)*T.dir});
+}
+function renderTable(){
+  const L=tableRows(),C=visCols();renderColSel();
+  $('#tCount').textContent=`${L.length} filas · ${C.length} columnas · ordenado por «${COLS.find(c=>c[0]===T.sort)?.[1]||T.sort}» ${T.dir>0?'ascendente':'descendente'}`;
+  $('#tableWrap').innerHTML=`<table class="data" style="min-width:${Math.max(640,C.length*82)}px"><thead><tr>${C.map(([k,l])=>`<th scope="col" aria-sort="${T.sort===k?(T.dir>0?'ascending':'descending'):'none'}"><button type="button" class="th-b" data-k="${k}" title="${esc(MET[k]?.d||'Ordenar por esta columna')}">${l}${T.sort===k?(T.dir>0?' ▲':' ▼'):''}</button></th>`).join('')}</tr></thead><tbody>${L.map(o=>`<tr data-iso="${o.iso}" class="${S.sel.includes(o.iso)?'sel':''}">${C.map(([k])=>{const v=cellVal(o,k);return `<td${typeof v==='number'?' class="mono"':''}${typeof v==='number'&&(MET[k]||DOM8.includes(k))?` data-tip="m:${o.iso}:${k}"`:''}>${typeof v==='number'?fmt(v,colDec(k)).replace(/\./g,k==='year'||k==='rank'?'':'.'):esc(v??'—')}</td>`}).join('')}</tr>`).join('')}</tbody></table>`;
+  $('#tableWrap').querySelectorAll('.th-b').forEach(th=>th.addEventListener('click',()=>{const k=th.dataset.k;if(T.sort===k)T.dir*=-1;else{T.sort=k;T.dir=['name','iso','reg','inc','tier','arch','bn','rank'].includes(k)?1:-1}renderTable()}));
   $('#tableWrap').querySelectorAll('tr[data-iso]').forEach(tr=>tr.addEventListener('click',()=>toggleSel(tr.dataset.iso)));
 }
+// CSV = vista actual (mismas filas, mismo orden, mismas columnas). Separador «;» y coma decimal, para Excel en español.
+function tableCsv(){
+  const L=tableRows(),C=visCols();
+  const cell=(o,k)=>{const v=cellVal(o,k);return typeof v==='number'?v.toFixed(colDec(k)).replace('.',','):`"${String(v??'—').replace(/"/g,'""')}"`};
+  return {n:L.length,c:C.length,txt:'﻿'+[C.map(c=>`"${c[1]}"`).join(';'),...L.map(o=>C.map(([k])=>cell(o,k)).join(';'))].join('\r\n')};
+}
+$('#dlCsv').addEventListener('click',()=>{const t=tableCsv();saveFile(`atlas-ia-datos-${new Date().toISOString().slice(0,10)}.csv`,new Blob([t.txt],{type:'text/csv;charset=utf-8'}));toast(`CSV: ${t.n} filas y ${t.c} columnas, en el orden de la vista`)});
 $('#copyCsv').addEventListener('click',()=>{
-  const L=filtered();const head=COLS.map(c=>c[1]);
-  const lines=[head.join(';'),...L.map(o=>COLS.map(([k])=>{const v=cellVal(o,k);return typeof v==='number'?String(Math.round(v*100)/100).replace('.',','):`"${String(v??'').replace(/"/g,'""')}"`}).join(';'))];
-  const txt=lines.join('\n');
-  navigator.clipboard.writeText(txt).then(()=>toast(`CSV copiado: ${L.length} filas (separador ;)`)).catch(()=>{
+  const t=tableCsv(),txt=t.txt.replace(/^﻿/,'');
+  navigator.clipboard.writeText(txt).then(()=>toast(`CSV copiado: ${t.n} filas y ${t.c} columnas (separador ;)`)).catch(()=>{
     const ta=document.createElement('textarea');ta.value=txt;ta.style.width='100%';ta.rows=6;ta.readOnly=true;$('#tableWrap').before(ta);ta.select();toast('Selecciona y copia el texto que aparece arriba de la tabla')});
 });
 
@@ -1449,13 +1634,13 @@ function offerDirect(filename,data,reason){
 async function saveFile(filename,data){
   const dl=await dlReady;
   if(dl==='local'){try{const url=URL.createObjectURL(data);const a=document.createElement('a');a.href=url;a.download=filename;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),8000);toast('Descarga iniciada: '+filename)}
-    catch(e){offerDirect(filename,data,'Pulsa el botón para guardar el informe en tu equipo.')}return}
-  if(!dl){offerDirect(filename,data,'Este navegador no ofrece el aviso de descarga de Claude. Pulsa el botón para guardar el informe en tu equipo.');return}
+    catch(e){offerDirect(filename,data,'Pulsa el botón para guardar el archivo en tu equipo.')}return}
+  if(!dl){offerDirect(filename,data,'Este navegador no ofrece el aviso de descarga de Claude. Pulsa el botón para guardar el archivo en tu equipo.');return}
   try{const r=await dl.save({filename,data});if(r&&r.status==='saved')toast('Descarga iniciada: '+filename)}
   catch(e){const c=e&&e.code;
     if(c==='declined')toast('Descarga cancelada');
     else if(c==='rate_limited')toast('Ya hay una descarga pendiente. Inténtalo de nuevo en unos segundos');
-    else offerDirect(filename,data,'El aviso de descarga de Claude no está disponible en esta vista. Pulsa el botón para guardar el informe en tu equipo.')}
+    else offerDirect(filename,data,'El aviso de descarga de Claude no está disponible en esta vista. Pulsa el botón para guardar el archivo en tu equipo.')}
 }
 const vis=el=>!!(el&&(el.offsetWidth||el.offsetHeight||el.getClientRects().length));
 const wait=ms=>new Promise(r=>setTimeout(r,ms));
@@ -1677,7 +1862,7 @@ async function buildReport(step){
   {const Lt=layout('Configuración de la consulta',{size:13,style:'bold',width:CW});const Ls=layout('Filtros, selección y opciones de cada vista con las que se ha generado este informe.',{size:8.2,width:CW});
    y+=draw(Lt,M,y,T.head)+1.5;y+=draw(Ls,M,y,T.muted)+4;}
   const conf=[['Región',$('#fRegion').value||'Todas las regiones'],['Renta',$('#fIncome').value||'Todos los grupos'],['Evidencia',$('#fTier').selectedOptions[0].text],
-    ['Arquetipo',$('#fArch').value===''?'Todos los arquetipos':ARCH[+$('#fArch').value]],['Referentes · objetivo',`${GOAL==='custom'?'Personalizado':GOALS[GOAL].l} · ${DOM.filter(k=>GW[k]).map(k=>DS[k]+' '+GW[k]).join(', ')}`],['Radiografía · comparar con',`${GMODES[GMODE]}${(GMODE==='contexto'||GMODE==='arquitectura')&&!(RX&&groupFor(BYISO[RX]).sizeNA)?' · '+GSIZE+' economías':''}${GMODE==='contexto'&&GREG?' · misma región':''}`],['Referencia',$('#bench').selectedOptions[0].text],['Economías seleccionadas',E.length?E.map(e=>e.o.name).join(', '):'Ninguna']];
+    ['Arquetipo',$('#fArch').value===''?'Todos los arquetipos':ARCH[+$('#fArch').value]],['Referentes · objetivo',`${GOAL==='custom'?'Personalizado':GOALS[GOAL].l} · ${DOM.filter(k=>GW[k]).map(k=>DS[k]+' '+GW[k]).join(', ')}`],['Radiografía · comparar con',(()=>{const G=RX?groupFor(BYISO[RX]):null;return `${GMODES[GMODE]}${G&&G.eff.size?' · '+GSIZE+' economías':''}${G&&G.eff.reg?' · misma región':''}${G&&G.alt?' · criterio alternativo (sin PIB per cápita)':''}`})()],['Referencia',$('#bench').selectedOptions[0].text],['Economías seleccionadas',E.length?E.map(e=>e.o.name).join(', '):'Ninguna']];
   VIEWS.filter(v=>v!=='perfil'&&v!=='datos').forEach(v=>{const sec=document.querySelector(`[data-view="${v}"]`);viewSettings(sec).forEach(([k,val])=>conf.push([VIEW_NAMES[v]+' · '+k,val]))});
   // Cuadrícula de dos columnas: etiqueta pequeña encima, valor debajo
   {const gw=(CW-6)/2;for(let i=0;i<conf.length;i+=2){const pair=conf.slice(i,i+2).map(([k,v])=>({Lk:layout(k,{size:6.2,style:'bold',width:gw-6,cs:.15,upper:true}),Lv:layout(v,{size:8,width:gw-6})}));
@@ -1704,12 +1889,12 @@ async function buildReport(step){
         l.its.forEach(it=>{doc.setFillColor(...col);doc.rect(x+3.5,cy+0.3,0.6,it.Lt.h+it.Ls.h,'F');cy+=draw(it.Lt,x+6,cy,T.ink);cy+=draw(it.Ls,x+6,cy,T.muted)+3.2})});
       y+=hh+6}
     // Bloques y dominios con referencia y diferencia
-    headingT('Arquitectura por bloques y posición en el grupo',`Valor de ${o.name}, mediana del grupo, diferencia en puntos y rango habitual del grupo (P25–P75). «Destaca»: por encima de P75; «Se queda atrás»: por debajo de P25.`);
+    headingT('Arquitectura por bloques y posición en el grupo',`Valor de ${o.name}, mediana del grupo, diferencia en puntos, rango central del grupo (P25–P75) y cobertura de indicadores. «Top cuartil (>P75)»: por encima del percentil 75 del grupo; «Cuartil inferior (<P25)»: por debajo del percentil 25. Es una lectura distinta de «Por encima de la mediana (+X pts)», que se usa en las conclusiones.`);
     const dcol=d=>d==null?T.muted:d>=RX_T.strong?T.pos:d<=-RX_T.strong?T.neg:T.muted;
     const prow=(k,label,bold,key)=>{const st=gStats(G,k),v=o[k],p=gPos(v,st),d=v!=null&&st.med!=null?v-st.med:null;
       return {cells:[{t:label,b:bold,key},{t:v==null?'—':fmt(v),b:1},fmt(st.med),{t:d==null?'—':(d>0?'+':'')+fmt(d),b:bold,color:dcol(d)},st.p25==null?'—':`${fmt(st.p25)}–${fmt(st.p75)}`,
-        {t:p.t,b:1,color:p.c==='up'?T.pos:p.c==='down'?T.neg:T.muted}]}};
-    await table([{h:'Bloque / dominio',w:58},{h:'Valor',w:20,a:'r'},{h:'Mediana grupo',w:22,a:'r'},{h:'Diferencia',w:22,a:'r'},{h:'P25–P75',w:26,a:'r'},{h:'Posición',w:34}],
+        {t:p.t,b:1,color:p.c==='up'?T.pos:p.c==='down'?T.neg:T.muted},(()=>{const c=covOf(o,k);return {t:`${c.n}/${c.N} · ${c.lvl==='nula'?'sin datos':c.lvl}`,color:c.lvl==='limitada'||c.lvl==='nula'?T.neg:null}})()]}};
+    await table([{h:'Bloque / dominio',w:46},{h:'Valor',w:15,a:'r'},{h:'Mediana grupo',w:19,a:'r'},{h:'Diferencia',w:19,a:'r'},{h:'P25–P75',w:21,a:'r'},{h:'Posición',w:34},{h:'Cobertura',w:28}],
       A.blocks.flatMap(b=>[prow(b.k,b.name,1,T.acc),...b.doms.map(k=>prow(k,'   '+DL[k],0,null))]));
 
     // Trazabilidad: datos que sostienen cada conclusión
@@ -1719,24 +1904,31 @@ async function buildReport(step){
         rows.push({group:`${c.t} · ${c.sub}`});
         const ir=doms.flatMap(d=>indRows(o,d,G).filter(r=>r.x)).sort((p,q)=>Math.abs(q.diff??0)-Math.abs(p.diff??0)).slice(0,c.kind==='dom'?4:5);
         ir.forEach(({I,x,gm,diff})=>rows.push({cells:[{t:I.label,sub:`${SRC_ES[I.src]||I.src} · ${I.unit} · ${DS[I.dom]}`},{t:fmt(x.n,0),b:1},gm==null?'—':fmt(gm,0),{t:diff==null?'—':sgn(diff,0),color:diff==null?null:diff>=0?T.pos:T.neg},{t:fmtR(x.r)},String(x.y)]}));
-        if(!ir.length)rows.push({cells:[{t:'Sin indicadores observados en estos dominios (método de estimación: Dato pendiente)',color:T.neg},'','','','','']});
+        if(!ir.length)rows.push({cells:[{t:'Sin indicadores observados en estos dominios: el valor es la referencia previa (45 % mediana global, 30 % regional, 25 % de renta)',color:T.neg},'','','','','']});
       });
-      if(rows.length){headingT('Datos que sostienen las conclusiones',`Indicadores con más peso en cada conclusión, frente a la mediana del grupo (valores normalizados 0–100). Peso de cada indicador en su dominio: Dato pendiente.`);
+      if(rows.length){headingT('Datos que sostienen las conclusiones',`Indicadores con mayor divergencia respecto al grupo en cada conclusión, frente a su mediana (valores normalizados 0–100). Metodológicamente, todos los indicadores con dato pesan igual dentro de su dominio.`);
         await table([{h:'Indicador',w:70},{h:'Valor',w:15,a:'r'},{h:'Mediana grupo',w:19,a:'r'},{h:'Dif.',w:14,a:'r'},{h:'Original',w:20,a:'r'},{h:'Año',w:12,a:'r'}],rows,{size:6.9});}
     }
     // Comparación con otro país
-    {const b=BYISO[PAIR];if(b&&b!==o){const dc=o.core-b.core,simple=mean(DOM.map(k=>o[k]))-mean(DOM.map(k=>b[k])),[hi,lo]=dc>=0?[o,b]:[b,o];
-      headingT(`¿Por qué ${hi.name} queda por encima de ${lo.name}?`,`Núcleo ${fmt(o.core)} (${o.name}) frente a ${fmt(b.core)} (${b.name}): ${sgn(dc)} puntos. ${sgn(simple)} se explican por la media simple de los 7 dominios (cada uno aporta su diferencia ÷ 7) y ${sgn(dc-simple)} por el ajuste por fiabilidad (método: Dato pendiente).`);
-      await table([{h:'Bloque / dominio',w:70},{h:o.name,w:28,a:'r'},{h:b.name,w:28,a:'r'},{h:'Diferencia',w:28,a:'r'},{h:'Aporta al núcleo',w:28,a:'r'}],
-        BLOCKS.flatMap(bl=>[{cells:[{t:bl.name,b:1,key:T.acc},{t:fmt(o[bl.k]),b:1},{t:fmt(b[bl.k]),b:1},{t:sgn(o[bl.k]-b[bl.k]),b:1,color:o[bl.k]>=b[bl.k]?T.pos:T.neg},'']},
-          ...bl.doms.map(k=>{const d=o[k]!=null&&b[k]!=null?o[k]-b[k]:null;return {cells:['   '+DL[k],fmt(o[k]),fmt(b[k]),{t:sgn(d),color:d==null?null:d>=0?T.pos:T.neg},sgn(d==null?null:d/7,2)]}})]));}}
+    {const b=BYISO[PAIR];if(b&&b!==o){const dc=o.core-b.core,[hi,lo]=dc>=0?[o,b]:[b,o],D=pairDecomp(o,b),f2=v=>sgn(v,2);
+      headingT(`¿Por qué ${hi.name} queda por encima de ${lo.name}?`,`Núcleo ${fmt(o.core,2)} (${o.name}) frente a ${fmt(b.core,2)} (${b.name}): ${f2(dc)} puntos, que se reparten en ${f2(D.dRaw)} de puntuación bruta y ${f2(D.dAdj)} de ajuste por fiabilidad (núcleo − bruta: ${f2(D.adjA)} y ${f2(D.adjB)}).${Math.abs(D.res)>=0.005?` Residuo no explicado por redondeo: ${f2(D.res)}.`:' Las partes suman exactamente la diferencia.'}`);
+      await table([{h:'Dominio',w:62},{h:o.iso,w:20,a:'r'},{h:b.iso,w:20,a:'r'},{h:'Aporta (dif. ÷ 7)',w:28,a:'r'},{h:'De datos observados',w:26,a:'r'},{h:'Del ajuste',w:26,a:'r'}],
+        [...D.rows.map(r=>({cells:[DL[r.k],fmt(o[r.k]),fmt(b[r.k]),{t:f2(r.tot),b:1,color:r.tot>=0?T.pos:T.neg},f2(r.ob),f2(r.aj)]})),
+         ...(Math.abs(D.comp)>=0.005?[{cells:['Dominios sin dato (la bruta solo promedia los observados)','','','0,00',f2(-D.comp),f2(D.comp)]}]:[]),
+         {cells:[{t:'Residuo no explicado (redondeo)',color:T.muted},'','',f2(D.res),f2(D.resOb),f2(D.resAj)]},
+         {cells:[{t:'Total',b:1},{t:fmt(o.core,2),b:1},{t:fmt(b.core,2),b:1},{t:f2(D.dCore),b:1},{t:f2(D.dRaw),b:1},{t:f2(D.dAdj),b:1}]}]);}}
+    // Cálculo completo de la puntuación
+    {const C=calcChain(o),f2=v=>fmt(v,2);
+      headingT('Cómo se calcula la puntuación',`Indicadores normalizados 0–100 (winsorización P2,5–P97,5, log con signo si procede, mín–máx) → media simple por dominio → bruta ${f2(o.raw)} → ajuste por fiabilidad: ajustada = cobertura × observada + (1 − cobertura) × referencia previa (45 % mediana global + 30 % regional + 25 % de renta) → núcleo = media de los 7 dominios ajustados = ${f2(o.core)} (reproducido: ${f2(C.core)}; residuo ${sgn(C.resCore,2)}).`);
+      await table([{h:'Dominio',w:34},{h:'Indicadores',w:20,a:'r'},{h:'Observada',w:19,a:'r'},{h:'Fiabilidad',w:18,a:'r'},{h:'Ref. previa',w:19,a:'r'},{h:'Ajustada',w:19,a:'r'},{h:'Publicada',w:19,a:'r'},{h:'Efecto',w:16,a:'r'}],
+        DOM.map(k=>{const c=C.doms[k];return {cells:[DS[k],`${c.n} de ${c.N}`,c.obs==null?'—':f2(c.obs),fmt(c.a*100,1)+' %',f2(c.prior),{t:f2(c.adj),b:1},fmt(c.pub),c.obs==null?'solo ref.':sgn(c.adj-c.obs,2)]}}));}
     // Solidez de la evidencia
     const ev=EVBY[o.iso]||[],yrs=ev.map(x=>x.y);
-    headingT('Solidez de la evidencia','Indicadores observados por dominio. Peso de cada indicador en su dominio: Dato pendiente.');
+    headingT('Solidez de la evidencia',`Indicadores observados por dominio y nivel de cobertura (alta ≥ ${COV_T.alta} %, media ${COV_T.media}–${COV_T.alta} %, limitada < ${COV_T.media} %). La cobertura es la fiabilidad del dominio en el ajuste.`);
     await table([{h:'Medida',w:90},{h:'Valor',w:92}],[
       {cells:['Tier · confianza',{t:`${o.tier} · ${fmt(o.conf)}`,b:1}]},{cells:['Indicadores con dato',{t:`${o.ind} de 92 (${fmt(o.cov,0)} %)`,b:1}]},
-      {cells:['Años de las observaciones',{t:yrs.length?Math.min(...yrs)+'–'+Math.max(...yrs):'—',b:1}]},{cells:['Ajuste por fiabilidad (núcleo − bruta)',{t:o.raw?sgn(o.core-o.raw):'—',b:1}]},
-      ...DOM8.map(k=>{const n=ev.filter(x=>IND[x.k].dom===k).length,t=IND.filter(i=>i.dom===k).length;return {cells:[DL[k],{t:`${n} de ${t}${n===0&&k!=='leg'?' · sin observaciones (método: Dato pendiente)':''}`,color:n===0?T.neg:null}]}})]);
+      {cells:['Años de las observaciones',{t:yrs.length?Math.min(...yrs)+'–'+Math.max(...yrs):'—',b:1}]},{cells:['Ajuste por fiabilidad (núcleo − bruta)',{t:o.raw!=null?`${sgn(o.core-o.raw,2)} (bruta ${fmt(o.raw,2)} → núcleo ${fmt(o.core,2)})`:'—',b:1}]},
+      ...DOM8.map(k=>{const c=covOf(o,k);return {cells:[DL[k],{t:`${c.n} de ${c.N} · ${COV_L[c.lvl].toLowerCase()}${c.n===0&&k!=='leg'?' · valor = referencia previa':''}`,color:c.lvl==='limitada'||c.lvl==='nula'?T.neg:null}]}})]);
   }
 
   /* ================= 2. REFERENTES POR OBJETIVO ================= */
@@ -1954,6 +2146,8 @@ async function exportReport(){
 }
 $('#exportBtn').addEventListener('click',exportReport);
 $('#fabPdf').addEventListener('click',exportReport);
+// El botón flotante solo aparece cuando el botón de la cabecera no está a la vista
+try{new IntersectionObserver(es=>es.forEach(e=>$('#fabPdf').classList.toggle('off',e.isIntersecting))).observe($('#exportBtn'))}catch(e){}
 
 
 /* ---------- Ventana de datos al pasar el cursor (tablas, tarjetas, fichas y KPIs) ---------- */
@@ -2015,55 +2209,127 @@ document.addEventListener('focusout',()=>{tipEl=null;TT.classList.remove('on')})
 /* ---------- Grupos de comparación con sentido explícito (Mejora 2) ---------- */
 // PIB per cápita PPA (indicador WDI de la propia base) para el criterio «contexto similar».
 const GDP_IND=IND.find(i=>i.id==='wdi_gdp_pc_ppp');
-const GDPPC={};if(GDP_IND)GDP_IND.obs.forEach(x=>{if(x.r!=null)GDPPC[x.o.iso]={v:x.r,y:x.y}});
+const GDPPC={};if(GDP_IND)GDP_IND.obs.forEach(x=>{if(x.r!=null)GDPPC[x.o.iso]={v:x.r,y:x.y,src:'base'}});
+// PIB per cápita PPA que faltaba en la base de origen: misma serie del Banco Mundial (WDI, NY.GDP.PCAP.PP.KD,
+// $ internacionales constantes de 2021), último año disponible. Consulta a la API del Banco Mundial del 16-11-2026.
+const GDP_SRC={code:'NY.GDP.PCAP.PP.KD',name:'Banco Mundial, World Development Indicators',unit:'$ internacionales constantes de 2021',date:'16-11-2026'};
+const GDP_EXT={ARE:[69702,2024],CHE:[85448,2024],ESP:[48460,2024],GBR:[53412,2024],LKA:[13793,2024],SDN:[1861,2024],SVN:[48658,2024],SWE:[62558,2024],SYR:[4579,2022],TGO:[3351,2024],THA:[21882,2024],TJK:[4756,2024],TTO:[31960,2024],TUN:[12775,2024],TUR:[36154,2024],UGA:[2880,2024],UKR:[16371,2024],URY:[32149,2024],USA:[75698,2024],UZB:[10997,2024],VNM:[14396,2024],ZAF:[13598,2024],ZMB:[3708,2024],ZWE:[5212,2024]};
+// Sin dato en WDI para esta serie: LIE, TWN, VEN, YEM, ERI (se usa el criterio alternativo de renta y región).
+Object.entries(GDP_EXT).forEach(([i,[v,y]])=>{if(!GDPPC[i]&&BYISO[i])GDPPC[i]={v,y,src:'wdi'}});
+const gdpSrcTxt=g=>g.src==='wdi'?`WDI ${GDP_SRC.code}, ${g.y}, consulta ${GDP_SRC.date}`:`base del atlas (WDI), ${g.y}`;
+
+/* ---------- Metodología original de la puntuación (release 2026.4, instantánea de evidencia 05-08-2026) ----------
+   1) Cada indicador se acota en los percentiles 2,5 y 97,5, se alinea su sentido (más alto = mejor), se transforma con
+      log(1+x) con signo cuando la distribución es muy asimétrica y se reescala mín–máx a 0–100.
+   2) Puntuación observada de un dominio = media simple de sus indicadores con dato (peso igual entre los observados).
+   3) Puntuación bruta = media simple de los dominios núcleo con dato.
+   4) Ajuste por fiabilidad: fiabilidad del dominio = cobertura (indicadores con dato ÷ indicadores del dominio).
+      Estimación ajustada = fiabilidad × observada + (1 − fiabilidad) × referencia previa, con referencia previa =
+      45 % mediana global + 30 % mediana regional + 25 % mediana del grupo de renta (mediana global si el grupo tiene < 5).
+      Sin ningún dato en el dominio, la estimación es la referencia previa. Nunca se imputa un cero.
+   5) Puntuación núcleo (final) = media de los 7 dominios ajustados, peso 14,3 % cada uno. La legitimidad social pesa 0 %. */
+const METH={wG:.45,wR:.30,wI:.25,minN:5,lo:2.5,hi:97.5,snapshot:'05-08-2026',release:'2026.4'};
+const OBSD=Object.fromEntries(`HKG:45.23,97.87,64.28,65.28,60.88,76.88,98.55,;ISL:84.33,85.77,50.68,75.43,62.48,86.62,34.17,;LUX:83.11,72.61,61.79,75.71,62.03,83.43,32.61,;MLT:62.67,77.48,74.55,76.74,53.74,66.66,58.62,;FIN:72.84,73.28,67.77,78.67,52.92,70.64,50.24,;SGP:66.48,91.73,64.84,69.75,72.55,74.98,31.76,57.57;DNK:78.94,78.01,58.12,82.02,50.32,74.08,41.17,;NOR:58.13,74.28,63.26,77.86,56.83,80.51,36.53,;EST:58.88,76.3,63.32,70.85,48.24,76.63,36.51,;AUT:65.67,72.05,59.22,64.24,58.93,77.62,27.44,;CHE:51.05,94.21,60.39,78.15,58.63,80.61,25.78,28.78;LTU:48.68,74.72,59.44,58.75,58.67,74.89,40.98,;IRL:56.76,82.7,69.13,76.78,50.01,75.83,40.18,23.58;SRB:52.25,73.23,67.82,56.19,51.55,59.35,53.15,;CHN:80.01,63.19,68.46,63.77,43.96,49.19,9.92,92.73;GBR:55.09,95.84,60.86,64.54,63.83,78.13,29.82,22.56;ARE:20.95,100,59.06,67.96,82.02,70.81,10.42,;MYS:40.91,82.17,60.95,57.32,48.64,62.19,,58.11;NLD:67.26,77.55,55.45,72.74,57.94,64.7,31.07,35.18;DEU:74.01,72.82,62.42,63.12,53.75,64.32,32.13,39.11;KOR:83.05,80.85,57.71,52.15,51.85,62.78,11.33,59.89;SVN:36.87,87.19,44.62,79.07,64.04,62.8,26.92,;USA:92.44,54.34,57.04,59.67,63.1,74.95,35.45,18.2;LVA:48.79,68.9,52.83,68.69,49.47,67.42,41.34,;ISR:57.1,77.02,54.62,53.46,76.55,56.45,19.58,;SWE:38.59,96.63,53.8,69.68,61.85,87.15,22.96,20.5;CZE:50.62,76.2,57.17,70.25,43.62,63.21,31.45,;SVK:27.68,68.87,69.17,72.75,65.1,61.17,21.98,;JPN:81.18,70.44,68.52,54.7,53.4,68.19,16.84,27.09;BEL:62.79,68.56,50.65,75.17,54.9,68.45,31.9,25.42;AUS:53.65,73,69.62,76.16,58.69,69.67,15.28,17.37;HUN:53.17,67.2,51.27,60.41,40.74,59.68,31,67.85;NZL:58.49,70.01,58.58,71.68,54.2,70.08,22.28,25.94;THA:18.7,73.37,65.39,48.09,63.23,59.42,20.14,82.41;MUS:41.89,63.12,55.65,71.86,54.07,60.46,29.03,;PRT:59.33,67.95,55.69,60.69,41.81,64.65,24.1,;FRA:66.89,61.34,49.08,67,57.06,60.09,37.05,25.93;CYP:59.69,76,57.46,58.18,47.43,60.26,12.14,;ESP:21.61,75.21,45.67,73.54,69.76,68.48,24.65,44.03;HRV:57.47,67.17,57.12,60.64,45.59,58.62,11.77,;URY:21.65,77.64,28.89,61.17,56.44,69.48,42.71,;CAN:59.84,60.8,57.95,60.22,61.15,67.79,20.62,15.71;TUN:42.1,77.82,43.7,56.52,47.16,46.9,36.67,;GRC:54.1,67.97,45.56,58.65,42.41,47.74,33.55,;ITA:50.98,59.97,48,65.14,48.93,54.37,21.68,49.72;BGR:45.33,61.74,63.79,55.4,40.31,53.96,27.82,;POL:47.71,69.26,57.33,48.41,42.82,54.53,23.16,50.2;COL:21.85,60.97,53.35,43.58,47.11,38.11,58.3,64.19;BRA:33.79,58.75,43.92,63.02,44.39,39.77,50.55,49.55;PER:25.42,52.91,56.24,61.09,48.42,45.43,11.32,80.11;UZB:38.3,84.03,60.59,36.94,46.53,55.85,5.56,;ROU:38.96,62.2,50.43,55.33,40.19,51.15,24.25,;ARM:35.76,65.34,55.46,58.19,47.65,51.04,7.06,;TUR:34.82,67.22,51.53,47.67,42.02,51.06,10.11,61.82;CHL:37.89,67.08,41.3,60.46,55.91,55.01,4.33,43.67;SAU:40.49,66.98,49.53,47.04,45.37,55.01,13.16,;ARG:26.69,61.01,50.37,54.98,45.06,44.8,23.8,55.23;RUS:40.89,77.23,63.67,48.85,45.37,33.44,3.19,;CRI:28.24,67.47,50.44,62.21,40,61.54,1.64,;KAZ:39.81,71.91,60.9,50.18,44.76,41.62,0.41,;IDN:24.39,53.58,46.04,36.33,33.99,48.27,20,85.98;MEX:26.65,47.92,36.82,47.93,40.48,31.73,24.27,85.33;VNM:18.25,85.87,45.46,42.76,52.15,45.71,0.69,;ZAF:13.66,59.67,34.34,37.49,44.75,57.38,10.42,72.11;IND:29.26,49.11,49.63,35.71,45.96,48.56,5.16,61.72;RWA:17.96,29.78,56.95,51.42,47.26,57.6,10.07,;UGA:4.56,32.19,73.74,41.13,63.83,46.2,5.56,;MAR:36.61,58.2,31.7,49.32,49.28,38.57,2.71,;KEN:27.15,38.35,55.78,45.58,49.69,34.01,8.78,;EGY:36.98,45.18,41.74,34.6,25.95,39.09,11.61,;NGA:12.26,18.49,56.09,33.45,37.67,37.55,8.34,;LIE:98.24,87.68,63.77,72.27,10.78,92.71,,;MAC:48.24,68.23,79.99,85.07,59.46,66.37,,;SMR:79.72,81.56,56.46,84.74,19.14,69.72,,;PRI:63.21,66.07,49.7,69.9,78.57,62.09,,;AND:41.69,75.51,65.01,87.67,34.58,75.72,,;MNE:46.53,69.22,69.17,59.86,66.2,59.22,,;TWN:15.88,48.39,64.79,86.88,58.96,86.95,,;XKX:71.15,51.65,46.18,65.85,72.97,51.52,,;GEO:42.61,65.78,49.32,61.72,68.39,69.11,,;PLW:68.08,62.08,58.98,53.71,41.7,68.62,,;BRN:42.02,64.21,56.51,59.9,52.71,69.78,,;MKD:40.55,60.64,54.31,62.76,65.88,57.85,,;ATG:63.56,59.35,44.16,62.08,45.62,64.01,,;BRB:54.32,57.06,56.73,55.01,43.45,70.91,,;GRD:73.4,51.25,52.56,48.7,46.62,64.86,,;TTO:15.69,80.63,73.24,56.51,53.85,53.32,,;BHR:37.72,64.78,56.02,67.97,45.27,57.59,,;QAT:42.91,59.49,50.23,47.17,53.96,71.38,,;BIH:36.69,61.52,59.35,51.86,61.08,53.75,,;FJI:39.13,49.72,54.86,61.28,53.96,62.22,,;MDV:45.14,53.13,64.46,62.54,49.36,46.38,,;MNG:32.12,58.69,52.58,62.77,56.25,56.46,,;MDA:35.52,59.41,52.75,56.85,56.12,56.33,,;BLR:42.43,68.9,67.69,61.89,36.01,39.68,,;BHS:36.32,57.65,50.66,57.57,42.86,71.06,,;SYC:40.73,64.55,51.72,58.03,45.71,55,,;BTN:28.02,47.25,56.58,43.66,62.57,73.52,,;WSM:40.56,49.25,51.42,50.37,49.74,68.04,,;OMN:38.5,55.94,46.11,53.74,55.19,59.58,,;DMA:44.13,59.52,33.06,46.28,53.28,72.22,,;JAM:19.53,49.77,60.07,50.88,60.64,58.68,,;AZE:38.11,56.83,49.79,54.89,47.15,51.74,,;GUY:28.87,45.53,47.92,60.96,63.6,45.38,,;ALB:33.09,52.25,52.88,50.12,46.34,57.38,,;LKA:35.72,67.31,49.54,41.24,47.87,49.03,,;UKR:46.82,51.13,61.22,53.91,58.31,40.39,25,;KWT:26.88,53.5,39.83,51.94,44.2,68.88,,;NAM:25.94,38.72,48.43,51.83,57.49,62.1,,;BWA:31.81,44.72,39.55,49.29,52.8,66.1,,;PAN:23.86,58.81,50.48,51.31,50.33,48.02,,;BLZ:29.81,53.45,49.14,57.91,41.37,49.17,,;BMU:5.09,64.02,34.11,71.48,31.76,71,,;MHL:43.42,33.88,60.24,47.81,28.58,61.76,,;PRY:17.8,53.84,60.08,47.62,51.29,43.46,,;JOR:28.53,46.26,36.26,58.15,44.36,56.85,,;ECU:31.48,51.08,48.01,56.48,46.28,36.76,,;ZMB:7.24,50.69,71.77,36.51,49.76,53.5,,;DOM:7.26,48.07,53.71,55.46,51.69,52.15,,;CPV:36.72,43.32,48.86,37.32,37.15,64.9,,;IRN:44.76,60.01,41.02,50.72,47.39,21.11,,;SLV:10.07,53.05,45.94,51.04,54.99,42.55,,;PHL:20.75,62.21,56.45,42.03,29.92,43.59,,;TGO:10.84,64.83,39.9,43.21,47.93,47.3,,;GTM:3.1,43.26,50.11,63.76,57.45,34.43,,;GHA:17.86,36.32,65.45,40.29,33.08,56.69,,;NPL:21.89,37.62,45.79,38.31,52.91,49.72,,;NRU:19.17,53.42,43.01,71.09,7.43,51.91,,;LBN:40.74,40.47,47.07,36.16,43.64,30.16,,;NIC:7.18,37.94,54.82,48.28,44.7,37.65,,;KGZ:20.54,50.3,32.66,47.81,43.7,34.13,,;ZWE:14.25,32.48,60.14,41.03,51.25,27.59,,;SEN:13.35,37.52,40.15,35.68,42.58,54.97,,;SWZ:20.44,37.82,45.05,39.55,38.78,42.53,,;KHM:7.1,41.67,50.41,35.5,50.03,38.83,,;BOL:10.39,49.18,39.09,45.64,46.01,29.06,,;FSM:36.61,32.24,20.19,34.35,36.03,59.44,,;KIR:24.64,23.04,49.71,32.97,30.42,56.61,,;HND:13.2,32.76,45.3,37.57,52.86,35.42,,;DJI:20.78,28.78,35.34,41.32,50.47,35.66,,;DZA:38.83,46.64,46.67,36.22,13.32,30.67,,;TJK:3.54,35.87,41.12,35.21,49.73,44.51,,;STP:27.98,36.05,39.37,37.43,22.36,45.32,,;PNG:4.95,17.27,57.81,45,49.96,32.35,,;CIV:7.15,36.44,35.79,38.46,42.15,42.1,,;GAB:21.53,36.7,32.26,39.76,40.8,30.05,,;LSO:10.21,21.84,28.6,50.28,39.66,46.36,,;GMB:16.42,27.1,38.55,36.62,29.19,48.69,,;PAK:19.82,29.65,42.28,27.72,40.75,33.31,,;BEN:15.08,25.55,32.05,27.43,42.04,49.52,,;MRT:7.25,25.32,40.06,30.18,43.97,43.01,,;LAO:6.19,33.52,34.85,45.6,33.16,35.01,,;SYR:22.83,36.98,50,39.6,33.31,4.52,,;MWI:10.94,11.35,47.07,31.41,55.09,29.73,,;SLE:9.65,11.28,62.72,36.38,22.29,37,,;CMR:20.69,28.58,38.77,27.81,30.36,28.34,,;LBR:5.24,8.4,52.06,32.56,41.63,34.45,,;ETH:15.35,16.53,42.96,20.32,36.13,42.97,,;SDN:20.04,36.08,27.13,45.95,24.69,19.82,,;VEN:15.69,20.66,39.82,30.6,47.42,18.04,,;BGD:15.31,33.14,42.66,20.93,29.4,28.09,,;NER:1.92,11.33,42.01,25.22,42.04,42.58,,;IRQ:29.06,50.87,20.74,27.87,11.47,20.48,,;BFA:8.33,16.55,36.88,23.04,36.7,38.24,,;GNQ:0,25.15,53.11,24.86,28.37,26.03,,;MOZ:4.34,16.52,48.76,30.97,29.73,25.06,,;GIN:1.74,17.38,36.74,24.78,32.83,40.85,,;COM:14.46,21.89,30.07,21.91,37.35,28.29,,;GNB:7.83,20.22,43.6,22.14,27.45,31.79,,;COG:13.37,19.32,34.23,28.2,22.95,33.77,,;MLI:2.94,23.17,44.8,24.02,18.77,33.19,,;LBY:23.44,50.38,0,44.05,11.78,10.77,,;AGO:0.11,23.48,28.09,27.21,24.87,31.78,,;AFG:5.09,9.47,33.55,37.38,25.37,23.78,,;MMR:3.77,29.67,32.62,26.92,13.39,24.26,,;BDI:1.52,3.69,28.58,20.99,38.58,34.47,,;ERI:14.98,3.18,32.76,10.73,21.28,40.28,,;MDG:3.16,6.78,27.97,28.25,19.06,36.73,,;CAF:5.55,2.34,20.47,28.03,41.22,18.99,,;TCD:5.7,6.28,35.93,15.75,13.49,26.5,,;HTI:2.73,21.03,30.06,19.56,13.53,14.82,,;COD:2.41,5.46,42.54,19.33,15.13,14.94,,;YEM:2.46,0,16.43,31.49,2.91,14.24,,;CYM:,83.98,75,82.93,80.55,78.14,,;LCA:,78.8,63.74,69.8,56.59,71.16,,;GRL:83.25,53.07,50,69.68,,78.48,,;VCT:,62.87,59.55,59.24,50.67,70.95,,;ABW:,58.14,38.45,78.3,46.58,79.68,,;KNA:,61.57,45.9,55.89,58.38,68.23,,;TON:,65.62,51.37,47.94,36.76,58.84,,;VUT:,64.23,43.92,48.03,43.72,55.59,,;SLB:,60.71,46.09,43.13,44.99,50.18,,;TZA:,67.87,58.63,30.98,35.52,48.98,,;NCL:,63.8,42.98,10.12,39.55,73.99,,;PSE:,67.87,36.36,46.42,31.41,39.73,,;SUR:,44.79,13.32,50.42,42.92,46.45,,;CUB:31.85,33.1,43.78,46.57,,29.9,,;CUW:32.74,61.95,26.36,71.75,28.44,0,,;TLS:,51.84,36.6,24.1,22.23,41.92,,;PYF:,53.77,0,32.7,16.19,71.69,,;SSD:,0,69.2,25.89,42.22,25.7,,;SOM:,0,53.37,26.47,33.64,27.92,,;PRK:34.12,1.09,9.82,64.05,,15.47,,;CHI:,,100,,,,,;MCO:94.49,81.55,54.64,,,76.44,,;TCA:,,75,,,,,;IMN:,77.35,50,100,,40.49,,;VGB:,72.52,11.09,,67.34,,,;ASM:,40.17,0,64.79,,77.72,,;SXM:,74.41,1.36,80.18,22.32,,,;TKM:,,39.39,41.44,49.74,35.55,,;GUM:,51.04,0,37.97,,68.31,,;FRO:,75.22,0,73.27,,0,,;VIR:,,0,,,67.73,,;TUV:,,0,,,66.86,,;GIB:,74.61,25,,,0,,;MNP:,50.48,25,50.58,,0,,;MAF:,,0,,,,,`.split(';').map(x=>{const [i,v]=x.split(':');return [i,v.split(',').map(z=>z===''?null:+z)]}));
+const DOMN=Object.fromEntries(DOM8.map(k=>[k,IND.filter(i=>i.dom===k).length]));
+const domCount=(o,k)=>(EVBY[o.iso]||[]).filter(x=>IND[x.k].dom===k).length;
+const obsDom=(o,k)=>{const r=OBSD[o.iso];return r?r[DOM8.indexOf(k)]:null};
+const medOf=(L,k)=>{const v=L.map(x=>obsDom(x,k)).filter(v=>v!=null);return v.length?median(v):null};
+const MED_G=Object.fromEntries(DOM.map(k=>[k,medOf(ALL,k)]));
+const grpMed=key=>{const m={};ALL.forEach(o=>{const g=key(o);if(g==null)return;(m[g]=m[g]||[]).push(o)});
+  return Object.fromEntries(Object.entries(m).map(([g,L])=>[g,Object.fromEntries(DOM.map(k=>{const v=L.map(x=>obsDom(x,k)).filter(v=>v!=null);return [k,{v:v.length>=METH.minN?median(v):MED_G[k],n:v.length,fb:v.length<METH.minN}]}))]))};
+const MED_R=grpMed(o=>o.reg),MED_I=grpMed(o=>o.inc==='Sin clasificar'?null:o.inc);
+const CHAIN={};
+function calcChain(o){
+  if(CHAIN[o.iso])return CHAIN[o.iso];
+  const doms={};DOM8.forEach(k=>{const n=domCount(o,k),N=DOMN[k],cov=Math.round(n/N*1000)/10,obs=obsDom(o,k);
+    if(k==='leg'){doms[k]={k,n,N,cov,obs};return}
+    const g=MED_G[k],r=MED_R[o.reg][k],i=MED_I[o.inc]?MED_I[o.inc][k]:{v:g,n:0,fb:true};
+    const prior=METH.wG*g+METH.wR*r.v+METH.wI*i.v,a=obs==null?0:Math.min(1,cov/100),adj=obs==null?prior:a*obs+(1-a)*prior;
+    doms[k]={k,n,N,cov,obs,g,r:r.v,rFb:r.fb,i:i.v,iFb:i.fb||!MED_I[o.inc],prior,a,adj,pool:adj-(obs??0),pub:o[k]}});
+  const obsL=DOM.map(k=>doms[k].obs).filter(v=>v!=null);
+  const raw=obsL.length?mean(obsL):null,core=mean(DOM.map(k=>doms[k].adj));
+  const obsPart=DOM.reduce((s,k)=>s+(doms[k].obs??0),0)/7,poolPart=DOM.reduce((s,k)=>s+doms[k].pool,0)/7;
+  return CHAIN[o.iso]={doms,raw,core,obsPart,poolPart,nObsDom:obsL.length,resCore:o.core-core,resRaw:o.raw!=null&&raw!=null?o.raw-raw:null};
+}
+// Cobertura de un dominio o bloque y nivel de solidez de la conclusión
+const COV_T={alta:75,media:40};   // supuesto de interpretación: ≥ 75 % alta, 40–74,9 % media, < 40 % limitada
+const COV_L={alta:'Cobertura alta',media:'Cobertura media',limitada:'Cobertura limitada',nula:'Sin datos'};
+function covOf(o,k){const ks=BLOCKS_K[k]||[k];const n=ks.reduce((s,d)=>s+domCount(o,d),0),N=ks.reduce((s,d)=>s+DOMN[d],0),p=N?n/N*100:0;
+  return {n,N,p,lvl:n===0?'nula':p>=COV_T.alta?'alta':p>=COV_T.media?'media':'limitada'}}
+const covTxt=c=>`${c.n} de ${c.N} indicadores`;
+const covBadge=(c,lbl)=>`<span class="cov cov-${c.lvl}" title="${esc(COV_L[c.lvl])}: ${c.n} de ${c.N} indicadores disponibles (${fmt(c.p,0)} %). Alta ≥ ${COV_T.alta} %, media ${COV_T.media}–${COV_T.alta} %, limitada < ${COV_T.media} %.">${lbl?esc(lbl)+': ':''}${c.n}/${c.N}</span>`;
+const LVL_RANK={nula:0,limitada:1,media:2,alta:3};
+const worstCov=(...cs)=>cs.reduce((a,b)=>LVL_RANK[b.lvl]<LVL_RANK[a.lvl]?b:a);
+const BLOCKS_K={K:['sci','tal'],D:['inf','ado','fin'],I:['gov','res'],core:['sci','inf','tal','ado','fin','gov','res']};
+
 const GMODES={contexto:'Contexto similar',arquitectura:'Arquitectura similar',cliente:'Referentes del cliente',todas:'Todo el filtro'};
 let GMODE='contexto',GSIZE=15,GREG=false;
 const listNames=a=>a.length<=2?a.join(' y '):a.slice(0,-1).join(', ')+' y '+a[a.length-1];
 const domDist=(a,b)=>{const d=DOM.filter(k=>a[k]!=null&&b[k]!=null).map(k=>(a[k]-b[k])**2);return d.length?Math.sqrt(mean(d)):Infinity};
 
 function groupFor(o){
-  const pool=ELIG.filter(x=>x!==o);let members=[],crit='',warn='',sizeNA=false;
+  const pool=ELIG.filter(x=>x!==o);let members=[],crit='',warn='',sizeNA=false,alt='';
+  const eff={reg:false,size:false,sizeN:null};   // criterio que se aplica de verdad (los controles lo reflejan)
   if(GMODE==='contexto'){
     let cand=pool.filter(x=>x.inc===o.inc&&(!GREG||x.reg===o.reg));const g=GDPPC[o.iso];
     const base=`Mismo grupo de renta (${o.inc.toLowerCase()})${GREG?` y misma región (${o.reg})`:''}`;
     if(g){const wg=cand.filter(x=>GDPPC[x.iso]).sort((a,b)=>Math.abs(Math.log(GDPPC[a.iso].v/g.v))-Math.abs(Math.log(GDPPC[b.iso].v/g.v)));
-      members=wg.slice(0,GSIZE);const vs=members.map(x=>GDPPC[x.iso].v);
-      crit=`${base}; las ${members.length} economías comparables con el PIB per cápita PPA más cercano al de ${o.name} (${fmtR(g.v)} $ PPA de 2021, año ${g.y}). Rango del grupo: ${vs.length?fmtR(Math.min(...vs))+'–'+fmtR(Math.max(...vs))+' $':'—'}.`;
-      const sinPib=cand.length-wg.length;if(sinPib>0)warn=`${sinPib} economías del mismo grupo de renta no tienen PIB per cápita en la base y no se han considerado.`;}
-    else{let m2=pool.filter(x=>x.inc===o.inc&&x.reg===o.reg),regTxt=` y misma región (${o.reg})`;if(m2.length<5){m2=cand;regTxt=GREG?regTxt:''}
-      members=m2;sizeNA=true;crit=`Mismo grupo de renta (${o.inc.toLowerCase()})${regTxt}. El PIB per cápita PPA de ${o.name} es un Dato pendiente en la base, así que no se puede ordenar por cercanía: se incluyen las ${members.length} economías comparables que cumplen ese criterio.`}
+      members=wg.slice(0,GSIZE);const vs=members.map(x=>GDPPC[x.iso].v);eff.reg=GREG;eff.size=true;eff.sizeN=GSIZE;
+      crit=`${base}; las ${members.length} economías comparables con el PIB per cápita PPA más cercano al de ${o.name} (${fmtR(g.v)} $ PPA de 2021, ${gdpSrcTxt(g)}). Rango del grupo: ${vs.length?fmtR(Math.min(...vs))+'–'+fmtR(Math.max(...vs))+' $':'—'}. Fuente del PIB per cápita: ${GDP_SRC.name}, ${GDP_SRC.code}.`;
+      const sinPib=cand.filter(x=>!GDPPC[x.iso]);if(sinPib.length)warn=`${listNames(sinPib.map(x=>x.name))} ${sinPib.length>1?'no tienen':'no tiene'} PIB per cápita PPA en WDI y no se ${sinPib.length>1?'han':'ha'} considerado.`;}
+    else{let m2=pool.filter(x=>x.inc===o.inc&&x.reg===o.reg),useReg=true;if(m2.length<5){m2=cand;useReg=GREG}
+      members=m2;sizeNA=true;eff.reg=useReg;eff.size=false;
+      alt=`Criterio alternativo: ${o.name} no tiene PIB per cápita PPA en WDI, así que no se puede ordenar por cercanía. Se aplica «mismo grupo de renta${useReg?' y misma región':''}» y no se aplica el tamaño del grupo.`;
+      crit=`Mismo grupo de renta (${o.inc.toLowerCase()})${useReg?` y misma región (${o.reg})`:''}: las ${members.length} economías comparables que cumplen ese criterio.`}
   }else if(GMODE==='arquitectura'){
-    const sorted=pool.map(x=>({x,d:domDist(o,x)})).filter(z=>isFinite(z.d)).sort((a,b)=>a.d-b.d).slice(0,GSIZE);members=sorted.map(z=>z.x);
+    const sorted=pool.map(x=>({x,d:domDist(o,x)})).filter(z=>isFinite(z.d)).sort((a,b)=>a.d-b.d).slice(0,GSIZE);members=sorted.map(z=>z.x);eff.size=true;eff.sizeN=GSIZE;
     crit=`Las ${members.length} economías comparables con el perfil de los 7 dominios más parecido al de ${o.name} (distancia media cuadrática entre ${fmt(sorted[0]?.d)} y ${fmt(sorted[sorted.length-1]?.d)} puntos).`;
   }else if(GMODE==='cliente'){
     members=S.sel.filter(i=>i!==o.iso).map(i=>BYISO[i]).filter(Boolean);
     crit=members.length?`Selección manual del cliente: ${listNames(members.map(x=>x.name))}.`:'Selección manual del cliente: todavía no hay referentes.';
-    if(members.length<2)warn='Añade al menos dos referentes con el buscador «Añadir economía a la comparación». Con menos de dos, la mediana no es representativa.';
+    if(members.length<2)warn='Añade al menos dos referentes en «Opciones avanzadas › Economías seleccionadas». Con menos de dos, la mediana no es representativa.';
     const nc=members.filter(x=>!x.eligible);if(nc.length)warn+=(warn?' ':'')+`${listNames(nc.map(x=>x.name))} ${nc.length>1?'tienen':'tiene'} evidencia baja (tier C–D).`;
   }else{
     members=filtered().filter(x=>x.eligible&&x!==o);
     crit=`Las ${members.length} economías comparables (tier A–B) que cumplen los filtros actuales (${filterDesc()}).`;
   }
   if(members.length&&members.length<5&&!warn)warn=`El grupo tiene solo ${members.length} economías: la mediana y el rango P25–P75 son poco estables.`;
-  return {sizeNA,mode:GMODE,label:`Mediana del grupo «${GMODES[GMODE].toLowerCase()}»`,members,crit:crit+` No incluye a ${o.name}.`,warn};
+  const short=GMODE==='contexto'?(eff.size?`${members.length} economías de ${o.inc.toLowerCase()} con PIB per cápita más cercano${eff.reg?' de su región':''}`:`${members.length} economías de ${o.inc.toLowerCase()}${eff.reg?' de '+o.reg:''}`):
+    GMODE==='arquitectura'?`${members.length} economías con el perfil más parecido`:GMODE==='cliente'?`${members.length} referentes elegidos`:`${members.length} economías del filtro`;
+  return {sizeNA,eff,alt,short,mode:GMODE,label:`Mediana del grupo «${GMODES[GMODE].toLowerCase()}»`,members,crit:crit+` No incluye a ${o.name}.`,warn};
 }
 // Estadísticos del grupo para una métrica
 function gStats(G,k){const v=G.members.map(x=>x[k]).filter(x=>x!=null);return {n:v.length,p25:quant(v,.25),med:median(v),p75:quant(v,.75),min:v.length?Math.min(...v):null,max:v.length?Math.max(...v):null}}
-const gPos=(v,st)=>v==null||st.p25==null?{c:'na',t:'Sin dato'}:v>st.p75?{c:'up',t:'Destaca'}:v<st.p25?{c:'down',t:'Se queda atrás'}:{c:'mid',t:'En el rango habitual'};
+const POS_L={up:'Top cuartil (>P75)',down:'Cuartil inferior (<P25)',mid:'Rango central (P25–P75)',na:'Sin dato'};
+const POS_D={up:'Supera el percentil 75 del grupo: está entre el 25 % más alto.',down:'Queda por debajo del percentil 25 del grupo: está entre el 25 % más bajo.',mid:'Entre los percentiles 25 y 75 del grupo.',na:'Sin dato.'};
+const gPos=(v,st)=>{const c=v==null||st.p25==null?'na':v>st.p75?'up':v<st.p25?'down':'mid';return {c,t:POS_L[c],d:POS_D[c]}};
 
 function renderGroupCtl(o,G){
-  /*bind-later*/document.querySelectorAll('#gMode button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.m===GMODE)));
+  $('#gModeSel').value=GMODE;
   $('#gSizeF').hidden=!(GMODE==='contexto'||GMODE==='arquitectura');$('#gRegF').hidden=GMODE!=='contexto';
-  $('#gSize').value=String(GSIZE);$('#gReg').checked=GREG;
-  // Sin PIB per cápita no hay forma de ordenar por cercanía: el tamaño no se puede aplicar
-  $('#gSize').disabled=!!G.sizeNA;$('#gSizeHint').hidden=!G.sizeNA;
-  $('#gSizeF').title=G.sizeNA?`No se aplica: falta el PIB per cápita de ${o.name} para elegir los más cercanos`:'';
+  // Los controles reflejan el criterio aplicado de verdad, no solo la preferencia del usuario
+  $('#gSize').value=String(GSIZE);$('#gSize').disabled=!G.eff.size;$('#gSizeHint').hidden=G.eff.size;
+  $('#gReg').checked=GMODE==='contexto'?G.eff.reg:GREG;$('#gReg').disabled=!!G.alt;
+  $('#gRegF').classList.toggle('forced',!!G.alt);
+  $('#gSizeF').title=G.eff.size?'':`No se aplica: falta el PIB per cápita PPA de ${o.name} para elegir los más cercanos`;
+  $('#gAlt').hidden=!G.alt;$('#gAlt').innerHTML=G.alt?`<b>Criterio alternativo aplicado.</b> ${esc(G.alt.replace(/^Criterio alternativo: /,''))}`:'';
+  $('#gShort').textContent=G.short;
+  $('#gShort').title=G.warn||'';
   $('#gCrit').innerHTML=`<b>${esc(GMODES[GMODE])} · ${G.members.length} economías.</b> ${esc(G.crit)}`+(G.warn?`<span class="g-warn">${esc(G.warn)}</span>`:'');
   const chip=x=>`<button type="button" class="g-chip" data-rx="${x.iso}" title="Ver la radiografía de ${esc(x.name)}">${esc(x.name)}<small>${fmt(x.core)}</small></button>`;
   const ms=[...G.members].sort((a,b)=>b.core-a.core);
-  $('#gMembers').innerHTML=!ms.length?'<span class="note">Sin economías en el grupo.</span>':ms.length<=16?ms.map(chip).join(''):
-    ms.slice(0,12).map(chip).join('')+`<details class="g-more"><summary>Ver las ${ms.length} economías del grupo</summary><div class="g-members">${ms.slice(12).map(chip).join('')}</div></details>`;
+  $('#gMembers').innerHTML=!ms.length?'<span class="note">Sin economías en el grupo.</span>':ms.map(chip).join('');
   $('#gMembers').querySelectorAll('[data-rx]').forEach(b=>b.addEventListener('click',()=>openRx(b.dataset.rx)));
+}
+// Composición del grupo de comparación en el panel lateral
+function openGroupList(o){
+  const G=groupFor(o),ms=[...G.members].sort((a,b)=>b.core-a.core),g=GDPPC[o.iso];
+  const body=secH('Criterio aplicado')+basisHTML(G)+(G.alt?`<p class="g-alt">${esc(G.alt)}</p>`:'')+
+    secH(`Economías del grupo (${ms.length})`)+`<div class="tablewrap"><table class="mini drw-t"><thead><tr><th>Economía</th><th>Región</th><th>Renta</th><th>PIB pc PPA</th><th>Tier</th><th>Núcleo</th><th></th></tr></thead><tbody>
+    <tr class="me"><td><b>${esc(o.name)}</b> <small>(analizado)</small></td><td>${esc(o.reg)}</td><td>${esc(o.inc)}</td><td class="mono">${g?fmtR(g.v)+' <small>('+g.y+')</small>':'sin dato'}</td><td class="mono">${o.tier}</td><td class="mono"><b>${fmt(o.core)}</b></td><td></td></tr>
+    ${ms.map(x=>{const gx=GDPPC[x.iso];return `<tr><td>${esc(x.name)}</td><td>${esc(x.reg)}</td><td>${esc(x.inc)}</td><td class="mono">${gx?fmtR(gx.v)+' <small>('+gx.y+')</small>':'sin dato'}</td><td class="mono">${x.tier}</td><td class="mono">${fmt(x.core)}</td><td><button type="button" class="lnk" data-rx="${x.iso}">Radiografía</button></td></tr>`}).join('')}</tbody></table></div>
+    <p class="note">PIB per cápita PPA en $ internacionales constantes de 2021. Fuente: ${esc(GDP_SRC.name)} (${GDP_SRC.code}); los valores que faltaban en la base del atlas se han completado con la misma serie (consulta del ${GDP_SRC.date}). Sin dato en WDI: Liechtenstein, Taiwán, Venezuela, Yemen y Eritrea.</p>`;
+  drawerOpen(`Grupo de comparación de ${o.name}`,`${GMODES[G.mode]} · ${ms.length} economías`,body);$('.drw-kicker').textContent='Composición del grupo';
 }
 // Franja por dominio: rango P25–P75 del grupo, mediana y posición del país
 function renderBands(o,G){
@@ -2071,12 +2337,12 @@ function renderBands(o,G){
   const row=(k,label,cls)=>{const st=gStats(G,k),v=o[k],p=gPos(v,st);
     return `<div class="bd-row ${cls}" data-tip="g:${o.iso}:${k}"><span class="bd-l">${label}</span>
       <div class="bd-track">${st.p25!=null?`<span class="bd-band" style="left:${clamp(st.p25)}%;width:${Math.max(.6,clamp(st.p75)-clamp(st.p25))}%"></span><u style="left:calc(${clamp(st.med)}% - 1px)"></u>`:''}${v!=null?`<i class="bd-dot ${p.c}" style="left:${clamp(v)}%;--c:${c}"></i>`:''}</div>
-      <b class="bd-v">${v==null?'—':fmt(v)}</b><span class="bd-r">${st.p25==null?'—':fmt(st.p25,0)+'–'+fmt(st.p75,0)}</span><button type="button" class="bd-s ${p.c}" data-bk="${k}" title="Ver los datos que sostienen esta posición">${p.t}</button></div>`};
-  $('#bdRows').innerHTML=`<div class="bd-head"><span>Bloque / dominio</span><span>0 ─ 100</span><span>Valor</span><span>P25–P75</span><span>Posición</span></div>`+
+      <b class="bd-v">${v==null?'—':fmt(v)}</b><span class="bd-r">${st.p25==null?'—':fmt(st.p25,0)+'–'+fmt(st.p75,0)}</span><button type="button" class="bd-s ${p.c}" data-bk="${k}" title="${esc(p.d)} Pulsa para ver los datos que la sostienen.">${p.t}</button>${covBadge(covOf(o,k))}</div>`};
+  $('#bdRows').innerHTML=`<div class="bd-head"><span>Bloque / dominio</span><span>0 ─ 100</span><span>Valor</span><span>P25–P75</span><span>Posición en el grupo</span><span>Cobertura</span></div>`+
     BLOCKS.map(b=>row(b.k,b.name,'blk')+b.doms.map(k=>row(k,DL[k],'dom')).join('')).join('');
   $('#bdRows').querySelectorAll('[data-bk]').forEach(b=>b.addEventListener('click',e=>{LAST_CONCL=b;const k=b.dataset.bk,isB=BLOCKS.some(x=>x.k===k);
-    openConcl({kind:isB?'blk':'dom',k,t:`${isB?BLOCKS.find(x=>x.k===k).name:DL[k]}: ${b.textContent.toLowerCase()}`,sub:`frente al grupo «${GMODES[GMODE].toLowerCase()}»`})}));
-  $('#bdLegend').innerHTML=`<span><i class="bd-key-band"></i>Rango habitual del grupo (P25–P75)</span><span><i style="width:2px;height:12px;background:var(--ink)"></i>Mediana del grupo</span><span><i class="bd-key-dot" style="background:${c}"></i>${esc(o.name)}</span>`;
+    openConcl({kind:isB?'blk':'dom',k,t:`${isB?BLOCKS.find(x=>x.k===k).name:DL[k]}: ${b.textContent}`,sub:`frente al grupo «${GMODES[GMODE].toLowerCase()}»`})}));
+  $('#bdLegend').innerHTML=`<span><i class="bd-key-band"></i>Rango habitual del grupo (P25–P75)</span><span><i style="width:2px;height:12px;background:var(--ink)"></i>Mediana del grupo</span><span><i class="bd-key-dot" style="background:${c}"></i>${esc(o.name)}</span><span>«Top cuartil (&gt;P75)» y «Cuartil inferior (&lt;P25)» comparan con los percentiles del grupo; no es lo mismo que «Por encima de la mediana (+X pts)».</span>`;
 }
 function tipGroup(o,k){
   const G=groupFor(o),st=gStats(G,k),v=o[k],p=gPos(v,st);
@@ -2087,7 +2353,8 @@ function tipGroup(o,k){
     {v:st.p25==null?'—':`${fmt(st.p25)}–${fmt(st.p75)}`,l:'rango habitual (P25–P75)'},
     {v:st.min==null?'—':`${fmt(st.min)}–${fmt(st.max)}`,l:'mínimo y máximo del grupo'}],`Grupo: ${GMODES[G.mode]} (${G.members.length} economías). ${metDef(k)}`);
 }
-/*bind-later*/document.querySelectorAll('#gMode button').forEach(b=>b.addEventListener('click',()=>{GMODE=b.dataset.m;renderRx()}));
+$('#gModeSel').addEventListener('change',e=>{GMODE=e.target.value;renderRx()});
+$('#gListBtn').addEventListener('click',e=>{LAST_CONCL=e.currentTarget;openGroupList(BYISO[RX])});
 $('#gSize').addEventListener('change',e=>{GSIZE=+e.target.value;renderRx()});
 $('#gReg').addEventListener('change',e=>{GREG=e.target.checked;renderRx()});
 
@@ -2120,26 +2387,37 @@ function rxAnalyse(o,G){
   const doms=DOM.map(k=>({k,v:o[k],ref:ref[k],d:o[k]!=null&&ref[k]!=null?o[k]-ref[k]:null,block:BLOCK_OF[k]}));
   const sB=[...blocks].sort((a,b)=>b.v-a.v),hi=sB[0],lo=sB[2],gap=hi.v-lo.v;
   // Lectura automática (1–2 frases)
-  let s1;
-  if(gap>=RX_T.gapRel)s1=`Perfil más fuerte en ${hi.long} que en ${lo.long} (${fmt(hi.v)} frente a ${fmt(lo.v)}).`;
+  let s1;const cB=worstCov(covOf(o,hi.k),covOf(o,lo.k)),limB=cB.lvl==='limitada'||cB.lvl==='nula';
+  if(gap>=RX_T.gapRel)s1=cB.lvl==='alta'?`Perfil más fuerte en ${hi.long} que en ${lo.long} (${fmt(hi.v)} frente a ${fmt(lo.v)}).`:cB.lvl==='media'?`El perfil apunta a más fuerza en ${hi.long} que en ${lo.long} (${fmt(hi.v)} frente a ${fmt(lo.v)}).`:`Con datos limitados, el perfil sugiere más fuerza en ${hi.long} que en ${lo.long} (${fmt(hi.v)} frente a ${fmt(lo.v)}).`;
   else if(gap>=RX_T.gapMod)s1=`Perfil algo más fuerte en ${hi.long} que en ${lo.long} (${fmt(hi.v)} frente a ${fmt(lo.v)}).`;
   else s1=`Perfil equilibrado entre los tres bloques: la diferencia máxima es de ${fmt(gap)} puntos.`;
+  if(limB&&gap>=RX_T.gapMod)s1+=` Se basa solo en los indicadores disponibles (${cB.n} de ${cB.N}).`;
   const above=blocks.filter(b=>b.d!=null&&b.d>0).length,dc=o.core-ref.core;
   const s2=`Supera la mediana del grupo de comparación en ${above} de 3 bloques y su puntuación núcleo (${fmt(o.core)}) queda ${Math.abs(dc)<0.05?'en la mediana':(dc>0?fmt(dc)+' puntos por encima':fmt(-dc)+' puntos por debajo')}.`;
-  // Fortalezas: dominios ≥ +5 sobre la referencia (máx. 3) y bloques por encima
+  // Tono según cobertura: alta afirma, media matiza, limitada lo presenta como indicio basado solo en los datos disponibles
+  const lim=c=>c.lvl==='limitada'||c.lvl==='nula';
+  const tone=(c,alta,media,limitada)=>c.lvl==='alta'?alta:c.lvl==='media'?media:limitada;
+  const covSub=c=>lim(c)?`se basa solo en ${c.n} de ${c.N} indicadores disponibles`:`${COV_L[c.lvl].toLowerCase()}: ${c.n} de ${c.N} indicadores`;
+  // Fortalezas: dominios ≥ +5 sobre la mediana del grupo (máx. 3)
   const strong=doms.filter(x=>x.d!=null&&x.d>=RX_T.strong).sort((a,b)=>b.d-a.d).slice(0,3);
-  const fort=strong.map(x=>({t:`Destaca en ${dsl(x.k)}`,sub:`${fmt(x.v)} frente a ${fmt(x.ref)} · ${sgn(x.d)} puntos`,kind:'dom',k:x.k,d:x.d}));
+  const fort=strong.map(x=>{const c=covOf(o,x.k),pts=`(${sgn(x.d)} pts)`;
+    return {t:tone(c,`Por encima de la mediana en ${dsl(x.k)} ${pts}`,`Probablemente por encima de la mediana en ${dsl(x.k)} ${pts}`,`Indicio de ventaja en ${dsl(x.k)} ${pts}`),
+      sub:`${fmt(x.v)} frente a ${fmt(x.ref)} · ${covSub(c)}`,kind:'dom',k:x.k,d:x.d,cov:c}});
   if(!fort.length){const best=[...doms].filter(x=>x.d!=null).sort((a,b)=>b.d-a.d)[0];
-    if(best)fort.push({t:`Sin fortalezas claras frente al grupo`,sub:`Su mejor dominio relativo es ${dsl(best.k)} (${sgn(best.d)} puntos)`,kind:'dom',k:best.k,d:best.d,soft:true})}
+    if(best){const c=covOf(o,best.k);fort.push({t:`Sin dominios por encima de la mediana (+${RX_T.strong} pts)`,sub:`Su mejor dominio relativo es ${dsl(best.k)} (${sgn(best.d)} pts) · ${covSub(c)}`,kind:'dom',k:best.k,d:best.d,soft:true,cov:c})}}
   // Desequilibrios: diferencias entre bloques y dentro de cada bloque
   const deseq=[];
   for(let i=0;i<3;i++)for(let j=i+1;j<3;j++){const a=blocks[i],b=blocks[j],g=a.v-b.v;
-    if(Math.abs(g)>=RX_T.gapRel){const [x,y]=g>0?[a,b]:[b,a];deseq.push({t:`${x.name} por delante de ${y.name.toLowerCase()}`,sub:`${fmt(x.v)} frente a ${fmt(y.v)} · ${fmt(Math.abs(g))} puntos`,kind:'gap',a:x.k,b:y.k,d:Math.abs(g)})}}
+    if(Math.abs(g)>=RX_T.gapRel){const [x,y]=g>0?[a,b]:[b,a],c=worstCov(covOf(o,x.k),covOf(o,y.k));
+      deseq.push({t:tone(c,`${x.name} por delante de ${y.name.toLowerCase()}`,`${x.name} probablemente por delante de ${y.name.toLowerCase()}`,`Posible desequilibrio: ${x.name.toLowerCase()} por delante de ${y.name.toLowerCase()}`),
+        sub:`${fmt(x.v)} frente a ${fmt(y.v)} · ${fmt(Math.abs(g))} pts · ${covSub(c)}`,kind:'gap',a:x.k,b:y.k,d:Math.abs(g),cov:c})}}
   BLOCKS.forEach(b=>{const vs=b.doms.map(k=>({k,v:o[k]})).filter(x=>x.v!=null).sort((p,q)=>q.v-p.v);
-    if(vs.length>1&&vs[0].v-vs[vs.length-1].v>=RX_T.spread)deseq.push({t:`Dentro de ${b.name.toLowerCase()}: ${dsl(vs[0].k)} muy por encima de ${dsl(vs[vs.length-1].k)}`,
-      sub:`${fmt(vs[0].v)} frente a ${fmt(vs[vs.length-1].v)} · ${fmt(vs[0].v-vs[vs.length-1].v)} puntos`,kind:'spread',a:vs[0].k,b:vs[vs.length-1].k,d:vs[0].v-vs[vs.length-1].v})});
+    if(vs.length>1&&vs[0].v-vs[vs.length-1].v>=RX_T.spread){const c=worstCov(covOf(o,vs[0].k),covOf(o,vs[vs.length-1].k));
+      deseq.push({t:tone(c,`Dentro de ${b.name.toLowerCase()}: ${dsl(vs[0].k)} muy por encima de ${dsl(vs[vs.length-1].k)}`,`Dentro de ${b.name.toLowerCase()}: ${dsl(vs[0].k)} probablemente por encima de ${dsl(vs[vs.length-1].k)}`,`Indicio dentro de ${b.name.toLowerCase()}: ${dsl(vs[0].k)} por encima de ${dsl(vs[vs.length-1].k)}`),
+        sub:`${fmt(vs[0].v)} frente a ${fmt(vs[vs.length-1].v)} · ${fmt(vs[0].v-vs[vs.length-1].v)} pts · ${covSub(c)}`,kind:'spread',a:vs[0].k,b:vs[vs.length-1].k,d:vs[0].v-vs[vs.length-1].v,cov:c})}});
   const weak=doms.filter(x=>x.d!=null&&x.d<=-RX_T.strong).sort((a,b)=>a.d-b.d).slice(0,2);
-  weak.forEach(x=>deseq.push({t:`Por debajo del grupo en ${dsl(x.k)}`,sub:`${fmt(x.v)} frente a ${fmt(x.ref)} · ${sgn(x.d)} puntos`,kind:'dom',k:x.k,d:x.d}));
+  weak.forEach(x=>{const c=covOf(o,x.k),pts=`(${sgn(x.d)} pts)`;deseq.push({t:tone(c,`Por debajo de la mediana en ${dsl(x.k)} ${pts}`,`Probablemente por debajo de la mediana en ${dsl(x.k)} ${pts}`,`Indicio de rezago en ${dsl(x.k)} ${pts}`),
+    sub:`${fmt(x.v)} frente a ${fmt(x.ref)} · ${covSub(c)}`,kind:'dom',k:x.k,d:x.d,cov:c,weak:1})});
   if(!deseq.length)deseq.push({t:'Sin desequilibrios relevantes',sub:`Ningún bloque se separa ${RX_T.gapRel} puntos o más de otro`,soft:true});
   // Posición
   const pct=G.members.length?Math.round(100*G.members.filter(x=>x.core<o.core).length/G.members.length):null;
@@ -2148,7 +2426,10 @@ function rxAnalyse(o,G){
     {t:`${above} de 3 bloques por encima de la referencia`,sub:blocks.map(b=>`${b.name} ${sgn(b.d)}`).join(' · '),kind:'blocks'}];
   const c1=gap>=RX_T.gapMod?{kind:'gap',a:hi.k,b:lo.k,t:`${hi.name} frente a ${lo.name.toLowerCase()}`,sub:`${fmt(hi.v)} frente a ${fmt(lo.v)}`}:{kind:'blocks',t:'Perfil equilibrado entre bloques',sub:`diferencia máxima ${fmt(gap)} puntos`};
   const c2={kind:'core',t:'Posición frente al grupo de comparación',sub:`núcleo ${fmt(o.core)} · ${sgn(dc)} puntos`};
-  return {ref,blocks,doms,reading:[s1,s2],readingC:[c1,c2],fort,deseq,pos,pct};
+  // Tres mensajes prioritarios: mejor fortaleza, principal desequilibrio y principal rezago (o la posición si no hay)
+  const msgs=[];const push=x=>{if(x&&!msgs.includes(x)&&msgs.length<3)msgs.push(x)};
+  push(fort[0]);push(deseq.find(x=>!x.soft&&!x.weak));push(deseq.find(x=>x.weak));deseq.filter(x=>!x.soft).forEach(push);push(pos[1]);push(pos[0]);
+  return {ref,blocks,doms,reading:[s1,s2],readingC:[c1,c2],fort,deseq,pos,pct,msgs,cB};
 }
 
 function rxBar(v,ref,c){return `<div class="rx-track">${v!=null?`<i style="width:${clamp(v)}%;background:${c}"></i>`:''}${ref!=null?`<u style="left:calc(${clamp(ref)}% - 1px)"></u>`:''}</div>`}
@@ -2159,6 +2440,7 @@ function rxRow(o,k,label,v,ref,d,c,cls){
 let RXC=[];
 const conclBtn=(x,inner)=>{const i=RXC.push(x)-1;return `<button type="button" class="rx-c" data-ci="${i}" title="Ver los datos que sostienen esta conclusión">${inner}</button>`};
 function rxList(items,cls){return `<ul class="rx-list ${cls}">${items.map(x=>`<li class="${x.soft?'soft':''}">${x.kind?conclBtn(x,`<b>${esc(x.t)}</b><span>${esc(x.sub||'')}</span>`):`<b>${esc(x.t)}</b><span>${esc(x.sub||'')}</span>`}</li>`).join('')}</ul>`}
+const msgCls=x=>x.soft?'soft':x.weak?'down':x.kind==='gap'||x.kind==='spread'?'warn':x.kind==='core'||x.kind==='blocks'?'ref':'up';
 
 function renderRx(){
   const sel=$('#rxEco');
@@ -2166,18 +2448,30 @@ function renderRx(){
   if(!RX||!BYISO[RX])RX=S.sel[0]||ELIG[0].iso;sel.value=RX;
   const o=BYISO[RX],G=rxGroup(o),A=rxAnalyse(o,G),c=css('--accent');
   renderGroupCtl(o,G);
-  $('#rxId').innerHTML=`<div><div class="rx-name">${esc(o.name)}</div><div class="rx-meta">${esc(o.reg)} · ${esc(o.inc)} · <span class="pill" style="border-color:${archCol(o.arch)}">${esc(ARCH[o.arch])}</span> · <span class="tier">Tier ${o.tier}</span></div></div>
+  const covAll=DOM.map(k=>({k,c:covOf(o,k)})),nl=l=>covAll.filter(x=>x.c.lvl===l).length;
+  $('#rxId').innerHTML=`<div class="rx-idl">
+      <div class="rx-tier"><span class="rx-meta">${esc(o.reg)} · ${esc(o.inc)} · <span class="pill" style="border-color:${archCol(o.arch)}">${esc(ARCH[o.arch])}</span></span><span class="tier" title="${esc(TIER_L[o.tier])}: calificación global de la evidencia. Léela junto a la cobertura de cada dominio.">Tier ${o.tier} · ${esc(TIER_L[o.tier].split('· ')[1]||'')}</span><span class="rx-covsum">Cobertura: ${['alta','media','limitada','nula'].filter(nl).map(l=>`${nl(l)} ${l==='nula'?'sin datos':l}`).join(' · ')}</span><button type="button" class="lnk" id="rxCalcTop">Cómo se calcula</button></div>
+      <div class="rx-covs" aria-label="Cobertura de indicadores por dominio">${covAll.map(x=>covBadge(x.c,DS[x.k])).join('')}</div></div>
     <div class="rx-core" data-tip="m:${o.iso}:core"><b>${fmt(o.core)}</b><span>puntuación núcleo<br>${o.rank?`puesto <strong>${o.rank}</strong> de 183`:'sin puesto en el ranking'}</span></div>`;
+  $('#rxCalcTop').addEventListener('click',e=>{LAST_CONCL=e.currentTarget;openCalc(o)});
   RXC=[];
-  $('#rxRead').innerHTML=`<span class="rx-tag">Lectura</span><p>${A.reading.map((t,i)=>conclBtn(A.readingC[i],esc(t))).join(' ')}</p>`;
+  $('#rxMain').innerHTML=`<span class="rx-tag">Conclusión principal</span><p>${conclBtn(A.readingC[0],esc(A.reading[0]))} ${conclBtn(A.readingC[1],esc(A.reading[1]))}</p>`;
+  $('#rxBCards').innerHTML=A.blocks.map(b=>{const cv=covOf(o,b.k),d=b.d;
+    return `<button type="button" class="rx-bc" data-bk2="${b.k}" data-tip="g:${o.iso}:${b.k}"><span class="rx-bc-n">${esc(b.name)}</span>
+      <span class="rx-bc-v"><b>${fmt(b.v)}</b><em class="rx-d ${rxDiffCls(d)}">${d==null?'—':sgn(d)+' pts'}</em></span>
+      ${rxBar(b.v,b.ref,c)}<span class="rx-bc-s">Mediana del grupo ${fmt(b.ref)} · ${covBadge(cv)}</span></button>`}).join('');
+  $('#rxBCards').querySelectorAll('[data-bk2]').forEach(el=>el.addEventListener('click',()=>{LAST_CONCL=el;const bl=BLOCKS.find(x=>x.k===el.dataset.bk2);openConcl({kind:'blk',k:bl.k,t:`${bl.name}: ${fmt(o[bl.k])} frente a ${fmt(rxRef(G,bl.k))}`,sub:'frente al grupo de comparación'})}));
+  $('#rxMsgs').innerHTML=A.msgs.map(x=>`<li class="${msgCls(x)}">${conclBtn(x,`<b>${esc(x.t)}</b><span>${esc(x.sub||'')}</span>`)}</li>`).join('');
+  $('#rxRead').innerHTML=`<span class="rx-tag">Lectura completa</span><p>${A.reading.map((t,i)=>conclBtn(A.readingC[i],esc(t))).join(' ')}</p>`;
   $('#rxCols').innerHTML=`<div class="rx-col"><h3><span class="dot up"></span>Fortalezas</h3>${rxList(A.fort,'fort')}</div>
-    <div class="rx-col"><h3><span class="dot warn"></span>Desequilibrios</h3>${rxList(A.deseq,'deseq')}</div>
+    <div class="rx-col"><h3><span class="dot warn"></span>Desequilibrios y rezagos</h3>${rxList(A.deseq,'deseq')}</div>
     <div class="rx-col"><h3><span class="dot ref"></span>Posición</h3>${rxList(A.pos,'pos')}</div>`;
+  $('#rxLbl').innerHTML=`<b>Cómo leer las etiquetas.</b> «Por encima / por debajo de la mediana (±X pts)»: diferencia con la mediana del grupo de ${RX_T.strong} puntos o más. «Top cuartil (&gt;P75)» y «Cuartil inferior (&lt;P25)» (en «Posición dentro del grupo»): comparan con los percentiles 75 y 25 del grupo. Tono según la cobertura de indicadores: alta (≥ ${COV_T.alta} %) se afirma; media (${COV_T.media}–${COV_T.alta} %) se matiza con «probablemente»; limitada (&lt; ${COV_T.media} %) se presenta como indicio basado solo en los indicadores disponibles.`;
   $('#rxLegend').innerHTML=`<span><i style="background:${c};width:16px;height:8px;border-radius:3px"></i>${esc(o.name)}</span><span><i style="width:2px;height:12px;background:var(--ink)"></i>Mediana del grupo de comparación</span><span><b class="rx-d up" style="padding:0 6px">▲</b>/<b class="rx-d down" style="padding:0 6px">▼</b> diferencia de ${RX_T.strong} puntos o más</span>`;
   $('#rxBlocks').innerHTML=`<div class="rx-head"><span>Bloque / dominio</span><span></span><span>Valor</span><span>Ref.</span><span>Dif.</span></div>`+
     A.blocks.map(b=>`<details class="rx-block" ${b.k===A.blocks.slice().sort((x,y)=>Math.abs(y.d)-Math.abs(x.d))[0].k?'open':''}>
       <summary>${rxRow(o,b.k,`<span class="rx-chev" aria-hidden="true">›</span>${b.name}`,b.v,b.ref,b.d,c,'blk')}</summary>
-      <div class="rx-doms">${b.doms.map(k=>{const x=A.doms.find(z=>z.k===k);return rxRow(o,k,DL[k],x.v,x.ref,x.d,alpha(c,.65),'dom')}).join('')}
+      <div class="rx-doms">${b.doms.map(k=>{const x=A.doms.find(z=>z.k===k);return rxRow(o,k,DL[k]+' '+covBadge(covOf(o,k)),x.v,x.ref,x.d,alpha(c,.65),'dom')}).join('')}
       <p class="note">${b.name} = media de ${b.doms.map(k=>dsl(k)).join(b.doms.length>2?', ':' y ').replace(/, ([^,]*)$/,' y $1')}.</p></div></details>`).join('');
   // Solidez de la evidencia
   const ev=EVBY[o.iso]||[],years=ev.map(x=>x.y),byDom=DOM8.map(k=>({k,n:ev.filter(x=>IND[x.k].dom===k).length,tot:IND.filter(i=>i.dom===k).length}));
@@ -2186,16 +2480,21 @@ function renderRx(){
     <tr data-tip="m:${o.iso}:cov"><td>Indicadores con dato</td><td class="mono">${o.ind} de 92 (${fmt(o.cov,0)} %)</td></tr>
     <tr data-tip="m:${o.iso}:fresh"><td>Actualidad</td><td class="mono">${fmt(o.fresh,0)}</td></tr>
     <tr><td>Años de las observaciones</td><td class="mono">${years.length?Math.min(...years)+'–'+Math.max(...years):'—'}</td></tr>
-    <tr data-tip="m:${o.iso}:raw"><td>Ajuste por fiabilidad (núcleo − bruta)</td><td class="mono">${o.raw?sgn(o.core-o.raw):'—'}</td></tr></tbody></table>
+    <tr data-tip="m:${o.iso}:raw"><td>Bruta → núcleo</td><td class="mono">${o.raw!=null?fmt(o.raw,2)+' → '+fmt(o.core,2):'—'}</td></tr>
+    <tr><td>Ajuste por fiabilidad (núcleo − bruta)</td><td class="mono">${o.raw!=null?sgn(o.core-o.raw,2):'—'}</td></tr></tbody></table>
     <h3>Indicadores observados por dominio</h3>
-    <table class="mini"><tbody>${byDom.map(x=>`<tr class="${x.n===0?'warn':''}"><td>${DL[x.k]}</td><td class="mono">${x.n} de ${x.tot}</td></tr>`).join('')}</tbody></table>
-    ${byDom.some(x=>x.n===0&&x.k!=='leg')?`<p class="note warn-note">Hay dominios sin indicadores observados para esta economía: su valor no procede de datos directos. Método de estimación: <b>Dato pendiente</b>.</p>`:''}
-    <p class="note">Peso de cada indicador en su dominio: <b>Dato pendiente</b>.</p>`;
+    <table class="mini"><tbody>${byDom.map(x=>{const c=covOf(o,x.k);return `<tr class="${x.n===0?'warn':''}"><td>${DL[x.k]}</td><td class="mono">${x.n} de ${x.tot}</td><td>${covBadge(c,COV_L[c.lvl].replace('Cobertura ',''))}</td></tr>`}).join('')}</tbody></table>
+    <p class="note">Cobertura alta ≥ ${COV_T.alta} % de los indicadores del dominio, media ${COV_T.media}–${COV_T.alta} %, limitada &lt; ${COV_T.media} %. Con cobertura limitada, más de la mitad del valor del dominio procede de la referencia previa.</p>
+    ${byDom.some(x=>x.n===0&&x.k!=='leg')?`<p class="note warn-note">Hay dominios sin indicadores observados: su valor es la referencia previa (45 % mediana global, 30 % regional, 25 % de renta), nunca un cero.</p>`:''}
+    <p class="note">Peso de cada indicador: igual entre los indicadores con dato de su dominio. La cobertura de cada dominio es su fiabilidad en el ajuste.</p>
+    <button type="button" class="btn" id="rxCalcBtn">Ver el cálculo completo</button>`;
+  $('#rxCalcBtn').addEventListener('click',e=>{LAST_CONCL=e.currentTarget;openCalc(o)});
   renderBands(o,G);
-  document.querySelectorAll('#rxRead [data-ci],#rxCols [data-ci]').forEach(b=>b.addEventListener('click',()=>{LAST_CONCL=b;openConcl(RXC[+b.dataset.ci])}));
+  document.querySelectorAll('#rxMain [data-ci],#rxMsgs [data-ci],#rxRead [data-ci],#rxCols [data-ci]').forEach(b=>b.addEventListener('click',()=>{LAST_CONCL=b;openConcl(RXC[+b.dataset.ci])}));
   renderPair(o);
 }
 $('#rxEco').addEventListener('change',e=>{RX=e.target.value;renderRx()});
+$('#rxMore').addEventListener('click',e=>{const b=e.currentTarget,on=b.getAttribute('aria-expanded')!=='true';b.setAttribute('aria-expanded',String(on));b.textContent=on?'Ver menos':'Ver más';$('#rxMoreBox').hidden=!on});
 function openRx(iso){RX=iso;if(location.hash!=='#radiografia')location.hash='radiografia';else renderRx();window.scrollTo({top:$('nav.tabs').offsetTop-8,behavior:'smooth'})}
 
 /* ---------- De la conclusión al dato (Mejora 3) ---------- */
@@ -2214,20 +2513,21 @@ function indRows(o,d,G){
 function gapsFor(o,doms){
   const out=[];
   doms.forEach(d=>{const all=indsOf(d),obs=all.filter(I=>IOBS[I.k].has(o.iso)),miss=all.length-obs.length;
-    if(!obs.length)out.push({t:'warn',s:`${DL[d]}: ninguno de sus ${all.length} indicadores tiene dato para ${o.name}. El valor del dominio no procede de observaciones directas; método de estimación: Dato pendiente.`});
+    if(!obs.length&&d!=='leg'){const c=calcChain(o).doms[d];out.push({t:'warn',s:`${DL[d]}: ninguno de sus ${all.length} indicadores tiene dato para ${o.name}. El valor del dominio (${fmt(c.adj)}) es la referencia previa: 45 % mediana global (${fmt(c.g)}) + 30 % mediana regional (${fmt(c.r)}) + 25 % mediana del grupo de renta (${fmt(c.i)}). No se imputa ningún cero.`})}
     else if(miss)out.push({t:'info',s:`${DL[d]}: ${obs.length} de ${all.length} indicadores con dato; faltan ${miss}.`});
     const old=obs.filter(I=>IOBS[I.k].get(o.iso).y<=OLD_YEAR);if(old.length)out.push({t:'info',s:`${DL[d]}: ${old.length} indicador${old.length>1?'es':''} con dato de ${OLD_YEAR} o anterior (${old.map(I=>IOBS[I.k].get(o.iso).y).sort().join(', ')}).`});
     const db=obs.filter(I=>I.src==='Doing Business historical database');if(db.length)out.push({t:'info',s:`${DL[d]}: ${db.length} indicador${db.length>1?'es proceden':' procede'} de Doing Business, base histórica que ya no se actualiza (último año 2019).`});
   });
-  out.push({t:'info',s:`Peso de cada indicador dentro de su dominio y método de agregación: Dato pendiente.`});
-  if(o.raw)out.push({t:'info',s:`Ajuste por fiabilidad de la puntuación núcleo: ${sgn(o.core-o.raw)} puntos (núcleo ${fmt(o.core)} frente a media observada ${fmt(o.raw)}); detalle del método: Dato pendiente.`});
+  out.push({t:'info',s:`Peso de cada indicador: igual para todos los indicadores con dato de su dominio (1 ÷ nº de indicadores observados). Cada dominio núcleo pesa 14,3 % en la puntuación núcleo; la legitimidad social, 0 %.`});
+  doms.filter(d=>d!=='leg').forEach(d=>{const c=calcChain(o).doms[d];if(c.obs!=null&&c.a<1)out.push({t:'info',s:`${DL[d]}: ajuste por fiabilidad ${fmt(c.a*100,1)} % (cobertura). Observada ${fmt(c.obs)} → ajustada ${fmt(c.adj)}, mezclada con una referencia previa de ${fmt(c.prior)} (${sgn(c.adj-c.obs)} puntos).`})});
+  if(o.raw!=null)out.push({t:'info',s:`Ajuste por fiabilidad de la puntuación núcleo: ${sgn(o.core-o.raw)} puntos (núcleo ${fmt(o.core)} frente a bruta ${fmt(o.raw)}). Pulsa «Ver el cálculo completo» en la ficha para ver cada paso.`});
   out.push({t:o.tier==='A'?'info':'warn',s:`Solidez de la evidencia de ${o.name}: tier ${o.tier}, confianza ${fmt(o.conf)}, ${o.ind} de 92 indicadores con dato.`});
   return out;
 }
 
 /* Panel lateral de detalle */
 function drawerOpen(title,sub,html){
-  const d=$('#drawer');$('#drwTitle').textContent=title;$('#drwSub').textContent=sub||'';$('#drwBody').innerHTML=html;
+  const d=$('#drawer');$('.drw-kicker').textContent='De la conclusión al dato';$('#drwTitle').textContent=title;$('#drwSub').textContent=sub||'';$('#drwBody').innerHTML=html;
   d.hidden=false;document.body.classList.add('drw-on');requestAnimationFrame(()=>d.classList.add('on'));$('#drwClose').focus();
   $('#drwBody').querySelectorAll('[data-rx]').forEach(b=>b.addEventListener('click',()=>{drawerClose();openRx(b.dataset.rx)}));
 }
@@ -2243,9 +2543,9 @@ function rankIn(o,k,G){const L=G.members.filter(x=>x[k]!=null).concat(o[k]!=null
 function indTable(o,d,G,limit){
   const rows=indRows(o,d,G),shown=limit?rows.slice(0,limit):rows;
   return `<table class="mini drw-t ind"><thead><tr><th>Indicador</th><th>Valor 0–100</th><th>Original</th><th>Año</th><th>Mediana grupo</th><th>Dif.</th></tr></thead><tbody>${shown.map(({I,x,gm,gn,diff})=>
-    `<tr class="${x?'':'miss'}"><td><span class="ind-n">${esc(I.label)}</span><span class="ind-s">${esc(SRC_ES[I.src]||I.src)} · ${esc(I.unit)}${I.higher?'':' · más bajo es mejor'} · peso: Dato pendiente</span></td>
+    `<tr class="${x?'':'miss'}"><td><span class="ind-n">${esc(I.label)}</span><span class="ind-s">${esc(SRC_ES[I.src]||I.src)} · ${esc(I.unit)}${I.higher?'':' · más bajo es mejor'} · peso ${x?fmt(100/Math.max(1,domCount(o,d)),1)+' %':'0 % (sin dato)'}</span></td>
     <td class="mono">${x?fmt(x.n,0):'—'}</td><td class="mono">${x?fmtR(x.r):'sin dato'}</td><td class="mono">${x?x.y:'—'}</td><td class="mono">${gm==null?'—':fmt(gm,0)}<small> (${gn})</small></td><td class="mono ${rxDiffCls(diff)}">${diff==null?'—':sgn(diff,0)}</td></tr>`).join('')}</tbody></table>
-    ${limit&&rows.length>limit?`<p class="note">Se muestran los ${limit} indicadores con más peso en la diferencia de los ${rows.length} del dominio.</p>`:''}`;
+    ${limit&&rows.length>limit?`<p class="note">Indicadores con mayor divergencia respecto al grupo: se muestran ${limit} de los ${rows.length} del dominio, ordenados por la diferencia con la mediana. El peso metodológico es igual para todos los indicadores con dato.</p>`:''}`;
 }
 function gapsHTML(list){return `<ul class="drw-gaps">${list.map(g=>`<li class="${g.t}">${esc(g.s)}</li>`).join('')}</ul>`}
 function basisHTML(G){return `<p class="drw-p"><b>${esc(GMODES[G.mode])} · ${G.members.length} economías.</b> ${esc(G.crit)}${G.warn?` <span class="g-warn">${esc(G.warn)}</span>`:''}</p>`}
@@ -2292,6 +2592,69 @@ function openConcl(c){
   $('#drwBody').querySelectorAll('[data-dom]').forEach(b=>b.addEventListener('click',()=>openConcl({kind:'dom',k:b.dataset.dom,t:`${o.name} en ${DL[b.dataset.dom].toLowerCase()}`,sub:''})));
 }
 
+/* Descomposición exacta de la diferencia de puntuación núcleo entre dos economías.
+   Identidad: núcleo = bruta + ajuste por fiabilidad (ajuste = núcleo − bruta, el mismo que se muestra en cada ficha).
+   Por dominio: dominio ajustado = parte observada + parte del ajuste; cada dominio aporta su diferencia ÷ 7.
+   Lo que no cuadra con los valores publicados (redondeo) se muestra aparte como residuo no explicado. */
+function pairDecomp(o,b){
+  const A=calcChain(o),B=calcChain(b);
+  const rows=DOM.map(k=>{const x=A.doms[k],y=B.doms[k];const ob=((x.obs??0)-(y.obs??0))/7,aj=(x.pool-y.pool)/7;return {k,ob,aj,tot:ob+aj,oa:x.obs==null,ob2:y.obs==null}});
+  const compA=A.obsPart-(A.raw??0),compB=B.obsPart-(B.raw??0),comp=compA-compB;
+  const dCore=o.core-b.core,dRaw=(o.raw??0)-(b.raw??0),dAdj=(o.core-(o.raw??0))-(b.core-(b.raw??0));
+  const sumOb=rows.reduce((s,r)=>s+r.ob,0),sumAj=rows.reduce((s,r)=>s+r.aj,0);
+  const resOb=dRaw-(sumOb-comp),resAj=dAdj-(sumAj+comp);
+  return {rows,comp,dCore,dRaw,dAdj,sumOb,sumAj,resOb,resAj,res:resOb+resAj,adjA:o.core-(o.raw??0),adjB:b.core-(b.raw??0)};
+}
+function pairDecompHTML(o,b,D){
+  const f2=v=>sgn(v,2);
+  return `<p class="drw-p">La diferencia de <b>${f2(D.dCore)} puntos</b> se descompone en <b>${f2(D.dRaw)}</b> de puntuación bruta (media de los dominios con dato) y <b>${f2(D.dAdj)}</b> de ajuste por fiabilidad. Ese ajuste es el mismo «núcleo − bruta» que aparece en la ficha de cada país: ${f2(D.adjA)} para ${esc(o.name)} y ${f2(D.adjB)} para ${esc(b.name)}.${Math.abs(D.res)>=0.005?` Queda un residuo no explicado de ${f2(D.res)} puntos por el redondeo de los valores publicados; no se atribuye a ningún componente.`:' Las partes suman exactamente la diferencia total.'}</p>
+    <table class="mini drw-t pr-dec"><thead><tr><th>Componente</th><th>${esc(o.iso)}</th><th>${esc(b.iso)}</th><th>Diferencia</th></tr></thead><tbody>
+      <tr><td>Puntuación bruta (media de dominios con dato)</td><td class="mono">${fmt(o.raw,2)}</td><td class="mono">${fmt(b.raw,2)}</td><td class="mono">${f2(D.dRaw)}</td></tr>
+      <tr><td>Ajuste por fiabilidad (núcleo − bruta)</td><td class="mono">${f2(D.adjA)}</td><td class="mono">${f2(D.adjB)}</td><td class="mono">${f2(D.dAdj)}</td></tr>
+      <tr class="tot"><td>Puntuación núcleo</td><td class="mono">${fmt(o.core,2)}</td><td class="mono">${fmt(b.core,2)}</td><td class="mono"><b>${f2(D.dCore)}</b></td></tr></tbody></table>
+    <details class="pr-why"><summary>Desglose por dominio: parte observada y parte del ajuste</summary>
+    <table class="mini drw-t pr-dec"><thead><tr><th>Dominio</th><th>Aporta (dif. ÷ 7)</th><th>De datos observados</th><th>Del ajuste por fiabilidad</th></tr></thead><tbody>
+      ${D.rows.map(r=>`<tr><td>${esc(DL[r.k])}${r.oa||r.ob2?' <small class="g-warn-i">sin dato en '+(r.oa&&r.ob2?'ambos':r.oa?esc(o.iso):esc(b.iso))+'</small>':''}</td><td class="mono"><b>${f2(r.tot)}</b></td><td class="mono">${f2(r.ob)}</td><td class="mono">${f2(r.aj)}</td></tr>`).join('')}
+      ${Math.abs(D.comp)>=0.005?`<tr><td>Dominios sin dato: la bruta solo promedia los dominios observados</td><td class="mono">0,00</td><td class="mono">${f2(-D.comp)}</td><td class="mono">${f2(D.comp)}</td></tr>`:''}
+      <tr class="res"><td>Residuo no explicado (redondeo de los valores publicados)</td><td class="mono">${f2(D.res)}</td><td class="mono">${f2(D.resOb)}</td><td class="mono">${f2(D.resAj)}</td></tr>
+      <tr class="tot"><td>Total</td><td class="mono"><b>${f2(D.dCore)}</b></td><td class="mono">${f2(D.dRaw)}</td><td class="mono">${f2(D.dAdj)}</td></tr></tbody></table>
+    <p class="note">«De datos observados»: diferencia de las puntuaciones observadas del dominio ÷ 7. «Del ajuste por fiabilidad»: diferencia de lo que el ajuste añade o resta al dominio (mezcla con la referencia previa según la cobertura) ÷ 7. Las columnas suman la diferencia de bruta y de ajuste de la tabla superior.</p></details>`;
+}
+/* Cálculo completo de la puntuación de una economía: indicadores → dominios → bruta → ajuste → núcleo */
+function openCalc(o){
+  const C=calcChain(o),f2=v=>fmt(v,2);
+  const step=(n,t,d)=>`<div class="calc-step"><span class="calc-n">${n}</span><div><b>${t}</b><p>${d}</p></div></div>`;
+  const indList=k=>{const L=indsOf(k).map(I=>({I,x:IOBS[I.k].get(o.iso)})).sort((p,q)=>(q.x?1:0)-(p.x?1:0)||p.I.label.localeCompare(q.I.label,'es'));const n=L.filter(z=>z.x).length;
+    return `<table class="mini drw-t ind"><thead><tr><th>Indicador</th><th>Original</th><th>Año</th><th>Normalizado 0–100</th><th>Peso</th></tr></thead><tbody>${L.map(({I,x})=>`<tr class="${x?'':'miss'}"><td><span class="ind-n">${esc(I.label)}</span><span class="ind-s">${esc(SRC_ES[I.src]||I.src)} · ${esc(I.unit)}${I.higher?'':' · más bajo es mejor'}</span></td><td class="mono">${x?fmtR(x.r):'sin dato'}</td><td class="mono">${x?x.y:'—'}</td><td class="mono">${x?fmt(x.n,0):'—'}</td><td class="mono">${x?fmt(100/n,1)+' %':'—'}</td></tr>`).join('')}</tbody></table>`};
+  const ks=DOM;
+  const body=`<div class="calc-chain"><span>${o.ind} indicadores con dato</span><i>→</i><span>${C.nObsDom} dominios observados</span><i>→</i><span>Bruta <b>${f2(o.raw)}</b></span><i>→</i><span>Ajuste <b>${sgn(o.core-o.raw,2)}</b></span><i>→</i><span>Núcleo <b>${f2(o.core)}</b></span></div>
+    ${secH('Paso 1 · De la observación al indicador normalizado')}
+    ${step(1,'Normalización de cada indicador',`Cada indicador se acota entre sus percentiles ${fmt(METH.lo,1)} y ${fmt(METH.hi,1)} (winsorización), se alinea para que un valor más alto signifique siempre más capacidad, se transforma con log(1 + x) con signo cuando la distribución es muy asimétrica y se reescala mín–máx a 0–100 con datos de las 218 economías.`)}
+    ${secH('Paso 2 · De los indicadores a la puntuación observada de cada dominio')}
+    ${step(2,'Media simple de los indicadores con dato',`Todos los indicadores con dato de un dominio pesan lo mismo (1 ÷ nº de indicadores observados). Los indicadores sin dato no cuentan como cero: no entran en la media. Despliega cada dominio para ver sus indicadores. La media de los valores normalizados que se muestran (redondeados a entero) puede diferir unas décimas de la puntuación observada oficial.`)}
+    ${ks.map(k=>{const c=C.doms[k],cv=covOf(o,k);return `<details class="calc-dom"><summary><span>${esc(DL[k])}</span>${covBadge(cv)}<span class="mono">peso ${c.n?fmt(100/c.n,1)+' %':'—'}</span><b class="mono">${c.obs==null?'sin dato':f2(c.obs)}</b></summary>${indList(k)}</details>`}).join('')}
+    ${secH('Paso 3 · Puntuación bruta')}
+    ${step(3,`Media simple de los ${C.nObsDom} dominios núcleo con dato = ${f2(C.raw)}`,`Publicada: ${f2(o.raw)}. ${C.nObsDom<7?`Los ${7-C.nObsDom} dominios sin dato no entran en la bruta. `:''}La bruta no corrige la escasez de datos: con pocos indicadores puede ser engañosa.`)}
+    ${secH('Paso 4 · Ajuste por fiabilidad (agrupamiento parcial)')}
+    ${step(4,'Ajustada = fiabilidad × observada + (1 − fiabilidad) × referencia previa',`Fiabilidad del dominio = cobertura (indicadores con dato ÷ indicadores del dominio). Referencia previa = ${fmt(METH.wG*100,0)} % mediana global + ${fmt(METH.wR*100,0)} % mediana regional (${esc(o.reg)}) + ${fmt(METH.wI*100,0)} % mediana del grupo de renta (${esc(o.inc.toLowerCase())}). Si un grupo regional o de renta tiene menos de ${METH.minN} economías con dato, se usa la mediana global.`)}
+    <div class="tablewrap"><table class="mini drw-t calc-t"><thead><tr><th>Dominio</th><th>Observada</th><th>Fiabilidad</th><th>Med. global</th><th>Med. regional</th><th>Med. renta</th><th>Ref. previa</th><th>Ajustada</th><th>Publicada</th><th>Efecto</th></tr></thead><tbody>
+      ${ks.map(k=>{const c=C.doms[k];return `<tr><td>${esc(DS[k])}</td><td class="mono">${c.obs==null?'—':f2(c.obs)}</td><td class="mono">${fmt(c.a*100,1)} %</td><td class="mono">${f2(c.g)}</td><td class="mono">${f2(c.r)}${c.rFb?'*':''}</td><td class="mono">${f2(c.i)}${c.iFb?'*':''}</td><td class="mono">${f2(c.prior)}</td><td class="mono"><b>${f2(c.adj)}</b></td><td class="mono">${fmt(c.pub)}</td><td class="mono ${c.obs==null?'':c.adj-c.obs>=0?'up':'down'}">${c.obs==null?'solo ref.':sgn(c.adj-c.obs,2)}</td></tr>`}).join('')}
+    </tbody></table></div>
+    ${ks.some(k=>C.doms[k].rFb||C.doms[k].iFb)?'<p class="note">* Grupo con menos de 5 economías con dato: se usa la mediana global.</p>':''}
+    ${secH('Paso 5 · Puntuación núcleo (final)')}
+    ${step(5,`Media de los 7 dominios ajustados (14,3 % cada uno) = ${f2(C.core)}`,`Publicada: ${f2(o.core)}. Residuo no explicado: ${sgn(C.resCore,2)} puntos (redondeo de la cobertura y de los valores publicados). La legitimidad social se informa aparte y pesa 0 %.`)}
+    <table class="mini drw-t"><tbody>
+      <tr><td>Puntuación bruta</td><td class="mono">${f2(o.raw)}</td></tr>
+      <tr><td>+ Ajuste en los dominios con dato (Σ efecto ÷ 7)</td><td class="mono">${sgn(DOM.filter(k=>C.doms[k].obs!=null).reduce((s,k)=>s+C.doms[k].pool,0)/7,2)}</td></tr>
+      ${C.nObsDom<7?`<tr><td>+ Dominios sin dato (referencia previa ÷ 7)</td><td class="mono">${sgn(DOM.filter(k=>C.doms[k].obs==null).reduce((s,k)=>s+C.doms[k].pool,0)/7,2)}</td></tr>
+      <tr><td>+ Efecto de promediar sobre 7 dominios y no solo sobre los observados</td><td class="mono">${sgn(C.obsPart-C.raw,2)}</td></tr>`:''}
+      <tr><td>+ Residuo no explicado (redondeo)</td><td class="mono">${sgn(o.core-o.raw-(C.core-C.raw),2)}</td></tr>
+      <tr class="tot"><td>= Puntuación núcleo</td><td class="mono"><b>${f2(o.core)}</b></td></tr></tbody></table>
+    <p class="note">Fuente metodológica: AI Innovation Architecture Dashboard, release ${METH.release}, instantánea de evidencia ${METH.snapshot}. El atlas reproduce el cálculo con las puntuaciones observadas por dominio de esa fuente.</p>`;
+  drawerOpen('Cómo se calcula la puntuación',`${o.name} · indicadores → dominios → bruta → ajuste → núcleo`,body);
+  $('.drw-kicker').textContent='Cálculo paso a paso';
+}
+
 /* ¿Por qué A queda por encima de B? Descomposición por dominios e indicadores */
 let PAIR=null;
 function renderPair(o){
@@ -2301,26 +2664,27 @@ function renderPair(o){
   sel.value=PAIR;const b=BYISO[PAIR];if(!b){$('#pairBody').innerHTML='';return}
   const dc=o.core-b.core,above=dc>=0,[hi,lo]=above?[o,b]:[b,o];
   $('#pairTitle').textContent=`¿Por qué ${hi.name} queda por encima de ${lo.name}?`;
-  const dm=DOM.map(k=>({k,d:o[k]!=null&&b[k]!=null?o[k]-b[k]:null})),simple=mean(DOM.map(k=>o[k]))-mean(DOM.map(k=>b[k]));
+  const dm=DOM.map(k=>({k,d:o[k]!=null&&b[k]!=null?o[k]-b[k]:null}));
   const mx=Math.max(10,...dm.map(x=>Math.abs(x.d??0)));
   const pairInd=k=>indsOf(k).map(I=>{const xa=IOBS[I.k].get(o.iso),xb=IOBS[I.k].get(b.iso);return {I,xa,xb,d:xa&&xb?xa.n-xb.n:null}})
     .sort((p,q)=>(p.d==null)-(q.d==null)||Math.abs(q.d??0)-Math.abs(p.d??0));
+  const D=pairDecomp(o,b);
   $('#pairBody').innerHTML=`
     <div class="pr-sum">
-      <div><span>Puntuación núcleo</span><b>${fmt(o.core)}</b><small>${esc(o.name)}</small></div>
-      <div><span>Puntuación núcleo</span><b>${fmt(b.core)}</b><small>${esc(b.name)}</small></div>
-      <div class="pr-d"><span>Diferencia</span><b class="${dc>=0?'up':'down'}">${sgn(dc)}</b><small>a favor de ${esc(hi.name)}</small></div>
+      <div><span>Puntuación núcleo</span><b>${fmt(o.core,2)}</b><small>${esc(o.name)}</small></div>
+      <div><span>Puntuación núcleo</span><b>${fmt(b.core,2)}</b><small>${esc(b.name)}</small></div>
+      <div class="pr-d"><span>Diferencia</span><b class="${dc>=0?'up':'down'}">${sgn(dc,2)}</b><small>a favor de ${esc(hi.name)}</small></div>
     </div>
-    <p class="drw-p">De esa diferencia, <b>${sgn(simple)} puntos</b> se explican por la media simple de los 7 dominios (cada dominio aporta su diferencia ÷ 7, tabla inferior). El resto, <b>${sgn(dc-simple)} puntos</b>, procede del ajuste por fiabilidad de cada país (tier ${o.tier} frente a ${b.tier}); su método detallado es un Dato pendiente.</p>
+    ${pairDecompHTML(o,b,D)}`+`
     <div class="pr-head"><span>Dominio</span><span class="pr-axis"><em>a favor de ${esc(b.name)}</em><em>a favor de ${esc(o.name)}</em></span><span>${esc(o.iso)}</span><span>${esc(b.iso)}</span><span>Dif.</span><span>Aporta</span></div>
     ${BLOCKS.map(bl=>`<div class="pr-blk">${esc(bl.name)} <span class="mono">${fmt(o[bl.k])} · ${fmt(b[bl.k])} · ${sgn(o[bl.k]-b[bl.k])}</span></div>`+bl.doms.map(k=>{const x=dm.find(z=>z.k===k),w=x.d==null?0:Math.abs(x.d)/mx*50;
       return `<details class="pr-row"><summary><span class="pr-l"><span class="rx-chev" aria-hidden="true">›</span>${esc(DL[k])}</span>
         <span class="pr-bar"><i class="${x.d>=0?'up':'down'}" style="${x.d>=0?`left:50%`:`right:50%`};width:${w}%"></i></span>
-        <span class="mono">${fmt(o[k])}</span><span class="mono">${fmt(b[k])}</span><b class="mono ${x.d>=0?'up':'down'}">${x.d==null?'—':sgn(x.d)}</b><span class="mono">${x.d==null?'—':sgn(x.d/7,2)}</span></summary>
+        <span class="mono">${fmt(o[k])}</span><span class="mono">${fmt(b[k])}</span><b class="mono ${x.d>=0?'up':'down'}">${x.d==null?'—':sgn(x.d)}</b><span class="mono">${sgn(D.rows.find(r=>r.k===k).tot,2)}</span></summary>
         <table class="mini drw-t ind"><thead><tr><th>Indicador</th><th>${esc(o.iso)}</th><th>${esc(b.iso)}</th><th>Dif.</th><th>Años</th></tr></thead><tbody>${pairInd(k).map(({I,xa,xb,d})=>
           `<tr class="${d==null?'miss':''}"><td><span class="ind-n">${esc(I.label)}</span><span class="ind-s">${esc(SRC_ES[I.src]||I.src)} · ${esc(I.unit)}</span></td><td class="mono">${xa?fmt(xa.n,0):'—'}</td><td class="mono">${xb?fmt(xb.n,0):'—'}</td>
           <td class="mono ${d==null?'':d>=0?'up':'down'}">${d==null?(xa?'solo '+o.iso:xb?'solo '+b.iso:'sin dato'):sgn(d,0)}</td><td class="mono">${xa?xa.y:'—'} · ${xb?xb.y:'—'}</td></tr>`).join('')}</tbody></table></details>`}).join('')).join('')}
-    <p class="note">Valores de indicador normalizados 0–100. «solo» indica que el otro país no tiene dato y ese indicador no se puede comparar. Peso de cada indicador: Dato pendiente.</p>`;
+    <p class="note">Valores de indicador normalizados 0–100. «solo» indica que el otro país no tiene dato y ese indicador no se puede comparar. Todos los indicadores con dato pesan igual dentro de su dominio.</p>`;
 }
 $('#pairEco').addEventListener('change',e=>{PAIR=e.target.value;renderPair(BYISO[RX])});
 $('#pairSwap').addEventListener('click',()=>{const a=RX;RX=PAIR;PAIR=a;renderRx()});
@@ -2360,7 +2724,7 @@ function goalAnalyse(o,pool){
   if(o.tier!=='A')falta.push({t:`Evidencia tier ${o.tier}`,s:`confianza ${fmt(o.conf)}`});
   if(o.cov<60)falta.push({t:`Cobertura ${fmt(o.cov,0)} %`,s:`${o.ind} de 92 indicadores`});
   wd.forEach(k=>{const n=ev.filter(x=>IND[x.k].dom===k).length,t=indsOf(k).length;
-    if(n===0)falta.push({t:`${DS[k]} sin observaciones`,s:'valor no observado; método: Dato pendiente',warn:1});
+    if(n===0)falta.push({t:`${DS[k]} sin observaciones`,s:'valor = referencia previa (medianas global, regional y de renta)',warn:1});
     else if(n/t<0.4)falta.push({t:`${DS[k]}: ${n} de ${t} indicadores`,s:'cobertura baja en un dominio del objetivo'})});
   const oldN=ev.filter(x=>x.y<=OLD_YEAR).length;if(ev.length&&oldN/ev.length>OLD_SHARE)falta.push({t:`Datos antiguos`,s:`${Math.round(100*oldN/ev.length)} % de observaciones de ${OLD_YEAR} o antes`});
   const sc=goalScore(o);if(sc.cov<1)falta.push({t:'Objetivo incompleto',s:`faltan dominios que suman el ${Math.round(100*(1-sc.cov))} % del peso`,warn:1});
@@ -2427,12 +2791,22 @@ $('#goalExcl').addEventListener('change',e=>{G_EXCL=e.target.checked;renderGoals
 /* ---------- Navegación ---------- */
 const VIEWS=['radiografia','referentes','perfil','ranking','dispersion','grupos','mapa-calor','evidencia','datos'];
 function currentView(){const h=location.hash.slice(1);return VIEWS.includes(h)?h:'radiografia'}
+let ADV_TOUCHED=false;
+function setAdv(on,user){$('#adv').hidden=!on;$('#advBtn').setAttribute('aria-expanded',String(on));if(user)ADV_TOUCHED=true}
+function advSummary(){const F=filtered(),p=[];if($('#fRegion').value)p.push($('#fRegion').value);if($('#fIncome').value)p.push($('#fIncome').value);
+  if($('#fTier').value!=='AB')p.push($('#fTier').selectedOptions[0].text);if($('#fArch').value!=='')p.push(ARCH[+$('#fArch').value]);
+  $('#advSum').textContent=` · ${p.length?p.length+' filtro'+(p.length>1?'s':''):'sin filtros'} · ${S.sel.length} seleccionad${S.sel.length===1?'a':'as'}`;
+  $('#advSum').title=`${F.length} economías en el filtro${p.length?': '+p.join(', '):''}. Economías seleccionadas: ${S.sel.map(i=>BYISO[i].name).join(', ')||'ninguna'}.`}
+$('#advBtn').addEventListener('click',()=>setAdv($('#adv').hidden,true));
+$('#advClose').addEventListener('click',()=>{setAdv(false,true);$('#advBtn').focus()});
 function showView(){const v=currentView();
+  // En «Comparación» la selección de países es imprescindible: se abre el panel salvo que el usuario lo haya cerrado
+  if(v==='perfil'&&!ADV_TOUCHED)setAdv(true);
   document.querySelectorAll('[data-view]').forEach(s=>s.hidden=s.dataset.view!==v);
   document.querySelectorAll('nav.tabs a').forEach(a=>a.setAttribute('aria-current',a.dataset.v===v?'page':'false'));
   renderView(v);}
 function renderView(v){({radiografia:renderRx,referentes:renderGoals,perfil:renderPerfil,ranking:renderRanking,dispersion:renderScatter,grupos:renderGroups,'mapa-calor':renderHeat,evidencia:renderEvidence,datos:renderTable})[v]()}
-function renderAll(){renderKpis(filtered());renderChips();renderView(currentView())}
+function renderAll(){renderKpis(filtered());renderChips();advSummary();renderView(currentView())}
 window.addEventListener('hashchange',showView);
 
 /* Re-render al cambiar de tema */
