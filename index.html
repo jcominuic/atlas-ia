@@ -796,6 +796,35 @@ nav.tabs{gap:.45rem}
 .tab-help{padding:.4rem .5rem;font-size:.9063rem}
 #glossBtn{white-space:nowrap}
 @media (max-width:1400px){.adv-sum{display:none}}
+/* ===== Capa de investigación ===== */
+.inv-intro{flex-direction:row;flex-wrap:wrap;justify-content:space-between;align-items:center}
+.inv-nav{display:flex;flex-wrap:wrap;gap:.4rem}.inv-nav a{text-decoration:none}
+.ficha2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem 2rem}
+.ficha2>div{display:flex;flex-direction:column;gap:.6rem;min-width:0;align-items:flex-start}
+.ficha2 table{width:100%}
+@media (max-width:900px){.ficha2{grid-template-columns:minmax(0,1fr)}}
+table.fx td{text-align:left!important;vertical-align:top;line-height:1.5;white-space:normal}
+table.fx td:first-child{font-weight:650;width:11.5rem;color:var(--ink)}
+.sens-k{margin:.2rem 0}
+.rob{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:.5rem}
+.rob li{display:flex;gap:.8rem;align-items:baseline;border:1px solid var(--line);border-left-width:3px;border-radius:var(--r-md);padding:.55rem .8rem;font-size:.9688rem}
+.rob li b{flex:none;white-space:nowrap}
+.rob li.ok{border-left-color:var(--good)}.rob li.ok b{color:var(--good)}
+.rob li.ko{border-left-color:var(--warn)}.rob li.ko b{color:var(--warn)}
+.exp-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(15rem,1fr));gap:.75rem}
+.exp-c{border:1px solid var(--line);border-radius:var(--r-md);padding:.8rem .9rem;display:flex;flex-direction:column;gap:.4rem;align-items:flex-start}
+.exp-c span{color:var(--muted);font-size:.9063rem;line-height:1.5;flex:1}
+.cite{border:1px solid var(--line);border-radius:var(--r-md);padding:.7rem .9rem;display:flex;flex-direction:column;gap:.4rem;align-items:flex-start;margin-bottom:.6rem}
+.cite p{margin:0;font-size:.9688rem;line-height:1.55;user-select:all}
+.png-b{position:absolute;top:2px;right:2px;z-index:3;font:600 .75rem var(--f-body);color:var(--accent);background:color-mix(in srgb,var(--surface) 88%,transparent);border:1px solid var(--act-line);border-radius:var(--r-sm);padding:.15rem .45rem;cursor:pointer;opacity:.75}
+.png-b:hover,.png-b:focus-visible{opacity:1;background:var(--act-bg);outline:2px solid var(--accent);outline-offset:1px}
+.pdf-mode .png-b{display:none}
+.tab-grp a{padding:.5rem .55rem}
+a.btn{text-decoration:none}
+nav.tabs{gap:.35rem}
+.tab-g{padding:0 .45rem;gap:.25rem;font-size:.7188rem}
+.tab-grp a{padding:.5rem .42rem;font-size:.9063rem}
+@media (max-width:1500px){nav.tabs{gap:.35rem}.tab-g{padding:0 .4rem;letter-spacing:.04em}.tab-g svg{display:none}.tab-grp a{padding:.5rem .5rem;font-size:.9063rem}}
 @media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
 </style>
 
@@ -876,7 +905,8 @@ nav.tabs{gap:.45rem}
     <div class="tab-grp" role="group" aria-label="Datos">
     <span class="tab-g"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M4 10h16M10 4v16"/></svg>Datos</span>
     <a href="#evidencia" data-v="evidencia" title="Los 92 indicadores de origen, uno a uno">Indicadores</a>
-    <a href="#datos" data-v="datos" title="Tabla completa con búsqueda, columnas y exportación a CSV">Tabla de datos</a>
+    <a href="#datos" data-v="datos" title="Tabla completa con búsqueda, columnas y exportación a CSV">Tabla</a>
+    <a href="#investigacion" data-v="investigacion" title="Metodología, sensibilidad, exportación de datos y cita">Investigación</a>
     </div>
   </nav>
 
@@ -1137,6 +1167,42 @@ nav.tabs{gap:.45rem}
     </div>
   </section>
 
+  <!-- INVESTIGACIÓN -->
+  <section class="view" data-view="investigacion" hidden>
+    <div class="panel span inv-intro">
+      <div><h2>Capa de investigación</h2><p class="note">Para analistas: metodología y versiones, calidad del dato, análisis de sensibilidad, exportación de datos y cita. Nada de lo que hagas aquí cambia las puntuaciones publicadas ni el resto de vistas.</p></div>
+      <nav class="inv-nav" aria-label="Apartados"><a class="btn" href="#invFicha">Ficha metodológica</a><a class="btn" href="#invCal">Calidad del dato</a><a class="btn" href="#invSens">Sensibilidad</a><a class="btn" href="#invExp">Exportar</a><a class="btn" href="#invCite">Citar</a></nav>
+    </div>
+    <section class="panel span" id="invFicha"><h2>Ficha metodológica y versiones</h2><div id="invFichaB"></div></section>
+    <section class="panel span" id="invCal"><h2>Calidad del dato por país <span data-ii="cobertura"></span></h2>
+      <p class="note">País analizado y países seleccionados. Cada celda indica cuántos indicadores del dominio tienen dato; con cobertura limitada, más de la mitad del valor procede de la referencia previa.</p>
+      <div class="tablewrap" id="invCalB"></div></section>
+    <section class="panel span" id="invSens"><h2>Análisis de sensibilidad <span data-ii="sensibilidad"></span></h2>
+      <p class="note">Cambia los pesos de los dominios, el método de agregación o la base de datos y observa cómo varían la puntuación y el puesto. Es un ejercicio exploratorio: la puntuación publicada usa pesos iguales, media aritmética y dominios ajustados.</p>
+      <div class="ctrls">
+        <div class="fld"><label for="sAgg">Método de agregación</label><select id="sAgg"><option value="arit">Media aritmética (publicada)</option><option value="geo">Media geométrica</option></select></div>
+        <div class="fld"><label for="sBase">Valores de los dominios</label><select id="sBase"><option value="adj">Ajustados por fiabilidad (publicados)</option><option value="obs">Solo observados, sin ajuste</option></select></div>
+        <button class="btn" type="button" id="sReset">Volver a la especificación publicada</button>
+      </div>
+      <div class="gw-grid" id="sW"></div>
+      <div id="sOut"></div>
+      <h3>¿Son robustas las conclusiones del país analizado?</h3>
+      <div id="sRob"></div>
+    </section>
+    <section class="panel span" id="invExp"><h2>Exportar datos para investigación</h2>
+      <p class="note">Los archivos incluyen metadatos (fecha, versiones, filtros y grupo de comparación). El JSON usa punto decimal; los CSV usan «;» y coma decimal, para abrirlos en Excel en español.</p>
+      <div class="ctrls"><div class="fld"><label for="exScope">Países incluidos</label><select id="exScope"><option value="f">Los del filtro actual</option><option value="all">Los 218</option></select></div></div>
+      <div class="exp-grid">
+        <div class="exp-c"><b>Paquete completo (JSON)</b><span>Metadatos, puntuaciones publicadas, puntuaciones observadas y ajustadas por dominio, observaciones originales y normalizadas, y diccionario de indicadores.</span><button class="btn primary" type="button" data-ex="json">Exportar paquete (JSON)</button></div>
+        <div class="exp-c"><b>Puntuaciones por país (CSV)</b><span>Núcleo, bruta, Tier, dominios publicados, observados y ajustados, fiabilidad y cobertura.</span><button class="btn" type="button" data-ex="scores">Exportar puntuaciones (CSV)</button></div>
+        <div class="exp-c"><b>Observaciones (CSV, formato largo)</b><span>Una fila por país e indicador: valor original, valor normalizado 0–100 y año.</span><button class="btn" type="button" data-ex="obs">Exportar observaciones (CSV)</button></div>
+        <div class="exp-c"><b>Diccionario de indicadores (CSV)</b><span>Los 92 indicadores: nombre, dominio, fuente, unidad, sentido, años, cobertura y pesos.</span><button class="btn" type="button" data-ex="dict">Exportar diccionario (CSV)</button></div>
+      </div>
+      <p class="note">Gráficos: cada gráfico tiene un botón «PNG» en su esquina para descargarlo en alta resolución. La tabla de la vista «Tabla» se exporta desde allí, tal como se ve.</p>
+    </section>
+    <section class="panel span" id="invCite"><h2>Cómo citar</h2><div id="invCiteB"></div></section>
+  </section>
+
   <footer>
     <details class="panel fold ft-fold"><summary><span class="fold-t">Metodología y cómo leer las métricas</span><span class="fold-h">Fórmulas de las métricas derivadas, cálculo de la puntuación y límites del análisis</span></summary>
       <div class="ft"><b>Cómo leer las métricas derivadas.</b> Brecha de conversión = media(Ciencia, Talento) − media(Adopción, Financiación): positiva indica conocimiento aún no convertido en uso y financiación. Brecha de endogeneización = media(Infraestructura, Adopción, Financiación) − media(Ciencia, Talento): positiva indica despliegue por delante de la formación de conocimiento propio. Equilibrio = 100 − 2,2 × desviación típica de los 7 dominios. Alineación política-capacidad = 100 − 1,6 × |Gobernanza − media(IA responsable, Adopción)|.</div>
@@ -1318,7 +1384,7 @@ function benchmark(){
 const charts={};let CAPTURE=null;
 function kill(id){if(charts[id]){charts[id].destroy();delete charts[id]}}
 // En modo captura (informe PDF) se guarda la configuración en lugar de dibujar el gráfico en pantalla.
-function mkChart(key,canvas,cfg){if(CAPTURE){CAPTURE[key]=cfg;return null}kill(key);return charts[key]=new Chart(canvas,cfg)}
+function mkChart(key,canvas,cfg){if(CAPTURE){CAPTURE[key]=cfg;return null}kill(key);try{addPngBtn(key,canvas)}catch(e){}return charts[key]=new Chart(canvas,cfg)}
 const FONT='"Instrument Sans", system-ui, -apple-system, "Segoe UI", sans-serif';
 const reduced=()=>matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -2052,53 +2118,42 @@ async function buildReport(step){
   const heatAbs=v=>v==null?null:mixRgb(T.acc,clamp(v)/100*0.8,T.surface);
   const heatRel=(v,k)=>{if(v==null)return null;const d=v-MEDIAN_DOM[k],a=Math.min(1,Math.abs(d)/25)*0.7;return mixRgb(d>=0?T.pos:T.neg,a,T.surface)};
 
+  const RO=BYISO[RX]||BYISO[S.sel[0]]||ELIG[0],RG=rxGroup(RO),RA=rxAnalyse(RO,RG);let SN=0;const nx=()=>String(++SN).padStart(2,'0');
   /* ================= PORTADA ================= */
   await step('Componiendo la portada…');
   paint(deep);
   arch.forEach((c,i)=>{doc.setFillColor(...c);doc.rect(i*W/6,0,W/6+0.2,2.4,'F')});
   y=15;
-  y+=draw(eyebrow('Informe completo  ·  Atlas de arquitecturas de IA',CW),M,y,T.acc)+5;
-  y+=draw(layout('Atlas de arquitecturas de IA',{size:27,style:'bold',width:CW,min:20}),M,y,T.head)+2.5;
-  const subT=E.length?'Comparación de '+E.map(e=>e.o.name).join(', '):'Panorama del conjunto filtrado';
-  y+=draw(layout(subT,{size:14,width:CW,min:10.5}),M,y,T.acc)+3;
-  y+=draw(layout('Capacidades de inteligencia artificial de 218 países: 7 dominios núcleo y un dominio de contexto social. Este informe recoge todas las vistas del atlas con la consulta actual.',{size:9.2,width:CW}),M,y,T.muted)+5;
-  const meta=[['Fecha',fechaLarga()],['Países analizados',`${F.length} de 218`],['Evidencia',$('#fTier').selectedOptions[0].text],['Referencia',B?B.label:'Sin referencia']];
+  y+=draw(eyebrow('Informe de análisis  ·  Atlas de arquitecturas de IA',CW),M,y,T.acc)+5;
+  y+=draw(layout(`Radiografía de ${RO.name}`,{size:27,style:'bold',width:CW,min:20}),M,y,T.head)+2.5;
+  y+=draw(layout(`Frente a: ${GMODES[RG.mode].toLowerCase()} (${RG.short})`,{size:14,width:CW,min:10.5}),M,y,T.acc)+3;
+  y+=draw(layout('Capacidades de inteligencia artificial del país en 7 dominios núcleo y un dominio de contexto social, comparadas con su grupo de referencia. Incluye resumen ejecutivo, análisis comparativo y anexos de metodología y datos.',{size:9.2,width:CW}),M,y,T.muted)+5;
+  {const cvA=DOM.map(k=>covOf(RO,k)),nl=l=>cvA.filter(c=>c.lvl===l).length,gw=(CW-8)/3;
+    const box=[['Puntuación núcleo',fmt(RO.core),RO.rank?`Puesto ${RO.rank} de 183 países comparables`:'Sin puesto en el ranking'],['Calidad de los datos',`Tier ${RO.tier}`,`${TIER_L[RO.tier].split('· ')[1]||''} · ${RO.ind} de 92 indicadores con dato`],['Cobertura por dominio',['alta','media','limitada','nula'].filter(nl).map(l=>`${nl(l)} ${l==='nula'?'sin datos':l}`).join(' · '),'de los 7 dominios núcleo (detalle en el resumen ejecutivo)']];
+    const cs=box.map(([a,b,c],i)=>({La:layout(a,{size:7,style:'bold',width:gw-8,cs:.3,upper:true}),Lb:layout(b,{size:i<2?22:11.5,style:'bold',width:gw-8,min:9}),Lc:layout(c,{size:7.4,width:gw-8})}));
+    const h=Math.max(...cs.map(c=>c.La.h+c.Lb.h+c.Lc.h))+12;
+    cs.forEach((c,i)=>{const x=M+i*(gw+4);doc.setFillColor(...T.surface);doc.setDrawColor(...(i?T.line:T.acc));doc.setLineWidth(i?0.25:0.5);doc.roundedRect(x,y,gw,h,2.4,2.4,'FD');let cy=y+4;cy+=draw(c.La,x+4,cy,T.muted)+2;cy+=draw(c.Lb,x+4,cy,i?T.ink:T.acc)+2;draw(c.Lc,x+4,cy,T.muted)});y+=h+7}
+  const meta=[['Fecha del informe',fechaLarga()],['País analizado',`${RO.name} · ${RO.reg} · ${RO.inc}`],['Grupo de comparación',`${GMODES[RG.mode]} · ${RG.members.length} países${RG.alt?' · criterio alternativo':''}`],['Países seleccionados para comparar',E.length?E.map(e=>e.o.name).join(', '):'Ninguno'],
+    ['Versión de los datos',`Release ${METH.release} · instantánea de evidencia ${METH.snapshot}`],['Versión de la metodología',`7 dominios núcleo + 1 de contexto, con ajuste por fiabilidad (release ${METH.release})`],['Versión del atlas',`${APP.ver} (${APP.date})`],['Países en el filtro',`${F.length} de 218 · ${$('#fTier').selectedOptions[0].text}`]];
   const colW=(CW-10)/2;doc.setDrawColor(...T.line);doc.setLineWidth(0.25);doc.line(M,y,W-M,y);y+=4.5;
-  for(let r=0;r<2;r++){
+  for(let r=0;r<meta.length/2;r++){
     const cells=[meta[2*r],meta[2*r+1]].map(([l,val])=>({Ll:eyebrow(l,colW),Lv:layout(val,{size:8.8,style:'bold',width:colW})}));
     const rowH=Math.max(...cells.map(c=>c.Ll.h+1.6+c.Lv.h));
     cells.forEach((c,i)=>{const x=M+i*(colW+10);draw(c.Ll,x,y,T.muted);draw(c.Lv,x,y+c.Ll.h+1.6,T.ink)});y+=rowH+4;
   }
   doc.line(M,y,W-M,y);y+=6;
-  y+=draw(eyebrow('Indicadores clave del conjunto analizado',CW),M,y,T.acc)+3;
-  const kp=[...document.querySelectorAll('#kpis .kpi')].map(k=>[k.querySelector('span').textContent,k.querySelector('b').textContent,k.querySelector('small').textContent]);
-  const gap=4,cw=(CW-2*gap)/3,pad=4,inner=cw-2*pad;
-  const cards=kp.map(([lab,val,sub])=>{const vv=pdfTxt(val),long=vv.length>12;
-    const Lb=layout(lab,{size:6.3,style:'bold',width:inner,cs:0.2,upper:true}),Lv=layout(vv,{size:long?12:18,style:'bold',width:inner,min:long?9.5:14}),Ls=layout(sub,{size:6.8,width:inner});
-    return {Lb,Lv,Ls,h:pad+2.6+Lb.h+2+Lv.h+1.6+Ls.h+pad}});
-  for(let r=0;r<cards.length;r+=3){
-    const row=cards.slice(r,r+3),rowH=Math.max(...row.map(c=>c.h));need(rowH+gap);
-    row.forEach((c,j)=>{const i=r+j,cx=M+j*(cw+gap);
-      doc.setFillColor(...T.surface);doc.setDrawColor(...T.line);doc.setLineWidth(0.25);doc.roundedRect(cx,y,cw,rowH,2.4,2.4,'FD');
-      doc.setFillColor(...KPI_NEON[i%6]);doc.rect(cx+pad,y+pad,5,0.9,'F');
-      let cy=y+pad+2.6;cy+=draw(c.Lb,cx+pad,cy,T.muted)+2;cy+=draw(c.Lv,cx+pad,cy,KPI_NEON[i%6])+1.6;draw(c.Ls,cx+pad,cy,T.muted)});
-    y+=rowH+gap;
-  }
-  y+=4;
-  y+=draw(eyebrow('Puntos clave',CW),M,y,T.acc)+3;
-  keyPoints().forEach(t=>{const L=layout(t,{size:9,width:CW-5});if(y+L.h>BOTTOM-14)newPage();
-    doc.setFillColor(...T.acc);doc.circle(M+1.2,y+L.size*PT*0.5,0.8,'F');y+=draw(L,M+5,y,T.ink)+2.4});
+  y+=draw(eyebrow('Cita recomendada',CW),M,y,T.acc)+2;y+=draw(layout(citeReport(),{size:8,width:CW}),M,y,T.ink)+4;
   const Ld=layout('Diagnóstico estructural basado en datos públicos. No constituye una predicción ni una recomendación de inversión. Los valores ausentes nunca se cuentan como cero.',{size:7.5,width:CW});
   if(doc.getNumberOfPages()===1&&y+4<BOTTOM-Ld.h-2)draw(Ld,M,BOTTOM-Ld.h-2,T.muted);else{need(Ld.h+4);y+=2;y+=draw(Ld,M,y,T.muted)+4}
 
   /* ================= CONFIGURACIÓN Y CONTENIDO ================= */
   newPage();const tocPage=doc.getNumberOfPages();   // el índice se dibuja al final, con los números de página reales
-  const nSec=E.length?9:8;y=TOP+30+nSec*10.5+6;
+  const nSec=13+(BYISO[PAIR]&&BYISO[PAIR]!==RO?1:0)+(DOM.some(k=>GW[k])?1:0)+(E.length?1:0);y=TOP+30+nSec*10.5+6;if(y>BOTTOM-40){newPage();y=TOP+2}
   {const Lt=layout('Configuración de la consulta',{size:13,style:'bold',width:CW});const Ls=layout('Filtros, selección y opciones de cada vista con las que se ha generado este informe.',{size:8.2,width:CW});
    y+=draw(Lt,M,y,T.head)+1.5;y+=draw(Ls,M,y,T.muted)+4;}
   const conf=[['Región',$('#fRegion').value||'Todas las regiones'],['Renta',$('#fIncome').value||'Todos los grupos'],['Evidencia',$('#fTier').selectedOptions[0].text],
     ['Arquetipo',$('#fArch').value===''?'Todos los arquetipos':ARCH[+$('#fArch').value]],['Referentes · objetivo',`${GOAL==='custom'?'Personalizado':GOALS[GOAL].l} · ${DOM.filter(k=>GW[k]).map(k=>DS[k]+' '+GW[k]).join(', ')}`],['Radiografía · comparar con',(()=>{const G=RX?groupFor(BYISO[RX]):null;return `${GMODES[GMODE]}${G&&G.eff.size?' · '+GSIZE+' países':''}${G&&G.eff.reg?' · misma región':''}${G&&G.alt?' · criterio alternativo (sin PIB per cápita)':''}`})()],['Referencia',$('#bench').selectedOptions[0].text],['Países seleccionadas',E.length?E.map(e=>e.o.name).join(', '):'Ninguna']];
-  VIEWS.filter(v=>v!=='perfil'&&v!=='datos').forEach(v=>{const sec=document.querySelector(`[data-view="${v}"]`);viewSettings(sec).forEach(([k,val])=>conf.push([VIEW_NAMES[v]+' · '+k,val]))});
+  VIEWS.filter(v=>v!=='perfil'&&v!=='datos'&&v!=='investigacion').forEach(v=>{const sec=document.querySelector(`[data-view="${v}"]`);viewSettings(sec).forEach(([k,val])=>conf.push([VIEW_NAMES[v]+' · '+k,val]))});
   // Cuadrícula de dos columnas: etiqueta pequeña encima, valor debajo
   {const gw=(CW-6)/2;for(let i=0;i<conf.length;i+=2){const pair=conf.slice(i,i+2).map(([k,v])=>({Lk:layout(k,{size:6.2,style:'bold',width:gw-6,cs:.15,upper:true}),Lv:layout(v,{size:8,width:gw-6})}));
     const h=Math.max(...pair.map(p=>p.Lk.h+0.8+p.Lv.h))+3.6;need(h);
@@ -2107,10 +2162,22 @@ async function buildReport(step){
 
   /* ================= 1. RADIOGRAFÍA ================= */
   await step('Componiendo la radiografía del país…');
-  {const o=BYISO[RX]||BYISO[S.sel[0]]||ELIG[0];const G=rxGroup(o),A=rxAnalyse(o,G);
+  {const o=RO,G=RG,A=RA;
     const covAll=DOM.map(k=>({k,c:covOf(o,k)})),nl=l=>covAll.filter(x=>x.c.lvl===l).length;
     const covSum=['alta','media','limitada','nula'].filter(nl).map(l=>`${nl(l)} ${l==='nula'?'sin datos':l}`).join(' · ');
-    section('01',`Radiografía de ${o.name}`,`${o.reg} · ${o.inc} · ${ARCH[o.arch]} · Tier ${o.tier} (${TIER_L[o.tier].split('· ')[1]||''}) · cobertura de los 7 dominios: ${covSum}. Comparado con: ${GMODES[G.mode].toLowerCase()} (${G.short}).`);
+    if(y>TOP+1)newPage();
+    section('','Resumen ejecutivo',`${o.name} frente a ${GMODES[G.mode].toLowerCase()} (${G.short}). ${o.reg} · ${o.inc} · ${ARCH[o.arch]}.`);
+    // Conclusión principal destacada
+    {const L=layout(A.reading.join(' '),{size:10.5,width:CW-10}),Lg=layout('CONCLUSIÓN PRINCIPAL',{size:6.5,style:'bold',width:60,cs:.4});const h=Lg.h+2+L.h+8;need(h+4);
+      doc.setFillColor(...mixRgb(T.acc,0.1,T.surface));doc.setDrawColor(...T.acc);doc.setLineWidth(0.3);doc.roundedRect(M,y,CW,h,2,2,'FD');
+      draw(Lg,M+5,y+4,T.acc);draw(L,M+5,y+4+Lg.h+2,T.ink);y+=h+5}
+    // Tres mensajes prioritarios
+    {const gw=(CW-8)/3,colOf=x=>x.soft?T.muted:x.weak?T.neg:x.kind==='gap'||x.kind==='spread'?T.bench:x.kind==='core'||x.kind==='blocks'?T.bench:T.pos;
+      const Lh=layout('MENSAJES PRIORITARIOS',{size:7,style:'bold',width:CW,cs:.4});
+      const its=A.msgs.map((x,i)=>({x,Lt:layout(`${i+1}. ${x.t}`,{size:8.4,style:'bold',width:gw-8}),Ls:layout(x.sub||'',{size:7,width:gw-8})}));
+      const ch=Math.max(...its.map(c=>c.Lt.h+c.Ls.h))+8;need(Lh.h+2+ch+3);y+=draw(Lh,M,y,T.acc)+2;
+      its.forEach((c,i)=>{const x=M+i*(gw+4);doc.setFillColor(...T.surface);doc.setDrawColor(...T.line);doc.setLineWidth(0.25);doc.roundedRect(x,y,gw,ch,2,2,'FD');doc.setFillColor(...colOf(c.x));doc.rect(x,y+1,1,ch-2,'F');
+        let cy=y+3.5;cy+=draw(c.Lt,x+4,cy,T.ink)+0.8;draw(c.Ls,x+4,cy,T.muted)});y+=ch+6}
     // Tier acompañado de la cobertura por dominio
     {const gw=(CW-6*2)/7,cl={alta:T.pos,media:T.bench,limitada:hexRgb(css('--warn')),nula:T.muted};
       const Lt=layout(`Tier ${o.tier} · ${TIER_L[o.tier].split('· ')[1]||''} · puntuación núcleo ${fmt(o.core,2)}${o.rank?` · puesto ${o.rank} de 183`:''}. Cobertura de indicadores por dominio (alta ≥ ${COV_T.alta} %, media ${COV_T.media}–${COV_T.alta} %, limitada < ${COV_T.media} %):`,{size:7.6,width:CW});
@@ -2118,15 +2185,6 @@ async function buildReport(step){
       const ch=Math.max(...cells.map(c=>c.La.h+c.Lb.h))+4.5;need(Lt.h+2+ch+4);y+=draw(Lt,M,y,T.muted)+2;
       cells.forEach((c,i)=>{const x=M+i*(gw+2);doc.setFillColor(...mixRgb(c.col,0.12,T.surface));doc.setDrawColor(...mixRgb(c.col,0.6,T.line));doc.setLineWidth(0.3);doc.roundedRect(x,y,gw,ch,1.5,1.5,'FD');
         doc.setFillColor(...c.col);doc.rect(x,y+1,0.9,ch-2,'F');draw(c.La,x+2.5,y+1.8,T.ink);draw(c.Lb,x+2.5,y+1.8+c.La.h+0.6,T.ink)});y+=ch+4}
-    // Criterio alternativo: aviso destacado, como en pantalla
-    if(G.alt){const L=layout(G.alt,{size:8,width:CW-10}),Lg=layout('CRITERIO ALTERNATIVO APLICADO',{size:6.5,style:'bold',width:CW-10,cs:.4}),h=Lg.h+1.5+L.h+7,wc=hexRgb(css('--warn'));need(h+3);
-      doc.setFillColor(...mixRgb(wc,0.12,T.surface));doc.setDrawColor(...wc);doc.setLineWidth(0.35);doc.roundedRect(M,y,CW,h,2,2,'FD');doc.setFillColor(...wc);doc.rect(M,y,1.2,h,'F');
-      draw(Lg,M+5,y+3.5,wc);draw(L,M+5,y+3.5+Lg.h+1.5,T.ink);y+=h+4}
-    para(`Grupo de comparación. ${G.crit}${G.warn?' '+G.warn:''} Miembros: ${[...G.members].sort((a,b)=>b.core-a.core).map(x=>x.name).join(', ')}.`,7.8,T.muted);
-    // Conclusión principal destacada
-    {const L=layout(A.reading.join(' '),{size:10.5,width:CW-10}),Lg=layout('CONCLUSIÓN PRINCIPAL',{size:6.5,style:'bold',width:60,cs:.4});const h=Lg.h+2+L.h+8;need(h+4);
-      doc.setFillColor(...mixRgb(T.acc,0.1,T.surface));doc.setDrawColor(...T.acc);doc.setLineWidth(0.3);doc.roundedRect(M,y,CW,h,2,2,'FD');
-      draw(Lg,M+5,y+4,T.acc);draw(L,M+5,y+4+Lg.h+2,T.ink);y+=h+5}
     // Tres bloques de la arquitectura
     {const gw=(CW-8)/3;const cards=A.blocks.map(b=>{const cv=covOf(o,b.k);return {b,cv,Ln:layout(b.name,{size:7,style:'bold',width:gw-8,cs:.3,upper:true}),
         Lv:layout(fmt(b.v),{size:17,style:'bold',width:30}),Ld:layout(b.d==null?'—':sgn(b.d)+' pts',{size:8.5,style:'bold',width:30}),
@@ -2136,13 +2194,21 @@ async function buildReport(step){
         cy+=draw(c.Ln,x+4,cy,T.muted)+1.5;draw(c.Lv,x+4,cy,T.ink);draw(c.Ld,x+8+tw(c.Lv.lines[0],0)*1.05+4,cy+2.2,c.b.d==null?T.muted:c.b.d>=RX_T.strong?T.pos:c.b.d<=-RX_T.strong?T.neg:T.muted);cy+=c.Lv.h+2;
         const bw=gw-8;doc.setFillColor(...T.soft);doc.roundedRect(x+4,cy,bw,2.2,1,1,'F');if(c.b.v!=null){doc.setFillColor(...T.acc);doc.roundedRect(x+4,cy,bw*clamp(c.b.v)/100,2.2,1,1,'F')}
         if(c.b.ref!=null){doc.setFillColor(...T.ink);doc.rect(x+4+bw*clamp(c.b.ref)/100-0.3,cy-1,0.6,4.2,'F')}cy+=4.5;draw(c.Ls,x+4,cy,T.muted)});y+=ch+5}
-    // Tres mensajes prioritarios
-    {const gw=(CW-8)/3,colOf=x=>x.soft?T.muted:x.weak?T.neg:x.kind==='gap'||x.kind==='spread'?T.bench:x.kind==='core'||x.kind==='blocks'?T.bench:T.pos;
-      const Lh=layout('MENSAJES PRIORITARIOS',{size:7,style:'bold',width:CW,cs:.4});
-      const its=A.msgs.map((x,i)=>({x,Lt:layout(`${i+1}. ${x.t}`,{size:8.4,style:'bold',width:gw-8}),Ls:layout(x.sub||'',{size:7,width:gw-8})}));
-      const ch=Math.max(...its.map(c=>c.Lt.h+c.Ls.h))+8;need(Lh.h+2+ch+3);y+=draw(Lh,M,y,T.acc)+2;
-      its.forEach((c,i)=>{const x=M+i*(gw+4);doc.setFillColor(...T.surface);doc.setDrawColor(...T.line);doc.setLineWidth(0.25);doc.roundedRect(x,y,gw,ch,2,2,'FD');doc.setFillColor(...colOf(c.x));doc.rect(x,y+1,1,ch-2,'F');
-        let cy=y+3.5;cy+=draw(c.Lt,x+4,cy,T.ink)+0.8;draw(c.Ls,x+4,cy,T.muted)});y+=ch+6}
+    para(`Cómo leer este resumen. Las diferencias se miden en puntos frente a la mediana del grupo de comparación. El tono de cada mensaje depende de la cobertura de datos: alta se afirma, media se matiza con «probablemente» y limitada se presenta como indicio. El detalle, la metodología y los datos están en las secciones y anexos siguientes.`,7.8,T.muted);
+    newPage();
+    section(nx(),'Radiografía por bloques y dominios',`Posición de ${o.name} en cada bloque y dominio frente a su grupo de comparación, con la cobertura de datos de cada uno.`);
+    // Gráfico vectorial: franja P25–P75 del grupo, mediana y país (legible en blanco y negro: se distingue por la forma)
+    {const rows=A.blocks.flatMap(b=>[[b.k,b.name,1],...b.doms.map(k=>[k,DL[k],0])]),lw=52,vw=30,x0=M+lw,pw=CW-lw-vw,rh=6.4,h=rows.length*rh+16;need(h+4);
+      [0,25,50,75,100].forEach(t=>{const x=x0+pw*t/100;doc.setDrawColor(...T.line);doc.setLineWidth(0.2);doc.line(x,y+5,x,y+6+rows.length*rh);draw(layout(String(t),{size:6.5,width:10}),x-(t===100?3.5:t?1.6:0.8),y,T.muted)});
+      let cy=y+6;rows.forEach(([k,l,b])=>{const st=gStats(G,k),v=o[k],my=cy+rh/2;draw(layout(l,{size:b?8:7.4,style:b?'bold':'normal',width:lw-(b?2:5)}),M+(b?0:3),my-1.6,T.ink);
+        doc.setDrawColor(...T.muted);doc.setLineWidth(0.15);doc.line(x0,my,x0+pw,my);
+        if(st.p25!=null){doc.setFillColor(...mixRgb(T.bench,0.45,T.surface));doc.setDrawColor(...T.bench);doc.setLineWidth(0.25);doc.rect(x0+pw*clamp(st.p25)/100,my-1.6,Math.max(0.6,pw*(clamp(st.p75)-clamp(st.p25))/100),3.2,'FD');
+          doc.setFillColor(...T.ink);doc.rect(x0+pw*clamp(st.med)/100-0.25,my-2.4,0.5,4.8,'F')}
+        if(v!=null){doc.setFillColor(...T.acc);doc.setDrawColor(...T.ink);doc.setLineWidth(0.35);doc.circle(x0+pw*clamp(v)/100,my,1.5,'FD')}
+        const p=gPos(v,st);draw(layout(`${v==null?'—':fmt(v)} ${p.c==='up'?'▲':p.c==='down'?'▼':''}`.trim(),{size:7.6,style:'bold',width:vw-3}),x0+pw+3,my-1.6,p.c==='up'?T.pos:p.c==='down'?T.neg:T.ink);cy+=rh});
+      cy+=2;const lx=x0;doc.setFillColor(...mixRgb(T.bench,0.45,T.surface));doc.setDrawColor(...T.bench);doc.rect(lx,cy+0.4,7,2.6,'FD');draw(layout('Rango central del grupo (P25–P75)',{size:6.8,width:60}),lx+9,cy,T.muted);
+      doc.setFillColor(...T.ink);doc.rect(lx+62,cy-0.4,0.5,4,'F');draw(layout('Mediana del grupo',{size:6.8,width:40}),lx+64.5,cy,T.muted);
+      doc.setFillColor(...T.acc);doc.setDrawColor(...T.ink);doc.circle(lx+98,cy+1.6,1.4,'FD');draw(layout(`${o.name}  ·  ▲ top cuartil  ▼ cuartil inferior`,{size:6.8,width:70}),lx+101,cy,T.muted);y=cy+8}
     // Bloques y dominios con referencia y diferencia
     headingT('Arquitectura por bloques y posición en el grupo',`Valor de ${o.name}, mediana del grupo, diferencia en puntos, rango central del grupo (P25–P75) y cobertura de indicadores. «Top cuartil (>P75)»: por encima del percentil 75 del grupo; «Cuartil inferior (<P25)»: por debajo del percentil 25. Es una lectura distinta de «Por encima de la mediana (+X pts)», que se usa en las conclusiones.`);
     const dcol=d=>d==null?T.muted:d>=RX_T.strong?T.pos:d<=-RX_T.strong?T.neg:T.muted;
@@ -2152,9 +2218,10 @@ async function buildReport(step){
     await table([{h:'Bloque / dominio',w:46},{h:'Valor',w:15,a:'r'},{h:'Mediana grupo',w:19,a:'r'},{h:'Diferencia',w:19,a:'r'},{h:'P25–P75',w:21,a:'r'},{h:'Posición',w:34},{h:'Cobertura',w:28}],
       A.blocks.flatMap(b=>[prow(b.k,b.name,1,T.acc),...b.doms.map(k=>prow(k,'   '+DL[k],0,null))]));
 
+    section(nx(),'Fortalezas y rezagos',`Criterio: una fortaleza o un rezago es una diferencia de ${RX_T.strong} puntos o más frente a la mediana del grupo; un desequilibrio, ${RX_T.gapRel} puntos o más entre bloques (${RX_T.spread} entre dominios de un bloque).`);
     // Lectura completa (equivale a «Ver más»): lista que puede partirse entre páginas
     {const grp=(name,items)=>[{group:name},...items.map(x=>({cells:[{t:x.t,b:1,sub:x.sub||''},x.cov?{t:`${x.cov.n}/${x.cov.N} · ${x.cov.lvl==='nula'?'sin datos':x.cov.lvl}`,color:x.cov.lvl==='limitada'||x.cov.lvl==='nula'?T.neg:null}:'—']}))];
-      headingT('Lectura completa',`Todas las conclusiones de la radiografía. Tono según la cobertura: alta se afirma; media se matiza con «probablemente»; limitada se presenta como indicio basado solo en los indicadores disponibles.`);
+      headingT('Todas las conclusiones',`Tono según la cobertura: alta se afirma; media se matiza con «probablemente»; limitada se presenta como indicio basado solo en los indicadores disponibles.`);
       await table([{h:'Conclusión',w:150},{h:'Cobertura',w:32}],[...grp('Fortalezas',A.fort),...grp('Desequilibrios y rezagos',A.deseq),...grp('Posición',A.pos)],{size:7.4});}
     // Trazabilidad: datos que sostienen cada conclusión
     {const rows=[];
@@ -2168,33 +2235,31 @@ async function buildReport(step){
       if(rows.length){headingT('Datos que sostienen las conclusiones',`Indicadores con mayor divergencia respecto al grupo en cada conclusión, frente a su mediana (valores normalizados 0–100). Metodológicamente, todos los indicadores con dato pesan igual dentro de su dominio.`);
         await table([{h:'Indicador',w:70},{h:'Valor',w:15,a:'r'},{h:'Mediana grupo',w:19,a:'r'},{h:'Dif.',w:14,a:'r'},{h:'Original',w:20,a:'r'},{h:'Año',w:12,a:'r'}],rows,{size:6.9});}
     }
+    section(nx(),'Grupo de comparables',`${GMODES[G.mode]} · ${G.members.length} países.`);
+    // Criterio alternativo: aviso destacado, como en pantalla
+    if(G.alt){const L=layout(G.alt,{size:8,width:CW-10}),Lg=layout('CRITERIO ALTERNATIVO APLICADO',{size:6.5,style:'bold',width:CW-10,cs:.4}),h=Lg.h+1.5+L.h+7,wc=hexRgb(css('--warn'));need(h+3);
+      doc.setFillColor(...mixRgb(wc,0.12,T.surface));doc.setDrawColor(...wc);doc.setLineWidth(0.35);doc.roundedRect(M,y,CW,h,2,2,'FD');doc.setFillColor(...wc);doc.rect(M,y,1.2,h,'F');
+      draw(Lg,M+5,y+3.5,wc);draw(L,M+5,y+3.5+Lg.h+1.5,T.ink);y+=h+4}
+    para(`Criterio aplicado. ${G.crit}${G.warn?' '+G.warn:''}`,8.4);
+    {const ms=[...G.members].sort((a,b)=>b.core-a.core),g=x=>GDPPC[x.iso]?`${fmtR(GDPPC[x.iso].v)} (${GDPPC[x.iso].y})`:'sin dato';
+      await table([{h:'País',w:50},{h:'Región',w:40},{h:'Renta',w:22},{h:'PIB per cápita PPA',w:30,a:'r'},{h:'Tier',w:10},{h:'Núcleo',w:16,a:'r'},{h:'Puesto',w:14,a:'r'}],
+        [{cells:[{t:o.name+' (analizado)',b:1,key:T.acc},REG_S[o.reg]||o.reg,INC_S[o.inc]||o.inc,g(o),o.tier,{t:fmt(o.core),b:1},o.rank?String(o.rank):'—']},...ms.map(x=>({cells:[x.name,REG_S[x.reg]||x.reg,INC_S[x.inc]||x.inc,g(x),x.tier,fmt(x.core),x.rank?String(x.rank):'—']}))],{size:7.2});
+      para(`PIB per cápita PPA en ${GDP_SRC.unit}. Fuente: ${GDP_SRC.name}, serie ${GDP_SRC.code}; los valores que faltaban en la base se completaron con la misma serie (consulta del ${GDP_SRC.date}). Todas las medianas y percentiles del informe se calculan sobre este grupo, sin contar a ${o.name}.`,7.6,T.muted)}
     // Comparación con otro país
     {const b=BYISO[PAIR];if(b&&b!==o){const dc=o.core-b.core,[hi,lo]=dc>=0?[o,b]:[b,o],D=pairDecomp(o,b),f2=v=>sgn(v,2);
-      headingT(`¿Por qué ${hi.name} queda por encima de ${lo.name}?`,`Núcleo ${fmt(o.core,2)} (${o.name}) frente a ${fmt(b.core,2)} (${b.name}): ${f2(dc)} puntos, que se reparten en ${f2(D.dRaw)} de puntuación bruta y ${f2(D.dAdj)} de ajuste por fiabilidad (núcleo − bruta: ${f2(D.adjA)} y ${f2(D.adjB)}).${Math.abs(D.res)>=0.005?` Residuo no explicado por redondeo: ${f2(D.res)}.`:' Las partes suman exactamente la diferencia.'}`);
+      section(nx(),`¿Por qué ${hi.name} queda por encima de ${lo.name}?`,'Descomposición exacta de la diferencia de puntuación núcleo entre los dos países.');para(`Núcleo ${fmt(o.core,2)} (${o.name}) frente a ${fmt(b.core,2)} (${b.name}): ${f2(dc)} puntos, que se reparten en ${f2(D.dRaw)} de puntuación bruta y ${f2(D.dAdj)} de ajuste por fiabilidad (núcleo − bruta: ${f2(D.adjA)} y ${f2(D.adjB)}).${Math.abs(D.res)>=0.005?` Residuo no explicado por redondeo: ${f2(D.res)}.`:' Las partes suman exactamente la diferencia.'}`,8.2,T.muted);
       await table([{h:'Dominio',w:62},{h:o.iso,w:20,a:'r'},{h:b.iso,w:20,a:'r'},{h:'Aporta (dif. ÷ 7)',w:28,a:'r'},{h:'De datos observados',w:26,a:'r'},{h:'Del ajuste',w:26,a:'r'}],
         [...D.rows.map(r=>({cells:[DL[r.k],fmt(o[r.k]),fmt(b[r.k]),{t:f2(r.tot),b:1,color:r.tot>=0?T.pos:T.neg},f2(r.ob),f2(r.aj)]})),
          ...(Math.abs(D.comp)>=0.005?[{cells:['Dominios sin dato (la bruta solo promedia los observados)','','','0,00',f2(-D.comp),f2(D.comp)]}]:[]),
          {cells:[{t:'Residuo no explicado (redondeo)',color:T.muted},'','',f2(D.res),f2(D.resOb),f2(D.resAj)]},
          {cells:[{t:'Total',b:1},{t:fmt(o.core,2),b:1},{t:fmt(b.core,2),b:1},{t:f2(D.dCore),b:1},{t:f2(D.dRaw),b:1},{t:f2(D.dAdj),b:1}]}]);}}
-    // Cálculo completo de la puntuación
-    {const C=calcChain(o),f2=v=>fmt(v,2);
-      headingT('Cómo se calcula la puntuación',`Indicadores normalizados 0–100 (winsorización P2,5–P97,5, log con signo si procede, mín–máx) → media simple por dominio → bruta ${f2(o.raw)} → ajuste por fiabilidad: ajustada = cobertura × observada + (1 − cobertura) × referencia previa (45 % mediana global + 30 % regional + 25 % de renta) → núcleo = media de los 7 dominios ajustados = ${f2(o.core)} (reproducido: ${f2(C.core)}; residuo ${sgn(C.resCore,2)}).`);
-      await table([{h:'Dominio',w:34},{h:'Indicadores',w:20,a:'r'},{h:'Observada',w:19,a:'r'},{h:'Fiabilidad',w:18,a:'r'},{h:'Ref. previa',w:19,a:'r'},{h:'Ajustada',w:19,a:'r'},{h:'Publicada',w:19,a:'r'},{h:'Efecto',w:16,a:'r'}],
-        DOM.map(k=>{const c=C.doms[k];return {cells:[DS[k],`${c.n} de ${c.N}`,c.obs==null?'—':f2(c.obs),fmt(c.a*100,1)+' %',f2(c.prior),{t:f2(c.adj),b:1},fmt(c.pub),c.obs==null?'solo ref.':sgn(c.adj-c.obs,2)]}}));}
-    // Solidez de la evidencia
-    const ev=EVBY[o.iso]||[],yrs=ev.map(x=>x.y);
-    headingT('Solidez de la evidencia',`Indicadores observados por dominio y nivel de cobertura (alta ≥ ${COV_T.alta} %, media ${COV_T.media}–${COV_T.alta} %, limitada < ${COV_T.media} %). La cobertura es la fiabilidad del dominio en el ajuste.`);
-    await table([{h:'Medida',w:90},{h:'Valor',w:92}],[
-      {cells:['Tier · confianza',{t:`${o.tier} · ${fmt(o.conf)}`,b:1}]},{cells:['Indicadores con dato',{t:`${o.ind} de 92 (${fmt(o.cov,0)} %)`,b:1}]},
-      {cells:['Años de las observaciones',{t:yrs.length?Math.min(...yrs)+'–'+Math.max(...yrs):'—',b:1}]},{cells:['Ajuste por fiabilidad (núcleo − bruta)',{t:o.raw!=null?`${sgn(o.core-o.raw,2)} (bruta ${fmt(o.raw,2)} → núcleo ${fmt(o.core,2)})`:'—',b:1}]},
-      ...DOM8.map(k=>{const c=covOf(o,k);return {cells:[DL[k],{t:`${c.n} de ${c.N} · ${COV_L[c.lvl].toLowerCase()}${c.n===0&&k!=='leg'?' · valor = referencia previa':''}`,color:c.lvl==='limitada'||c.lvl==='nula'?T.neg:null}]}})]);
   }
 
   /* ================= 2. REFERENTES POR OBJETIVO ================= */
   await step('Preparando los referentes por objetivo…');
   {const tw=DOM.reduce((a,k)=>a+(GW[k]||0),0);
     if(tw){const {pool,list}=goalRanking(),top=list.slice(0,GN),gl=GOAL==='custom'?'Objetivo personalizado':GOALS[GOAL].l;
-      section('02',`Referentes por objetivo: ${gl.toLowerCase()}`,`Ponderación: ${DOM.filter(k=>GW[k]).map(k=>`${DS[k]} ${Math.round(100*GW[k]/tw)} %`).join(' · ')}. ${pool.length} países candidatos${G_TIERA?' (solo tier A)':' (tier A–B)'}${G_FILT?', con los filtros actuales':''}.`);
+      section(nx(),`Referentes por objetivo: ${gl.toLowerCase()}`,`Ponderación: ${DOM.filter(k=>GW[k]).map(k=>`${DS[k]} ${Math.round(100*GW[k]/tw)} %`).join(' · ')}. ${pool.length} países candidatos${G_TIERA?' (solo tier A)':' (tier A–B)'}${G_FILT?', con los filtros actuales':''}.`);
       const me=RX&&BYISO[RX];if(me){const sc=goalScore(me);para(`Como referencia, ${me.name} obtendría ${fmt(sc.s)} puntos en este objetivo. La propuesta es un punto de partida: cada país debe analizarse con su radiografía y su detalle.`,8,T.muted)}
       const lst=a=>a.length?a.map(x=>`${x.t} (${x.s})`).join('; '):'—';
       await table([{h:'#',w:7,a:'r'},{h:'País',w:30},{h:'Puntuación',w:17,a:'r'},{h:'Qué aporta',w:42},{h:'Contrapartidas',w:42},{h:'Información que falta',w:44}],
@@ -2206,7 +2271,7 @@ async function buildReport(step){
   await step('Dibujando la comparación entre países…');
   const G=CAPTURED;
   if(E.length){
-    section('03','Comparación de los países seleccionados',`${E.length} países frente a ${B?B.label.toLowerCase():'ninguna referencia'}. Fichas, perfil dominio a dominio, diferencias y cuadro con todas las métricas.`);
+    section(nx(),'Comparación de los países seleccionados',`${E.length} países frente a ${B?B.label.toLowerCase():'ninguna referencia'}. Fichas, perfil dominio a dominio, diferencias y cuadro con todas las métricas.`);
     // Fichas de país en vectorial (3 por fila)
     const gp=4,cwd=(CW-2*gp)/3,pd=3.6,iw=cwd-2*pd;
     for(let r=0;r<E.length;r+=3){
@@ -2250,10 +2315,31 @@ async function buildReport(step){
       return {cells:[{t:e.o.name,b:1,key:ECOL[i]},{t:p.map(({x,d})=>`${x.name} (${fmt(d)})`).join(' · ')}]}}));
   }
 
+  /* ================= PANORAMA ================= */
+  section(nx(),'Panorama del conjunto filtrado',`Los ${F.length} países que cumplen los filtros de la consulta.`);need(45);
+  y+=draw(eyebrow('Indicadores clave del conjunto analizado',CW),M,y,T.acc)+3;
+  const kp=[...document.querySelectorAll('#kpis .kpi')].map(k=>[k.querySelector('span').textContent,k.querySelector('b').textContent,k.querySelector('small').textContent]);
+  const gap=4,cw=(CW-2*gap)/3,pad=4,inner=cw-2*pad;
+  const cards=kp.map(([lab,val,sub])=>{const vv=pdfTxt(val),long=vv.length>12;
+    const Lb=layout(lab,{size:6.3,style:'bold',width:inner,cs:0.2,upper:true}),Lv=layout(vv,{size:long?12:18,style:'bold',width:inner,min:long?9.5:14}),Ls=layout(sub,{size:6.8,width:inner});
+    return {Lb,Lv,Ls,h:pad+2.6+Lb.h+2+Lv.h+1.6+Ls.h+pad}});
+  for(let r=0;r<cards.length;r+=3){
+    const row=cards.slice(r,r+3),rowH=Math.max(...row.map(c=>c.h));need(rowH+gap);
+    row.forEach((c,j)=>{const i=r+j,cx=M+j*(cw+gap);
+      doc.setFillColor(...T.surface);doc.setDrawColor(...T.line);doc.setLineWidth(0.25);doc.roundedRect(cx,y,cw,rowH,2.4,2.4,'FD');
+      doc.setFillColor(...KPI_NEON[i%6]);doc.rect(cx+pad,y+pad,5,0.9,'F');
+      let cy=y+pad+2.6;cy+=draw(c.Lb,cx+pad,cy,T.muted)+2;cy+=draw(c.Lv,cx+pad,cy,KPI_NEON[i%6])+1.6;draw(c.Ls,cx+pad,cy,T.muted)});
+    y+=rowH+gap;
+  }
+  y+=4;
+  y+=draw(eyebrow('Puntos clave',CW),M,y,T.acc)+3;
+  keyPoints().forEach(t=>{const L=layout(t,{size:9,width:CW-5});if(y+L.h>BOTTOM-14)newPage();
+    doc.setFillColor(...T.acc);doc.circle(M+1.2,y+L.size*PT*0.5,0.8,'F');y+=draw(L,M+5,y,T.ink)+2.4});
+
   /* ================= 2. RANKING ================= */
   await step('Dibujando el ranking…');
   const rm=$('#rMetric').value;
-  section('04','Ranking',`${MET[rm].l}: ${MET[rm].d}`);
+  section(nx(),'Ranking',`${MET[rm].l}: ${MET[rm].d}`);
   if(G.rank){const n=chartRows(G.rank);await figure(`Las ${Math.min(20,n)} primeras posiciones${E.length?' y los países seleccionados':''}`,'El ranking completo, con los '+F.length+' países del filtro, está en la sección 05. La línea discontinua es la mediana.',
     groupValues($('#rColor').value).map(v=>[hexRgb(groupColor($('#rColor').value,v)),groupLabel($('#rColor').value,v)]),G.rank,900,Math.max(300,n*19+70))}
   {const vals=F.map(x=>x[rm]).filter(v=>v!=null);
@@ -2272,7 +2358,7 @@ async function buildReport(step){
   /* ================= 3. DISPERSIÓN ================= */
   await step('Dibujando la dispersión…');
   const xm=$('#xMetric').value,ym=$('#yMetric').value;
-  section('05','Dispersión',`${MET[xm].l} (eje X) frente a ${MET[ym].l} (eje Y). Las líneas discontinuas marcan las medianas del conjunto filtrado.`);
+  section(nx(),'Dispersión',`${MET[xm].l} (eje X) frente a ${MET[ym].l} (eje Y). Las líneas discontinuas marcan las medianas del conjunto filtrado.`);
   if(G.scatter)await figure('Mapa de dispersión','Cada punto es un país; las seleccionadas llevan su código. Las líneas discontinuas dividen el plano en cuadrantes por la mediana.',
     groupValues($('#sColor').value).map(v=>[hexRgb(groupColor($('#sColor').value,v)),groupLabel($('#sColor').value,v)]),G.scatter,900,360);
   {const P=F.filter(o=>o[xm]!=null&&o[ym]!=null),mx=median(P.map(o=>o[xm])),my=median(P.map(o=>o[ym])),r=pearson(P.map(o=>o[xm]),P.map(o=>o[ym]));
@@ -2288,7 +2374,7 @@ async function buildReport(step){
   /* ================= 4. GRUPOS ================= */
   await step('Dibujando los grupos…');
   const gby=$('#gBy').value,gst=$('#gStat').value==='mean'?mean:median;
-  section('06','Grupos',`Perfil ${$('#gStat').value==='mean'?'medio':'mediano'} y composición por ${$('#gBy').selectedOptions[0].text.toLowerCase()}.`);
+  section(nx(),'Grupos',`Perfil ${$('#gStat').value==='mean'?'medio':'mediano'} y composición por ${$('#gBy').selectedOptions[0].text.toLowerCase()}.`);
   const GG=groupValues(gby).map(g=>({g,set:F.filter(o=>(gby==='arch'?o.arch:o[gby])===g)})).filter(x=>x.set.length);
   await figure('Perfil de cada grupo',`Puntuación ${$('#gStat').value==='mean'?'media':'mediana'} de cada dominio (0–100).`,GG.map(({g,set})=>[hexRgb(groupColor(gby,g)),`${groupLabel(gby,g)} (${set.length})`]),G.group,900,300);
   if(G.comp)await figure('Composición de cada grupo',`Reparto por ${$('#gComp').selectedOptions[0].text.toLowerCase()} (% de países del grupo).`,G.comp.data.datasets.map(d=>[hexRgb(d.backgroundColor),d.label]),G.comp,900,Math.max(200,GG.length*32+50));
@@ -2300,16 +2386,47 @@ async function buildReport(step){
   /* ================= 5. MAPA DE CALOR ================= */
   await step('Componiendo el mapa de calor…');
   const hm=$('#hScale').value;
-  section('07','Mapa de calor y ranking completo',`Los ${F.length} países del filtro ordenados por puntuación núcleo. ${hm==='abs'?'Color: valor absoluto 0–100 (más intenso, más alto).':'Color: verde por encima de la mediana global del dominio, rojo por debajo.'}`);
+  section(nx(),'Mapa de calor y ranking completo',`Los ${F.length} países del filtro ordenados por puntuación núcleo. ${hm==='abs'?'Color: valor absoluto 0–100 (más intenso, más alto).':'Color: verde por encima de la mediana global del dominio, rojo por debajo.'}`);
   {const L=[...F].sort((a,b)=>b.core-a.core),selSet=new Set(S.sel);
     await table([{h:'#',w:6,a:'r'},{h:'País',w:31},{h:'Arquetipo',w:27},{h:'Tier',w:6},{h:'Núcleo',w:11,a:'r'},...DOM8.map(k=>({h:DSS[k],w:12.6,a:'r'}))],
       L.map((o,i)=>({cells:[String(i+1),{t:o.name,b:selSet.has(o.iso),key:selSet.has(o.iso)?ECOL[S.sel.indexOf(o.iso)]:null},{t:ARCH[o.arch],size:6.2},o.tier,{t:fmt(o.core),b:1},
         ...DOM8.map(k=>({t:o[k]==null?'—':fmt(o[k],0),fill:hm==='abs'?heatAbs(o[k]):heatRel(o[k],k)}))]})),{size:6.8,label:'Mapa de calor'});
   }
 
+  /* ================= ANEXO A · METODOLOGÍA ================= */
+  await step('Escribiendo el anexo metodológico…');
+  {const o=RO,G=RG,A=RA;
+    section('A','Anexo metodológico','Cálculo de la puntuación, pesos, agregación, ajuste por fiabilidad, sensibilidad y solidez de los datos.');
+    [...document.querySelectorAll('footer .ft')].slice(0,2).forEach(d=>para(d.textContent,8.2));
+    // Cálculo completo de la puntuación
+    {const C=calcChain(o),f2=v=>fmt(v,2);
+      headingT('Cómo se calcula la puntuación',`Indicadores normalizados 0–100 (winsorización P2,5–P97,5, log con signo si procede, mín–máx) → media simple por dominio → bruta ${f2(o.raw)} → ajuste por fiabilidad: ajustada = cobertura × observada + (1 − cobertura) × referencia previa (45 % mediana global + 30 % regional + 25 % de renta) → núcleo = media de los 7 dominios ajustados = ${f2(o.core)} (reproducido: ${f2(C.core)}; residuo ${sgn(C.resCore,2)}).`);
+      await table([{h:'Dominio',w:34},{h:'Indicadores',w:20,a:'r'},{h:'Observada',w:19,a:'r'},{h:'Fiabilidad',w:18,a:'r'},{h:'Ref. previa',w:19,a:'r'},{h:'Ajustada',w:19,a:'r'},{h:'Publicada',w:19,a:'r'},{h:'Efecto',w:16,a:'r'}],
+        DOM.map(k=>{const c=C.doms[k];return {cells:[DS[k],`${c.n} de ${c.N}`,c.obs==null?'—':f2(c.obs),fmt(c.a*100,1)+' %',f2(c.prior),{t:f2(c.adj),b:1},fmt(c.pub),c.obs==null?'solo ref.':sgn(c.adj-c.obs,2)]}}));}
+    {const R=robustness(o);if(R){const t=robTxt(o,R);
+      headingT('Análisis de sensibilidad',`${t[0]} ${t[1]} El umbral de ${SCEN_T} puestos es un supuesto de interpretación del atlas.`);
+      await table([{h:'Escenario',w:86},{h:'Puntuación',w:22,a:'r'},{h:'Puesto',w:18,a:'r'},{h:'Cambio',w:20,a:'r'},{h:'Frente a la mediana del grupo',w:36}],
+        [{cells:[{t:'Especificación publicada (pesos iguales, media aritmética, dominios ajustados)',b:1},{t:fmt(o.core,2),b:1},{t:String(R.r0),b:1},'=',R.base?'por encima':'por debajo']},...R.rows.map(r=>({cells:[r.l,fmt(r.s,2),String(r.r??'—'),{t:r.d==null?'—':r.d===0?'=':r.d<0?`sube ${-r.d}`:`baja ${r.d}`,color:r.d<0?T.pos:r.d>0?T.neg:null},r.above==null?'—':r.above?'por encima':'por debajo']}))],{size:7.2});}}
+    // Solidez de la evidencia
+    const ev=EVBY[o.iso]||[],yrs=ev.map(x=>x.y);
+    headingT('Solidez de la evidencia',`Indicadores observados por dominio y nivel de cobertura (alta ≥ ${COV_T.alta} %, media ${COV_T.media}–${COV_T.alta} %, limitada < ${COV_T.media} %). La cobertura es la fiabilidad del dominio en el ajuste.`);
+    await table([{h:'Medida',w:90},{h:'Valor',w:92}],[
+      {cells:['Tier · confianza',{t:`${o.tier} · ${fmt(o.conf)}`,b:1}]},{cells:['Indicadores con dato',{t:`${o.ind} de 92 (${fmt(o.cov,0)} %)`,b:1}]},
+      {cells:['Años de las observaciones',{t:yrs.length?Math.min(...yrs)+'–'+Math.max(...yrs):'—',b:1}]},{cells:['Ajuste por fiabilidad (núcleo − bruta)',{t:o.raw!=null?`${sgn(o.core-o.raw,2)} (bruta ${fmt(o.raw,2)} → núcleo ${fmt(o.core,2)})`:'—',b:1}]},
+      ...DOM8.map(k=>{const c=covOf(o,k);return {cells:[DL[k],{t:`${c.n} de ${c.N} · ${COV_L[c.lvl].toLowerCase()}${c.n===0&&k!=='leg'?' · valor = referencia previa':''}`,color:c.lvl==='limitada'||c.lvl==='nula'?T.neg:null}]}})]);
+  }
+
+  /* ================= ANEXO B · DATOS ================= */
+  {const o=RO,L=IND.map(I=>({I,x:IOBS[I.k].get(o.iso)})).filter(z=>z.x);
+    section('B1',`Anexo de datos: indicadores de ${o.name}`,`Los ${L.length} indicadores con dato de los 92, con su fuente, año, valor original y valor normalizado 0–100. Los ${92-L.length} restantes no tienen dato para este país.`);
+    const rows=[];DOM8.forEach(d=>{const Ld=L.filter(z=>z.I.dom===d),N=DOMN[d];rows.push({group:`${DL[d]} · ${Ld.length} de ${N} indicadores con dato${d==='leg'?' · contexto, no puntúa':''}`});
+      Ld.forEach(({I,x})=>rows.push({cells:[{t:I.label,sub:I.higher?I.unit:I.unit+' · más bajo es mejor'},{t:SRC_ES[I.src]||I.src,size:6.4},String(x.y),fmtR(x.r),{t:fmt(x.n,0),b:1},fmt(I.medN,0)]}));
+      if(!Ld.length)rows.push({cells:[{t:'Sin indicadores con dato',color:T.muted},'','','','','']})});
+    await table([{h:'Indicador',w:74},{h:'Fuente',w:36},{h:'Año',w:12,a:'r'},{h:'Valor original',w:22,a:'r'},{h:'Normalizado',w:19,a:'r'},{h:'Mediana mundial',w:19,a:'r'}],rows,{size:6.9});
+    para('Normalizado: valor reescalado de 0 a 100 (redondeado a entero). Mediana mundial: mediana del valor normalizado entre los países con dato.',7.6,T.muted)}
   /* ================= 6. EVIDENCIA ================= */
   await step('Reuniendo la evidencia por indicador…');
-  section('08','Evidencia por indicador','Valores de los indicadores de origen (Stanford AI Index, World Bank, WIPO, OECD.AI y otras fuentes). Normalizado 0–100 en negrita; valor original y año debajo.');
+  section('B2','Anexo de datos: indicadores de la consulta','Valores de los indicadores de origen (Stanford AI Index, World Bank, WIPO, OECD.AI y otras fuentes). Normalizado 0–100 en negrita; valor original y año debajo.');
   if(G.ev&&$('#eMode').value!=='dict'){const n=chartRows(G.ev),mode=$('#eMode').value;
     await figure('Vista actual: '+$('#eMode').selectedOptions[0].text,pdfTxt($('#eNote').textContent).replace(/Pulsa.*$/,''),null,G.ev,900,Math.max(300,mode==='eco'?n*26+70:mode==='cmp'?n*(14+E.length*9)+80:n*19+70))}
   if(E.length){
@@ -2327,7 +2444,7 @@ async function buildReport(step){
 
   /* ================= 7. DATOS ================= */
   await step('Escribiendo la tabla de datos…');
-  section('09','Datos completos',`Tabla de la vista Datos tal como está configurada (filtro, búsqueda, orden y columnas). Conocim.: conocimiento · Instit.: institucional · Brecha conv./endog.: brechas de conversión y endogeneización.`);
+  section('B3','Anexo de datos: tabla de países',`Tabla de la vista Datos tal como está configurada (filtro, búsqueda, orden y columnas). Conocim.: conocimiento · Instit.: institucional · Brecha conv./endog.: brechas de conversión y endogeneización.`);
   {const L=tableRows(),selSet=new Set(S.sel),C=visCols(),W0={name:30,reg:22,inc:12,tier:6,rank:9,arch:24,bn:14,iso:8,year:10,inf:15,res:14,leg:13,gov:13,ado:12,cov:12,raw:11,conf:12,align:12,bal:12,conv:12,endo:12,K:12,D:13,I:11};
     const body=C.filter(c=>c[0]!=='name'),chunks=[],nCh=Math.max(1,Math.ceil(body.length/9)),per=Math.ceil(body.length/nCh);for(let i=0;i<body.length;i+=per)chunks.push(body.slice(i,i+per));if(!chunks.length)chunks.push([]);
     para(`Misma selección que la vista Datos: ${L.length} filas${$('#tSearch').value.trim()?` que contienen «${$('#tSearch').value.trim()}»`:''}, ordenadas por «${COLS.find(c=>c[0]===TSORT.sort)?.[1]||TSORT.sort}» ${TSORT.dir>0?'ascendente':'descendente'}, con las ${C.length} columnas visibles${chunks.length>1?` (repartidas en ${chunks.length} tablas)`:''}.`,7.8,T.muted);
@@ -2338,10 +2455,14 @@ async function buildReport(step){
           if(k==='conv'||k==='endo')return {t:sgn(v),color:v>=0?T.pos:T.neg};return typeof v==='number'?fmt(v,colDec(k)):String(v??'—')})})),{size:C.length>10?6.3:6.6,label:chunks.length>1?`Tabla de datos (${ci+1}/${chunks.length})`:'Tabla de datos'});}
   }
 
-  /* ================= METODOLOGÍA ================= */
-  heading('Cómo leer este informe',null,40);
-  [...document.querySelectorAll('footer .ft')].forEach(d=>para(d.textContent,8.2));
-  para('Los indicadores de origen proceden de Stanford AI Index 2025, World Development Indicators, Worldwide Governance Indicators, WIPO, OECD.AI Policy Observatory, World Bank Enterprise Surveys y Doing Business.',8.2,T.muted);
+  /* ================= ANEXO C · CITA Y LIMITACIONES ================= */
+  section('C','Cita recomendada y limitaciones','Cómo citar este informe y qué límites tiene el análisis.');
+  heading('Cita de este informe',null,20);para(citeReport(),8.6);
+  heading('Cita de la herramienta',null,20);para(citeTool(),8.6);
+  para('El atlas no tiene una autoría registrada: añade la persona o entidad responsable si procede. Cita también la fuente primaria de cada indicador cuando uses sus valores originales: Stanford AI Index 2025, World Development Indicators, Worldwide Governance Indicators, WIPO, OECD.AI Policy Observatory, World Bank Enterprise Surveys y Doing Business.',8,T.muted);
+  heading('Limitaciones',null,30);
+  LIMITS.forEach(t=>{const L=layout(t,{size:8.4,width:CW-5});need(L.h+2.4);doc.setFillColor(...T.acc);doc.circle(M+1.2,y+L.size*PT*0.5,0.7,'F');y+=draw(L,M+5,y,T.ink)+2.2});
+  [...document.querySelectorAll('footer .ft')].slice(2).forEach(d=>para(d.textContent,8.2,T.muted));
 
   /* Contenido con números de página */
   doc.setPage(tocPage);y=TOP+2;
@@ -2355,7 +2476,7 @@ async function buildReport(step){
 
   /* Encabezado y pie de página */
   await step('Paginando…');
-  const n=doc.getNumberOfPages(),title=pdfTxt(subT);
+  const n=doc.getNumberOfPages(),title=pdfTxt(`Radiografía de ${RO.name} · v${APP.ver} · datos ${METH.release}`);
   for(let i=1;i<=n;i++){doc.setPage(i);doc.setDrawColor(...T.line);doc.setLineWidth(0.25);
     if(i>1){const Lh=eyebrow('Atlas de arquitecturas de IA',CW*0.45);const used=Math.max(...Lh.lines.map(l=>{doc.setFontSize(Lh.size);return tw(l,Lh.cs)}));
       const Lr=layout(title,{size:7.5,width:CW-used-8,min:6});draw(Lh,M,8.5,T.acc);draw(Lr,W-M,8.5,T.muted,'right');
@@ -3098,7 +3219,145 @@ $('#goalFilt').addEventListener('change',e=>{G_FILT=e.target.checked;renderGoals
 $('#goalExcl').addEventListener('change',e=>{G_EXCL=e.target.checked;renderGoals()});
 
 /* ---------- Navegación ---------- */
-const VIEWS=['radiografia','referentes','perfil','ranking','dispersion','grupos','mapa-calor','evidencia','datos'];
+/* ---------- Capa de investigación: versiones, sensibilidad, calidad del dato, exportación y cita ---------- */
+const APP={name:'Atlas de Arquitecturas de IA',ver:'3.0',date:'16-11-2026',url:'https://jcominuic.github.io/atlas-ia/',src:'AI Innovation Architecture Dashboard'};
+GLOSS.sensibilidad=['Análisis de sensibilidad','Comprueba cuánto dependen los resultados de las decisiones del método (pesos, forma de promediar, ajuste). Si el puesto de un país apenas cambia al variar esos supuestos, la conclusión es robusta.'];
+const SCEN_T=10;   // supuesto de interpretación: un puesto es «robusto» si no se mueve más de 10 posiciones en ningún escenario
+const eqW=()=>Object.fromEntries(DOM.map(k=>[k,1]));
+const SENS={w:eqW(),agg:'arit',base:'adj'};
+function sensScore(o,cfg){let sw=0,s=0;for(const k of DOM){const w=cfg.w[k]||0,v=cfg.base==='obs'?obsDom(o,k):o[k];if(!w||v==null)continue;sw+=w;s+=w*(cfg.agg==='geo'?Math.log(Math.max(v,1)):v)}return sw?(cfg.agg==='geo'?Math.exp(s/sw):s/sw):null}
+function sensRank(cfg){const L=ELIG.map(o=>({o,s:sensScore(o,cfg)})).filter(x=>x.s!=null).sort((a,b)=>b.s-a.s);const m=new Map;L.forEach((x,i)=>m.set(x.o.iso,{s:x.s,r:i+1}));return m}
+const SENS0=sensRank({w:eqW(),agg:'arit',base:'adj'});   // especificación publicada, reproducida con los dominios publicados
+function sensScenarios(){
+  const S=[{l:'Media geométrica (penaliza los desequilibrios)',cfg:{w:eqW(),agg:'geo',base:'adj'}},{l:'Solo datos observados, sin ajuste por fiabilidad',cfg:{w:eqW(),agg:'arit',base:'obs'}}];
+  BLOCKS.forEach(b=>{const w=eqW();b.doms.forEach(k=>w[k]=2);S.push({l:`Doble peso al bloque ${b.name}`,cfg:{w,agg:'arit',base:'adj'}})});
+  DOM.forEach(k=>{const w=eqW();w[k]=0;S.push({l:`Sin el dominio ${DS[k]}`,cfg:{w,agg:'arit',base:'adj'}})});
+  DOM.forEach(k=>{const w=eqW();w[k]=2;S.push({l:`Doble peso a ${DS[k]}`,cfg:{w,agg:'arit',base:'adj'}})});
+  return S}
+let SCEN_CACHE=null;
+const scenRanks=()=>SCEN_CACHE||(SCEN_CACHE=sensScenarios().map(s=>({...s,m:sensRank(s.cfg)})));
+function robustness(o){
+  const b0=SENS0.get(o.iso);if(!o.eligible||!b0)return null;const G=groupFor(o);
+  const gmed=m=>median(G.members.map(x=>m.get(x.iso)?.s).filter(v=>v!=null));
+  const base=b0.s>=gmed(SENS0);
+  const rows=scenRanks().map(s=>{const x=s.m.get(o.iso),gm=gmed(s.m);return {l:s.l,s:x?.s,r:x?.r,d:x?x.r-b0.r:null,above:x&&gm!=null?x.s>=gm:null}});
+  const rs=rows.map(r=>r.r).filter(v=>v!=null),maxShift=Math.max(...rows.map(r=>Math.abs(r.d??0))),same=rows.filter(r=>r.above===base).length;
+  return {rows,r0:b0.r,min:Math.min(...rs),max:Math.max(...rs),maxShift,same,n:rows.length,base,robustRank:maxShift<=SCEN_T,robustSign:same===rows.length,G};
+}
+const robTxt=(o,R)=>[`Puesto: entre el ${R.min} y el ${R.max} en los ${R.n} escenarios (${R.r0} con la especificación publicada; variación máxima de ${R.maxShift} puestos). ${R.robustRank?'Conclusión robusta':'Conclusión sensible a los supuestos'}: ${R.robustRank?'no':'sí'} se mueve más de ${SCEN_T} puestos.`,
+  `Posición frente al grupo de comparación: queda ${R.base?'por encima':'por debajo'} de la mediana del grupo en ${R.same} de ${R.n} escenarios. ${R.robustSign?'Conclusión robusta.':'Conclusión sensible a los supuestos.'}`];
+const shiftTxt=d=>d==null?'—':d===0?'=':d<0?`▲ ${-d}`:`▼ ${d}`;
+function renderSens(){
+  $('#sAgg').value=SENS.agg;$('#sBase').value=SENS.base;
+  $('#sW').innerHTML=BLOCKS.map(b=>`<div class="gw-blk"><h4><span>${esc(b.name)}</span></h4>${b.doms.map(k=>`<label class="gw-row"><span>${esc(DL[k])}</span><input type="range" min="0" max="3" step="0.5" value="${SENS.w[k]}" data-sw="${k}" aria-label="Peso de ${esc(DL[k])}"><b class="mono">× ${fmt(SENS.w[k],1)}</b></label>`).join('')}</div>`).join('');
+  $('#sW').querySelectorAll('[data-sw]').forEach(i=>i.addEventListener('input',()=>{SENS.w[i.dataset.sw]=+i.value;i.nextElementSibling.textContent='× '+fmt(+i.value,1);renderSensOut()}));
+  renderSensOut();
+}
+function renderSensOut(){
+  const tw=DOM.reduce((a,k)=>a+SENS.w[k],0),isPub=SENS.agg==='arit'&&SENS.base==='adj'&&DOM.every(k=>SENS.w[k]===1);
+  if(!tw){$('#sOut').innerHTML=`<div class="empty"><b>Todos los pesos están a cero.</b><span>Da peso a algún dominio para calcular una puntuación.</span></div>`;return}
+  const m=sensRank(SENS),L=ELIG.filter(o=>m.has(o.iso)&&SENS0.has(o.iso)),d=L.map(o=>m.get(o.iso).r-SENS0.get(o.iso).r),ad=d.map(Math.abs);
+  const rho=pearson(L.map(o=>SENS0.get(o.iso).r),L.map(o=>m.get(o.iso).r)),big=ad.filter(v=>v>SCEN_T).length;
+  const focus=[...new Set([RX,...S.sel])].map(i=>BYISO[i]).filter(o=>o&&m.has(o.iso));
+  const row=o=>{const a=m.get(o.iso),b=SENS0.get(o.iso);return `<tr class="${o.iso===RX?'me':''}"><td>${esc(o.name)}</td><td class="mono">${o.rank??'—'}</td><td class="mono">${fmt(o.core,2)}</td><td class="mono"><b>${fmt(a.s,2)}</b></td><td class="mono"><b>${a.r}</b></td><td class="mono ${a.r<b.r?'up':a.r>b.r?'down':''}">${shiftTxt(a.r-b.r)}</td></tr>`};
+  const mv=[...L].sort((a,b)=>(m.get(a.iso).r-SENS0.get(a.iso).r)-(m.get(b.iso).r-SENS0.get(b.iso).r)),ups=mv.slice(0,5).filter(o=>m.get(o.iso).r<SENS0.get(o.iso).r),downs=mv.slice(-5).reverse().filter(o=>m.get(o.iso).r>SENS0.get(o.iso).r);
+  $('#sOut').innerHTML=`<p class="g-crit"><b>${isPub?'Especificación publicada.':'Especificación alternativa.'}</b> Pesos: ${DOM.map(k=>`${DS[k]} ${fmt(100*SENS.w[k]/tw,1)} %`).join(' · ')}. ${SENS.agg==='geo'?'Media geométrica':'Media aritmética'} de los dominios ${SENS.base==='obs'?'observados (sin ajuste; los dominios sin dato se omiten)':'ajustados por fiabilidad'}.</p>
+    <div class="pr-sum sens-k"><div><span>Concordancia de rankings</span><b>${fmt(rho,3)}</b><small>correlación de puestos con la publicada (1 = idénticos)</small></div><div><span>Cambio típico</span><b>${fmt(median(ad),0)}</b><small>mediana de puestos que se mueve un país</small></div><div><span>Cambios grandes</span><b>${big}</b><small>países que se mueven más de ${SCEN_T} puestos (de ${L.length})</small></div></div>
+    <div class="tablewrap"><table class="mini drw-t"><thead><tr><th>País</th><th>Puesto publicado</th><th>Núcleo publicado</th><th>Puntuación alternativa</th><th>Puesto alternativo</th><th>Cambio</th></tr></thead><tbody>${focus.map(row).join('')||'<tr><td colspan="6">El país analizado no entra en el ranking (Tier C o D).</td></tr>'}</tbody></table></div>
+    ${isPub?'<p class="note">Con la especificación publicada no hay cambios. El puesto reproducido con los dominios publicados (un decimal) puede diferir en 1 posición del oficial por redondeo.</p>':`<p class="note">Mayores subidas: ${ups.map(o=>`${esc(o.name)} (${shiftTxt(m.get(o.iso).r-SENS0.get(o.iso).r)})`).join(', ')||'ninguna'}. Mayores bajadas: ${downs.map(o=>`${esc(o.name)} (${shiftTxt(m.get(o.iso).r-SENS0.get(o.iso).r)})`).join(', ')||'ninguna'}. ▲ sube puestos; ▼ baja.</p>`}`;
+}
+function renderRob(){
+  const o=BYISO[RX],R=o&&robustness(o);
+  if(!R){$('#sRob').innerHTML=`<div class="empty"><b>${o?esc(o.name):'El país'} no entra en el ranking (Tier ${o?o.tier:'—'}).</b><span>La robustez solo se calcula para países con datos comparables (Tier A o B). Elige otro país en la Radiografía.</span></div>`;return}
+  const t=robTxt(o,R);
+  $('#sRob').innerHTML=`<ul class="rob"><li class="${R.robustRank?'ok':'ko'}"><b>${R.robustRank?'✓ Robusta':'⚠ Sensible'}</b><span>${esc(o.name)} · ${esc(t[0])}</span></li><li class="${R.robustSign?'ok':'ko'}"><b>${R.robustSign?'✓ Robusta':'⚠ Sensible'}</b><span>${esc(t[1])}</span></li></ul>
+    <details class="pr-why"><summary>Ver los ${R.n} escenarios</summary><div class="tablewrap"><table class="mini drw-t"><thead><tr><th>Escenario</th><th>Puntuación</th><th>Puesto</th><th>Cambio</th><th>Frente a la mediana del grupo</th></tr></thead><tbody>${R.rows.map(r=>`<tr><td>${esc(r.l)}</td><td class="mono">${fmt(r.s,2)}</td><td class="mono">${r.r??'—'}</td><td class="mono ${r.d<0?'up':r.d>0?'down':''}">${shiftTxt(r.d)}</td><td>${r.above==null?'—':r.above?'por encima':'por debajo'}</td></tr>`).join('')}</tbody></table></div>
+    <p class="note">Escenarios deterministas: media geométrica, solo datos observados, doble peso a cada bloque, exclusión de cada dominio y doble peso a cada dominio. El umbral de ${SCEN_T} puestos es un supuesto de interpretación de este atlas. La fuente original publica además intervalos de incertidumbre (401 simulaciones) que no están disponibles en este conjunto de datos.</p></details>`;
+}
+function renderQuality(){
+  const L=[...new Set([RX,...S.sel])].map(i=>BYISO[i]).filter(Boolean);
+  $('#invCalB').innerHTML=`<table class="mini drw-t" style="min-width:860px"><thead><tr><th>País</th><th>Tier</th><th>Confianza</th><th>Actualidad</th><th>Indicadores</th>${DOM8.map(k=>`<th>${DS[k]}</th>`).join('')}</tr></thead><tbody>${L.map(o=>`<tr class="${o.iso===RX?'me':''}"><td>${esc(o.name)}</td><td class="mono">${o.tier}</td><td class="mono">${fmt(o.conf)}</td><td class="mono">${fmt(o.fresh,0)}</td><td class="mono">${o.ind} de 92</td>${DOM8.map(k=>`<td>${covBadge(covOf(o,k))}</td>`).join('')}</tr>`).join('')}</tbody></table>`;
+}
+function renderFicha(){
+  const srcs=EVR.SRC.map(s=>{const I=IND.filter(i=>i.src===s);return {s,n:I.length,obs:I.reduce((a,i)=>a+i.obs.length,0),y0:Math.min(...I.map(i=>i.y0)),y1:Math.max(...I.map(i=>i.y1))}});
+  const tiers=ALL.reduce((a,o)=>(a[o.tier]=(a[o.tier]||0)+1,a),{});
+  const r=(k,v)=>`<tr><td>${k}</td><td>${v}</td></tr>`;
+  $('#invFichaB').innerHTML=`<div class="ficha2"><div><h3>Versiones</h3><table class="mini fx"><tbody>
+      ${r('Herramienta',`${APP.name}, versión ${APP.ver} (${APP.date})`)}${r('Conjunto de datos',`${APP.src}, release ${METH.release}`)}${r('Instantánea de evidencia',METH.snapshot)}
+      ${r('Cobertura',`218 países · 92 indicadores · ${IND.reduce((a,i)=>a+i.obs.length,0).toLocaleString('es-ES')} observaciones · 7 fuentes`)}
+      ${r('PIB per cápita PPA',`${GDP_SRC.name}, serie ${GDP_SRC.code} (${GDP_SRC.unit}); consulta del ${GDP_SRC.date}`)}
+      ${r('Tipo de datos','Corte transversal: una sola instantánea. No hay series históricas, así que no se puede analizar la evolución temporal.')}</tbody></table>
+      <h3>Calidad de los datos (Tier)</h3><table class="mini fx"><tbody>
+      ${r('A · alta confianza',`Evidencia densa y reciente en 7–8 dominios · ${tiers.A||0} países`)}${r('B · confianza media',`Al menos 6 dominios y 17 indicadores · ${tiers.B||0} países`)}${r('C · baja',`Perfil útil con carencias importantes; sin puesto en el ranking · ${tiers.C||0} países`)}${r('D · muy baja',`Perfil exploratorio con datos escasos; sin puesto · ${tiers.D||0} países`)}</tbody></table></div>
+    <div><h3>Método de cálculo</h3><table class="mini fx"><tbody>
+      ${r('1 · Normalización',`Cada indicador se acota entre sus percentiles ${fmt(METH.lo,1)} y ${fmt(METH.hi,1)}, se alinea (más alto = mejor), se transforma con log(1 + x) con signo si es muy asimétrico y se reescala mín–máx a 0–100.`)}
+      ${r('2 · Dominio',`Media simple de los indicadores con dato: todos pesan igual. Los que faltan no cuentan como cero.`)}
+      ${r('3 · Puntuación bruta','Media simple de los dominios núcleo con dato.')}
+      ${r('4 · Ajuste por fiabilidad',`Ajustada = cobertura × observada + (1 − cobertura) × referencia previa. Referencia previa = ${METH.wG*100} % mediana global + ${METH.wR*100} % regional + ${METH.wI*100} % del grupo de renta (mediana global si el grupo tiene menos de ${METH.minN} países con dato).`)}
+      ${r('5 · Puntuación núcleo','Media de los 7 dominios ajustados (14,3 % cada uno). La legitimidad social pesa 0 %.')}
+      ${r('Bloques','Conocimiento = media(Ciencia, Talento) · Despliegue = media(Infraestructura, Adopción, Financiación) · Instituciones = media(Gobernanza, IA responsable).')}
+      ${r('Umbrales de lectura del atlas',`Fortaleza o rezago: ±${RX_T.strong} puntos frente a la mediana del grupo. Desequilibrio entre bloques: ≥ ${RX_T.gapRel} puntos. Cobertura: alta ≥ ${COV_T.alta} %, media ${COV_T.media}–${COV_T.alta} %, limitada < ${COV_T.media} %. Son supuestos de interpretación de este atlas, no de la fuente.`)}</tbody></table>
+      <button type="button" class="btn" id="invCalc">Ver el cálculo paso a paso del país analizado</button> <a class="btn" href="#evidencia" id="invDict">Abrir el diccionario de indicadores</a></div></div>
+    <h3>Fuentes de los indicadores</h3><div class="tablewrap"><table class="mini drw-t"><thead><tr><th>Fuente</th><th>Indicadores</th><th>Observaciones</th><th>Años</th></tr></thead><tbody>${srcs.map(x=>`<tr><td>${esc(SRC_ES[x.s]||x.s)}</td><td class="mono">${x.n}</td><td class="mono">${x.obs.toLocaleString('es-ES')}</td><td class="mono">${x.y0===x.y1?x.y0:x.y0+'–'+x.y1}</td></tr>`).join('')}</tbody></table></div>
+    <h3>Limitaciones</h3><ul class="drw-gaps">${LIMITS.map(t=>`<li>${esc(t)}</li>`).join('')}</ul>`;
+  $('#invCalc').addEventListener('click',e=>{LAST_CONCL=e.currentTarget;openCalc(BYISO[RX])});
+  $('#invDict').addEventListener('click',()=>{$('#eMode').value='dict';});
+}
+const LIMITS=['Corte transversal: los datos son una única instantánea (05-08-2026). No hay series históricas ni variaciones en el tiempo.',
+  'Los indicadores de Doing Business son de 2019 y ya no se actualizan: sirven como referencia estructural, no describen la regulación actual.',
+  'La legitimidad social solo se observa en 32 países (encuesta de 2024) y no entra en la puntuación.',
+  'Los valores normalizados de cada indicador se muestran redondeados a entero; los límites de acotación (P2,5 y P97,5) de cada indicador no están incluidos. La puntuación observada de cada dominio sí procede de la fuente con dos decimales.',
+  'La fuente publica intervalos de incertidumbre (percentiles 10–90 de 401 simulaciones) que no están disponibles en este conjunto de datos; el atlas ofrece a cambio un análisis de sensibilidad con escenarios deterministas.',
+  'PIB per cápita PPA sin dato en WDI para Liechtenstein, Taiwán, Venezuela, Yemen y Eritrea: para ellos el grupo de contexto usa renta y región.',
+  'Índice comparativo y estructural: no admite lecturas causales ni predictivas, ni constituye una recomendación de inversión.'];
+const fechaISO=()=>new Date().toISOString().slice(0,10);
+function citeTool(){return `${APP.name} (2026). Versión ${APP.ver}. Datos: ${APP.src}, release ${METH.release}, instantánea de evidencia ${METH.snapshot}. Disponible en: ${APP.url} (consultado el ${fechaLarga()}).`}
+function citeReport(){const o=BYISO[RX],G=o?groupFor(o):null;return `${APP.name} (2026). Radiografía de ${o?o.name:'—'} frente a ${G?GMODES[G.mode].toLowerCase()+' ('+G.short+')':'—'}. Informe generado el ${fechaLarga()} con la versión ${APP.ver}. Datos: ${APP.src}, release ${METH.release}, instantánea de evidencia ${METH.snapshot}. ${APP.url}`}
+function renderCite(){
+  const c=(id,t,txt)=>`<div class="cite"><b>${t}</b><p id="${id}">${esc(txt)}</p><button type="button" class="btn" data-cp="${id}">Copiar cita</button></div>`;
+  $('#invCiteB').innerHTML=c('ciT','La herramienta',citeTool())+c('ciR','El informe de la consulta actual',citeReport())+`<p class="note">El atlas no tiene una autoría registrada: añade la persona o entidad responsable delante del título si procede. Cita también la fuente primaria de cada indicador cuando uses sus valores originales.</p>`;
+  $('#invCiteB').querySelectorAll('[data-cp]').forEach(b=>b.addEventListener('click',()=>{const t=$('#'+b.dataset.cp).textContent;navigator.clipboard.writeText(t).then(()=>toast('Cita copiada')).catch(()=>{const r=document.createRange();r.selectNodeContents($('#'+b.dataset.cp));const s=getSelection();s.removeAllRanges();s.addRange(r);toast('Cita seleccionada: cópiala con Ctrl+C')})}));
+}
+/* Exportación */
+function expMeta(L){const o=BYISO[RX],G=o?groupFor(o):null;return {herramienta:APP.name,version_atlas:APP.ver,fecha_version:APP.date,url:APP.url,generado:new Date().toISOString(),
+  datos:{fuente:APP.src,release:METH.release,instantanea_evidencia:METH.snapshot,paises:218,indicadores:92,tipo:'corte transversal'},
+  metodologia:{normalizacion:`winsorización P${METH.lo}–P${METH.hi}, alineación de sentido, log(1+x) con signo si procede, mín–máx 0–100`,dominio:'media simple de los indicadores con dato',bruta:'media simple de los dominios núcleo con dato',
+    ajuste_fiabilidad:{formula:'ajustada = cobertura × observada + (1 − cobertura) × referencia previa',peso_mediana_global:METH.wG,peso_mediana_regional:METH.wR,peso_mediana_renta:METH.wI,minimo_paises_grupo:METH.minN},nucleo:'media de los 7 dominios ajustados (1/7 cada uno); legitimidad social 0 %'},
+  pib_per_capita_ppa:GDP_SRC,umbrales_de_lectura:{cobertura_pct:COV_T,puntos:RX_T,robustez_puestos:SCEN_T},
+  consulta:{paises_exportados:L.length,filtros:{region:$('#fRegion').value||null,renta:$('#fIncome').value||null,calidad:$('#fTier').value,arquetipo:$('#fArch').value===''?null:ARCH[+$('#fArch').value]},pais_analizado:o?o.iso:null,
+    grupo_comparacion:G?{modo:G.mode,criterio:G.crit,criterio_alternativo:G.alt||null,miembros:G.members.map(m=>m.iso)}:null,paises_seleccionados:[...S.sel]},
+  cita:citeTool(),limitaciones:LIMITS}}
+const r4=v=>v==null?null:Math.round(v*1e4)/1e4;
+function expCountries(L){return L.map(o=>{const c=calcChain(o);return {iso:o.iso,pais:o.name,pais_en:o.nameEn,region:o.reg,renta:o.inc,tier:o.tier,confianza:o.conf,puesto:o.rank,arquetipo:ARCH[o.arch],nucleo:o.core,bruta:o.raw,
+  nucleo_reproducido:r4(c.core),indicadores_con_dato:o.ind,cobertura_pct:o.cov,actualidad:o.fresh,pib_pc_ppa:GDPPC[o.iso]?{valor:GDPPC[o.iso].v,anio:GDPPC[o.iso].y}:null,
+  bloques:{conocimiento:r4(o.K),despliegue:r4(o.D),instituciones:r4(o.I)},
+  dominios:Object.fromEntries(DOM8.map(k=>{const d=c.doms[k];return [k,{publicada:o[k],observada:d.obs,indicadores_con_dato:d.n,indicadores_total:d.N,fiabilidad:k==='leg'?null:r4(d.a),referencia_previa:k==='leg'?null:r4(d.prior),ajustada_reproducida:k==='leg'?null:r4(d.adj)}]}))}})}
+function expObs(L){const set=new Set(L.map(o=>o.iso)),out=[];IND.forEach(I=>I.obs.forEach(x=>{if(set.has(x.o.iso))out.push({iso:x.o.iso,pais:x.o.name,indicador:I.id,dominio:I.dom,anio:x.y,valor_original:x.r,valor_normalizado:x.n})}));return out}
+function expDict(){return IND.map(I=>({id:I.id,nombre:I.label,nombre_original:I.labelEn,dominio:I.dom,dominio_nombre:DL[I.dom],fuente:I.src,unidad:I.unit,unidad_original:I.unitEn,sentido:I.higher?'más alto es mejor':'más bajo es mejor',paises_con_dato:I.obs.length,anio_min:I.y0,anio_max:I.y1,
+  peso_nominal_en_dominio_pct:I.dom==='leg'?null:r4(100/DOMN[I.dom]),peso_nominal_en_nucleo_pct:I.dom==='leg'?0:r4(100/7/DOMN[I.dom]),nota_peso:I.dom==='leg'?'La legitimidad usa tres subconstructos equilibrados cuya ponderación interna no está disponible; pesa 0 % en el núcleo.':'Peso efectivo para un país = 1 ÷ nº de indicadores con dato de su dominio.'}))}
+function toCsv(rows){if(!rows.length)return '';const ks=Object.keys(rows[0]);const c=v=>v==null?'':typeof v==='number'?String(v).replace('.',','):`"${String(v).replace(/"/g,'""')}"`;return '﻿'+[ks.map(k=>`"${k}"`).join(';'),...rows.map(r=>ks.map(k=>c(r[k])).join(';'))].join('\r\n')}
+function expScoresFlat(L){return expCountries(L).map(x=>{const f={iso:x.iso,pais:x.pais,region:x.region,renta:x.renta,tier:x.tier,confianza:x.confianza,puesto:x.puesto,arquetipo:x.arquetipo,nucleo:x.nucleo,bruta:x.bruta,nucleo_reproducido:x.nucleo_reproducido,indicadores_con_dato:x.indicadores_con_dato,cobertura_pct:x.cobertura_pct,pib_pc_ppa:x.pib_pc_ppa?x.pib_pc_ppa.valor:null,conocimiento:x.bloques.conocimiento,despliegue:x.bloques.despliegue,instituciones:x.bloques.instituciones};
+  DOM8.forEach(k=>{const d=x.dominios[k];f[k+'_publicada']=d.publicada;f[k+'_observada']=d.observada;f[k+'_n']=d.indicadores_con_dato;f[k+'_fiabilidad']=d.fiabilidad;f[k+'_ajustada']=d.ajustada_reproducida});return f})}
+function doExport(kind){
+  const L=$('#exScope').value==='all'?ALL:filtered(),d=fechaISO(),save=(n,txt,type)=>saveFile(n,new Blob([txt],{type}));
+  if(!L.length){toast('No hay países que exportar: revisa los filtros');return}
+  if(kind==='json')save(`atlas-ia-datos-${d}.json`,JSON.stringify({metadatos:expMeta(L),paises:expCountries(L),observaciones:expObs(L),diccionario_indicadores:expDict()},null,1),'application/json');
+  else if(kind==='scores')save(`atlas-ia-puntuaciones-${d}.csv`,toCsv(expScoresFlat(L)),'text/csv;charset=utf-8');
+  else if(kind==='obs')save(`atlas-ia-observaciones-${d}.csv`,toCsv(expObs(L)),'text/csv;charset=utf-8');
+  else save(`atlas-ia-diccionario-${d}.csv`,toCsv(expDict()),'text/csv;charset=utf-8');
+}
+document.querySelectorAll('[data-ex]').forEach(b=>b.addEventListener('click',()=>doExport(b.dataset.ex)));
+$('#sAgg').addEventListener('change',e=>{SENS.agg=e.target.value;renderSensOut()});
+$('#sBase').addEventListener('change',e=>{SENS.base=e.target.value;renderSensOut()});
+$('#sReset').addEventListener('click',()=>{SENS.w=eqW();SENS.agg='arit';SENS.base='adj';renderSens()});
+document.querySelectorAll('.inv-nav a').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();document.querySelector(a.getAttribute('href'))?.scrollIntoView({behavior:reduced()?'auto':'smooth',block:'start'})}));
+function renderResearch(){renderFicha();renderQuality();renderSens();renderRob();renderCite();applyII(document.querySelector('[data-view="investigacion"]'))}
+/* Gráficos exportables en alta resolución */
+function chartPng(key){const ch=charts[key];if(!ch)return;const old=ch.options.devicePixelRatio;try{ch.options.devicePixelRatio=3;ch.resize();const c=document.createElement('canvas');c.width=ch.canvas.width;c.height=ch.canvas.height;const x=c.getContext('2d');x.fillStyle=css('--surface');x.fillRect(0,0,c.width,c.height);x.drawImage(ch.canvas,0,0);
+  c.toBlob(b=>{if(b)saveFile(`atlas-ia-grafico-${key}-${fechaISO()}.png`,b)},'image/png')}finally{ch.options.devicePixelRatio=old;ch.resize()}}
+function addPngBtn(key,canvas){const box=canvas&&canvas.parentElement;if(!box||box.querySelector('.png-b'))return;const b=document.createElement('button');b.type='button';b.className='png-b';b.textContent='PNG';b.title='Descargar este gráfico en alta resolución (PNG)';b.setAttribute('aria-label','Descargar este gráfico como imagen PNG');b.addEventListener('click',e=>{e.stopPropagation();chartPng(b.dataset.key)});box.appendChild(b);b.dataset.key=key}
+
+const VIEWS=['radiografia','referentes','perfil','ranking','dispersion','grupos','mapa-calor','evidencia','datos','investigacion'];
 function currentView(){const h=location.hash.slice(1);return VIEWS.includes(h)?h:'radiografia'}
 let ADV_TOUCHED=false;
 function setAdv(on,user){$('#adv').hidden=!on;$('#advBtn').setAttribute('aria-expanded',String(on));if(user)ADV_TOUCHED=true}
@@ -3115,7 +3374,7 @@ function showView(){const v=currentView();
   document.querySelectorAll('[data-view]').forEach(s=>s.hidden=s.dataset.view!==v);
   document.querySelectorAll('nav.tabs a').forEach(a=>a.setAttribute('aria-current',a.dataset.v===v?'page':'false'));
   renderView(v);}
-function renderView(v){({radiografia:renderRx,referentes:renderGoals,perfil:renderPerfil,ranking:renderRanking,dispersion:renderScatter,grupos:renderGroups,'mapa-calor':renderHeat,evidencia:renderEvidence,datos:renderTable})[v]()}
+function renderView(v){({radiografia:renderRx,referentes:renderGoals,perfil:renderPerfil,ranking:renderRanking,dispersion:renderScatter,grupos:renderGroups,'mapa-calor':renderHeat,evidencia:renderEvidence,datos:renderTable,investigacion:renderResearch})[v]()}
 function renderAll(){renderKpis(filtered());renderChips();advSummary();renderView(currentView())}
 window.addEventListener('hashchange',showView);
 
